@@ -389,8 +389,8 @@ function monolith(){
     const cut = b.w * (0.32 + Math.random() * 0.22);
     loose.push(piece({ w: cut, d: b.d }, b.y,
                      b.ox + side * (b.w - cut), b.oz,
-                     side * (0.30 + Math.random() * 0.22), 0, 0.42));
-    b.ox -= side * cut;
+                     side * (0.20 + Math.random() * 0.16), 0, 0.42));
+    b.ox = clamp(b.ox - side * cut * 0.5, -0.07, 0.07);   // the stack stays a stack
     b.w -= cut;
     b.glow = 1;
     puff(b.ox + side * b.w, b.y + TH * 0.5, b.oz, 0.55, b.d);
@@ -468,8 +468,8 @@ function monolith(){
         stack.splice(i, 1);
         loose.push(piece({ w: b.w, d: b.d }, b.y,
                          b.ox + b.pull.dx * 0.52, b.oz + b.pull.dz * 0.52,
-                         b.pull.dx * (0.16 + Math.random() * 0.14),
-                         b.pull.dz * (0.16 + Math.random() * 0.14), 0));
+                         b.pull.dx * (0.05 + Math.random() * 0.07),
+                         b.pull.dz * (0.05 + Math.random() * 0.07), 0));
       }
     }
 
@@ -519,8 +519,8 @@ function monolith(){
       }
       l.vy -= G * dt;
       l.y  += l.vy * dt;
-      l.ox += l.vx * dt;
-      l.oz += l.vz * dt;
+      l.ox = clamp(l.ox + l.vx * dt, -0.72, 0.72);    // rubble stays in frame
+      l.oz = clamp(l.oz + l.vz * dt, -0.62, 0.62);
       l.rx += l.vrx * dt;
       l.ry += l.vry * dt;
       if (l.y <= -1){
