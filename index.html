@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Autolith, the self-modifiable live agent</title>
+<meta name="description" content="Autolith is a terminal programming agent inside a live Common Lisp image. It works in your repository, answers over corpora larger than the model window, and can inspect, change, break and recover its own runtime.">
+<meta name="theme-color" content="#fffefa">
+<link rel="canonical" href="https://lambda-symbolics.com/autolith">
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Autolith, the self-modifiable live agent">
+<meta property="og:description" content="A terminal programming agent inside a live Common Lisp image it can inspect, change, break and recover.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@LukasHozda">
+<link rel="preload" href="fonts/cmu-typewriter-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/times-new-roman-regular.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add("js");if(location.search.indexOf("still")>-1)document.documentElement.classList.add("still");</script>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="asciinema-player.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap wrap--wide nav__in">
+    <a class="brand" href="#top" aria-label="Autolith, back to top">
+      <svg class="lsmark" viewBox="8.88 0.48 39.37 60.38" aria-hidden="true"><path class="ls-l" d="M9.57,51.46c4.74,2.32,9.42,4.89,14.4,6.56,5.67,1.56,6.87-2.3,5.41-6.98-2.12-6.6-5.25-12.72-8.19-19.03-.22-.48-.02-1.04.46-1.27.34-.16.72-.1,1,.12,2.43,1.94,4.74,4.03,7.05,6.13,7,6.21,12.88,13.64,18.13,21.31,0,0-2.53,1.74-2.53,1.74-1.42-2.31-2.6-5.62-3.68-8.09-4.87-11.4-12.87-27.5-18.06-38.83-1.8-3.7-3.46-7.54-5.53-11.1.02,0-.07-.02.2.12.11.04.05.01.08.02-.6.44-1.28,1.84-1.66,2.74-.13.38-.72.24-.7-.13.03-1.43.36-2.96,1.54-3.91.32-.22.89-.39,1.37-.18.44.26.39.32.61.59.21.3.69,1.1.88,1.43,4.29,7.63,8.97,16.92,12.92,24.78,4.46,8.96,9.11,17.93,12.86,27.22,0,0,.86,1.92.86,1.92.53,1.4,1.99,2.71.43,3.86-.71.46-1.65.26-2.11-.43-3.42-5.11-7.02-10.06-10.84-14.81-3.78-4.82-8.18-9.1-13-12.88,0,0,1.46-1.15,1.46-1.15,2.71,5.79,5.96,11.47,8.15,17.56,1.06,2.71,1.75,5.85.66,8.67-3.86,6.93-12.37.78-17.16-1.75-1.88-1.1-3.65-2.3-5.42-3.52-.41-.28-.03-.93.42-.71h0Z"/></svg>
+      <span class="brand__name">Autolith</span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Sections">
+      <a href="#image">Live image</a>
+      <a href="#repl">The REPL</a>
+      <a href="#mutation">Self-modification</a>
+      <a href="#context">RLM</a>
+      <a href="#security">Security</a>
+      <a href="#sessions">Sessions</a>
+      <a href="#state">State</a>
+      <a href="#yours">Yours</a>
+      <a class="nav__cta" href="#install"><span>Install</span></a>
+    </nav>
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav aria-label="Sections">
+    <a href="#image" style="--d:0">Live image</a>
+    <a href="#repl" style="--d:1">The REPL</a>
+    <a href="#mutation" style="--d:2">Self-modification</a>
+    <a href="#context" style="--d:3">RLM</a>
+    <a href="#live" style="--d:4">Attach</a>
+    <a href="#security" style="--d:5">Security</a>
+    <a href="#sessions" style="--d:6">Recordings</a>
+    <a href="#state" style="--d:7">State</a>
+    <a href="#yours" style="--d:8">Make it yours</a>
+    <a href="#install" style="--d:9">Install</a>
+  </nav>
+  <div class="menu__foot">
+    <a href="https://github.com/lambda-symbolics/autolith">Source</a>
+    <a href="https://lambda-symbolics.com/autolith/docs">Docs</a>
+    <a href="https://zulip.lambda-symbolics.com">Zulip</a>
+  </div>
+</div>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ============================================================= hero -->
+<section class="hero">
+  <canvas id="monolith" aria-hidden="true"></canvas>
+
+  <div class="hero__in wrap wrap--wide">
+    <div class="hero__copy">
+      <h1 class="hero__name" data-rv>
+        <svg class="lsmark" viewBox="8.88 0.48 39.37 60.38" aria-hidden="true"><path class="ls-l" d="M9.57,51.46c4.74,2.32,9.42,4.89,14.4,6.56,5.67,1.56,6.87-2.3,5.41-6.98-2.12-6.6-5.25-12.72-8.19-19.03-.22-.48-.02-1.04.46-1.27.34-.16.72-.1,1,.12,2.43,1.94,4.74,4.03,7.05,6.13,7,6.21,12.88,13.64,18.13,21.31,0,0-2.53,1.74-2.53,1.74-1.42-2.31-2.6-5.62-3.68-8.09-4.87-11.4-12.87-27.5-18.06-38.83-1.8-3.7-3.46-7.54-5.53-11.1.02,0-.07-.02.2.12.11.04.05.01.08.02-.6.44-1.28,1.84-1.66,2.74-.13.38-.72.24-.7-.13.03-1.43.36-2.96,1.54-3.91.32-.22.89-.39,1.37-.18.44.26.39.32.61.59.21.3.69,1.1.88,1.43,4.29,7.63,8.97,16.92,12.92,24.78,4.46,8.96,9.11,17.93,12.86,27.22,0,0,.86,1.92.86,1.92.53,1.4,1.99,2.71.43,3.86-.71.46-1.65.26-2.11-.43-3.42-5.11-7.02-10.06-10.84-14.81-3.78-4.82-8.18-9.1-13-12.88,0,0,1.46-1.15,1.46-1.15,2.71,5.79,5.96,11.47,8.15,17.56,1.06,2.71,1.75,5.85.66,8.67-3.86,6.93-12.37.78-17.16-1.75-1.88-1.1-3.65-2.3-5.42-3.52-.41-.28-.03-.93.42-.71h0Z"/></svg><span>Autolith</span>
+      </h1>
+      <p class="display hero__claim" data-split>The agent that rewrites <em>itself</em> while it runs.</p>
+      <p class="hero__lede" data-rv style="--d:4">
+        A terminal programming agent inside a live Common Lisp image it can
+        read, edit, break, and recover.
+      </p>
+      <div class="hero__install tabgroup" data-rv style="--d:5">
+        <div class="tabs" role="tablist" aria-label="Install Autolith">
+          <button role="tab" aria-selected="true" data-tab="h-nix">Nix</button>
+          <button role="tab" aria-selected="false" data-tab="h-curl">Binary</button>
+          <button role="tab" aria-selected="false" data-tab="h-src">Source</button>
+        </div>
+        <div class="install" data-tabpanel="h-nix">
+          <code>nix run github:lambda-symbolics/autolith</code>
+          <button class="install__copy" data-copy="nix run github:lambda-symbolics/autolith">Copy</button>
+        </div>
+        <div class="install" data-tabpanel="h-curl" hidden>
+          <code>curl -fsSL https://sh.lambda-symbolics.com/autolith | sh</code>
+          <button class="install__copy" data-copy="curl -fsSL https://sh.lambda-symbolics.com/autolith | sh">Copy</button>
+        </div>
+        <div class="install" data-tabpanel="h-src" hidden>
+          <code>git clone https://github.com/lambda-symbolics/autolith &amp;&amp; cd autolith &amp;&amp; ./script/bootstrap</code>
+          <button class="install__copy" data-copy="git clone https://github.com/lambda-symbolics/autolith &amp;&amp; cd autolith &amp;&amp; ./script/bootstrap">Copy</button>
+        </div>
+      </div>
+
+      <div class="hero__acts" data-rv style="--d:6">
+        <a class="btn" href="https://lambda-symbolics.com/autolith/docs"><span>Read the docs</span></a>
+        <p class="hero__plat">Linux, macOS, FreeBSD, NetBSD, OpenBSD, and Windows. <a class="ulink" href="#install">See more.</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================== one image -->
+<section class="band" id="image">
+  <div class="wrap wrap--wide">
+    <div class="two two--wide">
+      <div class="stack-3">
+        <h2 class="display d2" data-split>The whole agent is one Common Lisp&nbsp;<em>image.</em></h2>
+        <p class="prose" data-rv>
+          One image holds the provider client, the terminal, the tool
+          registry, the MCP connections, the conversation store, the memories,
+          the agenda, and the code that runs the turn. The agent reads and
+          edits all of it at the same address.
+        </p>
+        <p class="prose" data-rv style="--d:1">
+          Lisp gives it <code>describe</code>, the condition system, restarts,
+          CLOS protocols, and source forms at runtime, the same ones you get at
+          the prompt. Autolith lives in one package, which is unusual and
+          correct for a program that edits itself.
+        </p>
+        <p class="prose" data-rv style="--d:2">
+          Search runs in the same process through
+          <a class="ulink ulink--b" href="https://github.com/dmtrKovalenko/fff">fff</a>,
+          a Rust library, bringing unparalleled file search performance.
+          Autolith maintains semi-persistent Lisp repls and scripts in its
+          bundled runtime instead of spamming <code>python3 -c &hellip;</code>
+          scripts everywhere.
+        </p>
+      </div>
+
+      <figure class="win shadowband" id="imagebox" data-rv="fade">
+        <figcaption class="win__bar">One SBCL image, one process</figcaption>
+        <div class="win__body imagebox__grid">
+          <i>provider<br>client</i><i>terminal<br>interface</i><i>tool<br>registry</i>
+          <i>MCP<br>connections</i><i>conversation<br>store</i><i>persistent<br>memories</i>
+          <i>workspace<br>agenda</i><i>mutation<br>journal</i><i>what happens<br>next</i>
+        </div>
+      </figure>
+    </div>
+
+    <div class="clusters" data-rv>
+      <div class="cluster">
+        <h3 class="cluster__t">In your repository</h3>
+        <dl>
+          <div><dt>Repository work</dt><dd>Filesystem, shell, and search tools with results you can see.</dd></div>
+          <div><dt>Unattended jobs</dt><dd>Run Autolith inside your own workflows through its bounded headless mode, which prescribes the input and output schemas.</dd></div>
+        </dl>
+      </div>
+      <div class="cluster">
+        <h3 class="cluster__t">In its own image</h3>
+        <dl>
+          <div><dt>Live Lisp</dt><dd>A runtime it can inspect, test, and extend, with heap-isolated workers for experiments.</dd></div>
+          <div><dt>Oversized context</dt><dd>Recursive inference over corpora too large for the model window.</dd></div>
+          <div><dt>Continuity</dt><dd>Portable conversations, memories, agendas, checkpoints, and recovery.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= repl -->
+<section class="band band--flush" id="repl">
+  <div class="scrub" id="sugarScrub" style="height:250svh">
+    <div class="scrub__sticky">
+      <div class="wrap wrap--wide sugar">
+        <h2 class="display d2" data-split>Messages are just syntax&nbsp;<em>sugar.</em></h2>
+
+        <div class="sugar__stage">
+          <span class="sugar__glyphs" id="sugar" aria-hidden="true"></span>
+          <span class="sr">The sentence "Hello Autolith! How do you do?" is read as the Lisp form (prompt :to 'autolith "Hello Autolith! How do you do?")</span>
+        </div>
+
+        <p class="sugar__caption" id="sugarCaption">
+          <span class="on">Prose, typed at the prompt.</span>
+          <span>Autolith reads it as a call to <code>(prompt)</code>.</span>
+          <span>Talk to a specific agent using the <code>:to</code> parameter.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap wrap--wide repl__after">
+    <div class="tryit" data-rv>
+      <h3 class="display d3">Type something.</h3>
+      <p class="prose tryit__intro">
+        The same reader Autolith uses. Write prose and watch it become a call.
+        Open a parenthesis and it reads as a form.
+      </p>
+      <div class="tryit__box win shadowband">
+        <p class="win__bar">The reader</p>
+        <label class="tryit__in">
+          <span class="tryit__caret" aria-hidden="true">&#10095;</span>
+          <span class="sr">Type a message or a Lisp form</span>
+          <input id="replInput" type="text" spellcheck="false" autocomplete="off"
+                 placeholder="Summarize the failing tests and propose the smallest fix.">
+        </label>
+        <output class="tryit__out" id="replOut" aria-live="polite"></output>
+      </div>
+      <p class="tryit__note" id="replNote">Read as a call to <code>(prompt)</code>, addressed to the primary agent.</p>
+      <p class="prose tryit__foot">
+        You do not need to know Lisp. Prose works, and most people never type a
+        form. If you want to learn it, this is a good place to start: the input is a
+        real REPL, and the agent sees what you typed, what came back, and any
+        condition it signalled, so you can ask it why.
+      </p>
+    </div>
+
+    <div class="two">
+      <div class="stack-3" data-rv>
+        <h3 class="display d3">So a prompt can be&nbsp;computed.</h3>
+        <p class="prose">
+          Prose, commands, tools, and Common Lisp share one input. A form runs
+          in the active image and the model sees the result. Read a prompt off
+          disk, template it, or generate it from the program you are
+          debugging.
+        </p>
+        <figure class="code">
+          <pre><span class="cm">;; a computed prompt</span>
+(<span class="kw">prompt</span> (<span class="kw">read-file</span> "review-notes.org"))
+
+<span class="cm">;; a tool, called by hand</span>
+(<span class="kw">resource.read</span> :uri "workspace:.")
+
+<span class="cm">;; introspection, right there</span>
+(<span class="kw">describe</span> 'application)</pre>
+        </figure>
+      </div>
+
+      <div class="stack-3" data-rv style="--d:1">
+        <h3 class="display d3">And you can steer any child in the&nbsp;tree.</h3>
+        <p class="prose">
+          Autolith keeps working while its children run. Address one by name
+          to correct it mid-flight. Its next useful reply comes back to the
+          primary terminal.
+        </p>
+        <figure class="code">
+          <pre>(<span class="kw">prompt</span> :to 'test-review
+        "Run the focused tests and
+         report only failures.")</pre>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== live mutation -->
+<section class="band" id="mutation">
+  <div class="wrap wrap--wide">
+    <div class="lede-block">
+      <h2 class="display d2" data-split>Update the running agent without <em>restarting</em> it.</h2>
+      <p class="lede" data-rv>
+        Autolith replaces complete functions, methods, classes, macros,
+        conditions, and global settings in the image it runs in. The change is
+        live at once. Whether it outlives the process depends on what happens
+        next in the journal.
+      </p>
+    </div>
+
+    <div class="figpair">
+      <figure class="figure" data-rv="fade">
+        <div class="fig" id="mutFig"></div>
+        <figcaption><b>Figure 2.</b> The mutation path. A change passes a check on its way to durable state.</figcaption>
+      </figure>
+      <div class="stack-3">
+        <p class="prose">
+          <b>self.redefine</b> compiles and installs one complete definition in
+          the active image and appends it to the journal. <b>self.exercise</b>
+          asserts against the pending change. <b>self.diff</b> collapses
+          everything pending to its effective state. <b>self.discard</b> puts
+          the newest change back. Being wrong is cheap.
+        </p>
+        <p class="prose">
+          <b>self.commit</b> turns the pending set into an immutable private
+          image commit: a manifest plus a complete executable replay script, in
+          a separate private Git history. A clean process replays that script
+          and asserts the load-bearing surface survived before the commit
+          becomes selectable. Your working tree is a different repository.
+        </p>
+      </div>
+    </div>
+
+    <div class="figpair figpair--flip">
+      <figure class="figure" data-rv="fade">
+        <div class="fig" id="recFig"></div>
+        <figcaption><b>Figure 3.</b> The failure path. Recovery boots a separate image and reads the capsule.</figcaption>
+      </figure>
+      <div class="stack-3">
+        <h3 class="display d3">Then break it on&nbsp;purpose.</h3>
+        <p class="prose">
+          Give the formatter behind the live status row a bad redefinition
+          and the process dies on the spot. Autolith writes a private crash capsule,
+          boots a separately built pristine image, and selects a known-working
+          generation from it.
+        </p>
+        <p class="prose">
+          The conversation comes back with the scrollback intact. The first
+          turn afterwards reads only: bounded crash context, the workspace,
+          tracked source, active state. It reports, then asks before it repairs
+          anything.
+        </p>
+        <p class="note">
+          When an ordinary form signals, the live restart debugger
+          keeps the failed stack alive and puts <em>Ask Autolith why this
+          failed</em> beside the restarts, with up to three
+          validated recovery proposals.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== big context -->
+<section class="band" id="context">
+  <div class="wrap wrap--wide">
+    <div class="two two--viz">
+      <figure class="figure">
+        <div class="rlm__viz" id="rlmViz" aria-hidden="true"></div>
+        <figcaption><b>Figure 1.</b> One root completion. The corpus is an environment. Only frame results cross back.</figcaption>
+      </figure>
+      <div class="stack-3">
+        <h2 class="display d2" data-split>Process information <em>vastly larger</em> than the context window.</h2>
+        <p class="prose">
+          Every model has a hard limit on how much it can read at once. Autolith
+          works around it. Point it at a log, a codebase, or a folder of documents
+          far too big to fit, and it will answer questions about the whole thing.
+          The method comes from
+          <a class="ulink" href="https://arxiv.org/abs/2512.24601">Recursive
+          Language Models</a>, by Alex L. Zhang, Tim Kraska, and Omar Khattab.
+        </p>
+        <p class="prose">
+          It does not try to read everything. It writes small programs to search
+          and slice the material, sends the parts that matter to itself in
+          separate side conversations, and keeps only the answers. Those side
+          conversations never touch yours. A hundred of them add one line to your
+          screen. You set the ceiling on calls and tokens before it starts, so a
+          large question cannot turn into a runaway bill.
+        </p>
+        <dl class="sheet">
+          <div><dt>Budget</dt><dd>32 calls, 400 000 tokens, depth 2</dd></div>
+          <div><dt>Corpus</dt><dd>3.1 MB, 121 <code>src/*.lisp</code> files</dd></div>
+          <div><dt>Root conversation</dt><dd>59.6 K tokens in, 915 out</dd></div>
+          <div><dt>Answer</dt><dd>83 condition classes across 14 subsystems, each with its file</dd></div>
+          <div><dt>Trace</dt><dd><code>inference:s2Wb1o2</code>, readable in session</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= sessions -->
+<section class="band" id="sessions">
+  <div class="wrap wrap--wide">
+    <div class="lede-block">
+      <h2 class="display d2" data-split>Witness Autolith in <em>action.</em></h2>
+    </div>
+
+    <div class="demos tabgroup" data-rv>
+      <div class="tabs demos__tabs" role="tablist" aria-label="Recorded sessions">
+        <button role="tab" aria-selected="true" data-tab="d-oversized">Answer over 3.1 MB</button>
+        <button role="tab" aria-selected="false" data-tab="d-mutation">Break and recover</button>
+        <button role="tab" aria-selected="false" data-tab="d-continuity">Persist and resume</button>
+      </div>
+
+      <div class="demo" role="tabpanel" data-tabpanel="d-oversized">
+        <div class="player" data-cast="casts/oversized-context.cast" data-cols="120" data-rows="34">
+          <div class="player__poster">
+            <pre>  :::.      :::        AUTOLITH v0.35.0
+  ;;`;;     ;;;        ─────────────────────────────────
+ ,[[ '[[,   [[[        model      gpt-5.6-terra
+c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
+ 888   888,o88oo,.__
+ YMM   ""` """"YUMMM</pre>
+            <button class="player__load">Play the recording, 4 min 36 s</button>
+          </div>
+        </div>
+        <dl class="sheet demo__meta">
+          <div><dt>Asked</dt><dd>List every condition class in a 3.1 MB concatenation of 121 source files, grouped by subsystem, with the defining file. Budget of 32 calls, 400 000 tokens, depth 2. Do not read or search the file directly.</dd></div>
+          <div><dt>Cost</dt><dd>59.6 K tokens in the root conversation. The corpus never enters a prompt.</dd></div>
+          <div><dt>Answer</dt><dd>All 83 condition classes across 14 subsystems, each with its defining file.</dd></div>
+        </dl>
+      </div>
+
+      <div class="demo" role="tabpanel" data-tabpanel="d-mutation" hidden>
+        <div class="player" data-cast="casts/live-mutation.cast" data-cols="120" data-rows="34">
+          <div class="player__poster">
+            <pre>  :::.      :::        AUTOLITH v0.35.0
+  ;;`;;     ;;;        ─────────────────────────────────
+ ,[[ '[[,   [[[        model      gpt-5.6-terra
+c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
+ 888   888,o88oo,.__
+ YMM   ""` """"YUMMM</pre>
+            <button class="player__load">Play the recording, 6 min 19 s</button>
+          </div>
+        </div>
+        <dl class="sheet demo__meta">
+          <div><dt>Asked</dt><dd>Redefine a duration formatter live so durations over 24 hours render as <code>Dd H:MM:SS</code>, exercise it, commit it. Then break the function on purpose and recover.</dd></div>
+          <div><dt>What happened</dt><dd>The break killed the active process. Autolith wrote crash capsule <b>efa6aa16</b>, booted the pristine recovery image, restarted from clean committed source with the private commit selected, restored the conversation, and opened a read-only diagnosis turn.</dd></div>
+          <div><dt>Cost</dt><dd>289.0 K tokens, most of it the bounded crash context of the diagnosis turn.</dd></div>
+        </dl>
+      </div>
+
+      <div class="demo" role="tabpanel" data-tabpanel="d-continuity" hidden>
+        <div class="player" data-cast="casts/continuity.cast" data-cols="120" data-rows="34">
+          <div class="player__poster">
+            <pre>root@lho-thinkpad: ~/common-lisp/frob # ./bin/autolith
+  :::.      :::        AUTOLITH v0.35.0
+  ;;`;;     ;;;        ─────────────────────────────────
+ ,[[ '[[,   [[[        model      gpt-5.6-terra
+c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
+ 888   888,o88oo,.__</pre>
+            <button class="player__load">Play the recording, 10 min 11 s</button>
+          </div>
+        </div>
+        <dl class="sheet demo__meta">
+          <div><dt>Asked</dt><dd>Define a helper, exercise it, persist it as a private image commit, add an agenda entry. Then quit, run <code>autolith resume</code>, and ask where we were.</dd></div>
+          <div><dt>Result</dt><dd>Private image commits <b>4048480f</b> and <b>9eee3ae4</b>. The function defined before quitting answers in the next process with no reloading. The agenda entry written in the first session is found, finished, and marked done in the second.</dd></div>
+          <div><dt>Cost</dt><dd>10 min 11 s across two processes. Every persist runs the full validation suite before anything is retained.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================================= sessions live -->
+<section class="band" id="live">
+  <div class="wrap wrap--wide">
+    <div class="lede-block">
+      <h2 class="display d2" data-split>Attach to a session from another <em>terminal.</em></h2>
+      <p class="lede" data-rv>
+        Every running Autolith publishes a private authenticated endpoint on
+        loopback, keyed by the conversation identifier and guarded by a
+        capability token. Detach and the session moves to a supervised process
+        group that outlives your terminal.
+      </p>
+    </div>
+
+    <div class="two two--wide">
+      <div class="stack-3">
+        <figure class="code" data-rv>
+          <p class="code__cap">From any other terminal on the machine</p>
+          <pre><span class="p">$</span> <b>autolith localgroup status</b>
+<span class="p">$</span> <b>autolith localgroup tell</b>   SESSION "use the staging config"
+<span class="p">$</span> <b>autolith localgroup attach</b> SESSION --read-only
+<span class="p">$</span> <b>autolith localgroup attach</b> SESSION --take-over
+<span class="p">$</span> <b>autolith localgroup pause</b>  SESSION
+<span class="p">$</span> <b>autolith localgroup kill</b>   SESSION</pre>
+        </figure>
+        <p class="prose" data-rv>
+          Many observers, one controller. Take over and the previous controller
+          loses the session. Output arrives in order for everyone watching.
+          <b>tell</b> also wakes a paused session, <b>pause</b> cancels active
+          work and holds the queue, <b>kill</b> asks for a graceful shutdown.
+        </p>
+        <p class="note" data-rv>
+          On Windows a session runs in the terminal that started it. The
+          endpoint and these commands work the same.
+        </p>
+      </div>
+
+      <div class="stack-3">
+        <h3 class="display d3">And it moves between machines.</h3>
+        <figure class="code" data-rv>
+          <pre><span class="p">$</span> <b>autolith data export</b> project.sexp --workspace ~/code/project
+<span class="p">$</span> <b>autolith data import</b> project.sexp --workspace ~/src/project</pre>
+        </figure>
+        <p class="prose" data-rv>
+          One readable S-expression archive: conversations, memories, agendas,
+          plans, papercuts, and session assets. Import preserves stable
+          identifiers and merges into local data.
+        </p>
+        <p class="note" data-rv>
+          Even self-modified cores can be rebuilt on another machine.
+        </p>
+        <ul class="chips" data-rv>
+          <li>Linux x86_64</li><li>Linux aarch64</li><li>musl static</li>
+          <li>macOS x86_64</li><li>macOS arm64</li>
+          <li>FreeBSD</li><li>NetBSD</li><li>OpenBSD</li>
+          <li>Windows x86_64</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= authorization -->
+<section class="band" id="security">
+  <div class="wrap wrap--wide">
+    <div class="lede-block">
+      <h2 class="display d2" data-split>Every command is <em>classified</em> before it runs.</h2>
+      <p class="lede" data-rv>
+        An agent that edits itself needs authorization that holds whether or
+        not the agent behaves.
+      </p>
+    </div>
+
+    <dl class="deflist" data-rv>
+      <div>
+        <dt>Sandbox</dt>
+        <dd>
+          <code>cl-exec-sandbox</code> selects the backend: Bubblewrap on
+          Linux, Seatbelt on macOS. The default policy gives a command no
+          network, a read-only host, writes in the workspace and temporary
+          directories, protected repository metadata, and sixty seconds. On
+          Linux it adds process, user, IPC, UTS, and network namespaces,
+          <code>no_new_privs</code>, and seccomp.
+        </dd>
+      </div>
+      <div>
+        <dt>Classification</dt>
+        <dd>
+          In automatic mode one bounded inference frame judges each command
+          under a two-call, eight-thousand-token budget and answers through a
+          closed schema: sandboxed, full access, or denied. It reads the
+          command as data and ignores instructions written inside it. A failed
+          classification denies. An unavailable sandbox turns a sandboxed
+          verdict into a denial.
+        </dd>
+      </div>
+      <div>
+        <dt>Approvals</dt>
+        <dd>
+          Once, always for this exact command in this directory, sandboxed for
+          the session, full access for the session, or denied. Headless jobs
+          deny anything that would otherwise open the picker.
+        </dd>
+      </div>
+      <div>
+        <dt>Credentials</dt>
+        <dd>
+          OAuth and MCP credentials render as explicit redaction markers. Crash
+          capsules are written secret-free. A checkpoint clears credentials from
+          memory before it forks. An exported archive carries user data.
+        </dd>
+      </div>
+      <div>
+        <dt>Bounds</dt>
+        <dd>
+          Sixteen identical tool calls. Five hundred and twelve provider
+          requests per turn. Sixty-four kilobytes of shell output, four
+          mebibytes per file read, sixty-four kilobytes per crash capsule. Call,
+          token, and depth budgets on every inference frame.
+        </dd>
+      </div>
+      <div>
+        <dt>Revision gating</dt>
+        <dd>
+          A read returns an opaque revision. An edit applies against that exact
+          observation, or it fails and names the revision it expected and the
+          one it found.
+        </dd>
+      </div>
+      <div>
+        <dt>Immutable mode</dt>
+        <dd>
+          <code>--immutable</code> pins the agent to one state: no
+          evaluation, mutation, persistence, checkpoints, or rollback. Use it
+          when you are integrating a fixed Autolith into something else, or
+          running it unattended, and self-modification is not wanted.
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================================================ state -->
+<section class="band" id="state">
+  <div class="wrap wrap--wide">
+    <div class="lede-block">
+      <h2 class="display d2" data-split>Tiered knowledge <em>system.</em></h2>
+      <p class="lede" data-rv>
+        A fact you want forever, a commitment for this month, a step for this
+        hour, and an exact heap expire on different schedules. Autolith writes
+        them to separate readable stores rather than one database or one saved
+        core.
+      </p>
+    </div>
+
+    <div class="bento" data-rv>
+      <article class="cell cell--6 cell--solid">
+        <h3 class="display">Conversations</h3>
+        <p>Append-only portable S-expressions with exact resume commands, crash-tail repair, and read-only replay navigation.</p>
+      </article>
+      <article class="cell cell--3">
+        <h3 class="display">Memories</h3>
+        <p>Workspace or global facts and preferences, recalled under a bounded budget.</p>
+      </article>
+      <article class="cell cell--3">
+        <h3 class="display">Agenda</h3>
+        <p>Durable commitments and blockers for one workspace, delivered in full on every request. An item can carry memory identifiers.</p>
+      </article>
+      <article class="cell cell--3">
+        <h3 class="display">Plan</h3>
+        <p>One ordered working list per workspace, at most thirty-two steps, replaced wholesale.</p>
+      </article>
+      <article class="cell cell--3">
+        <h3 class="display">Private image commits</h3>
+        <p>Complete replay scripts for durable definitions and settings, retained in private Git.</p>
+      </article>
+      <article class="cell cell--3">
+        <h3 class="display">Generations</h3>
+        <p>A saved core, the exact source commit, a reconstruction script, a manifest, and a journal position.</p>
+      </article>
+      <article class="cell cell--3">
+        <h3 class="display">Worker images</h3>
+        <p>Immutable experimental cores with parentage and notes, for trying something at full size.</p>
+      </article>
+    </div>
+
+    <p class="bento__foot" data-rv>
+      Every store is append-only or transactional. Shared-state transactions
+      serialize across processes, so two agents can share one workspace.
+    </p>
+  </div>
+</section>
+
+
+
+<!-- ========================================================= flexibility -->
+<section class="band" id="yours">
+  <div class="wrap wrap--wide">
+    <div class="lede-block">
+      <h2 class="display d2" data-split>Change any layer <em>from the prompt.</em></h2>
+      <p class="lede" data-rv>
+        Configuration is files and Lisp forms, and the running agent reads both.
+      </p>
+    </div>
+
+    <dl class="deflist deflist--two" data-rv>
+      <div>
+        <dt>Skills</dt>
+        <dd>Standard <code>SKILL.md</code> with frontmatter, or native <code>SKILL.sexp</code>. Project skills win over yours, yours win over bundled.</dd>
+      </div>
+      <div>
+        <dt>MCP servers</dt>
+        <dd>Stdio or Streamable HTTP, with an approval policy per server. Trust a directory in <code>directory-scopes.sexp</code> to let its own <code>mcp.sexp</code> load.</dd>
+      </div>
+      <div>
+        <dt>Child roles</dt>
+        <dd>Six bundled: scout, designer, reviewer, librarian, task, sonic. Write your own into <code>.autolith/agents/</code> and name the tools, models, and effort each one gets.</dd>
+      </div>
+      <div>
+        <dt>Providers</dt>
+        <dd>Nine built in, from ChatGPT and Gemini subscriptions to Anthropic and Mistral keys. Register any other OpenAI-compatible endpoint from the REPL.</dd>
+      </div>
+      <div>
+        <dt>init.lisp</dt>
+        <dd>Ordinary Common Lisp in the <code>autolith</code> package, loaded after tracked code and your selected private commit, with your privileges.</dd>
+      </div>
+      <div>
+        <dt>Request context</dt>
+        <dd><code>define-context-contributor</code> attaches bounded standing notes to provider requests. A note shapes one request.</dd>
+      </div>
+      <div>
+        <dt>Commands</dt>
+        <dd><code>define-application-command</code> adds your own. The thirty-seven built-in slash commands are sugar for the same Lisp calls.</dd>
+      </div>
+      <div>
+        <dt>Instructions</dt>
+        <dd><code>AGENTS.md</code> at the project root, refined by deeper ones, re-read on every request.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ========================================================== install -->
+<section class="band" id="install">
+  <div class="wrap wrap--wide">
+    <div class="two two--install">
+      <div class="stack-3 tabgroup">
+        <h2 class="display d2" data-split>Install it.</h2>
+        <div class="tabs" role="tablist" aria-label="Install methods">
+          <button role="tab" aria-selected="true" data-tab="nix">Nix <i>recommended</i></button>
+          <button role="tab" aria-selected="false" data-tab="binary">Binary <i>Linux, macOS, BSD</i></button>
+          <button role="tab" aria-selected="false" data-tab="source">Source <i>any platform</i></button>
+          <button role="tab" aria-selected="false" data-tab="windows">Windows <i>x86_64</i></button>
+        </div>
+
+        <div class="panel" role="tabpanel" data-tabpanel="nix">
+          <div class="shellblock"><span class="p">$</span> <b>nix run github:lambda-symbolics/autolith</b></div>
+          <p class="prose panel__note">The high testosterone, high estrogen way to install Autolith.</p>
+        </div>
+
+        <div class="panel" role="tabpanel" data-tabpanel="binary" hidden>
+          <div class="install">
+            <code>curl -fsSL https://sh.lambda-symbolics.com/autolith | sh</code>
+            <button class="install__copy" data-copy="curl -fsSL https://sh.lambda-symbolics.com/autolith | sh">Copy</button>
+          </div>
+          <p class="prose panel__note">Installs or updates the packaged release for your platform. Then run <code>autolith</code>.</p>
+        </div>
+
+        <div class="panel" role="tabpanel" data-tabpanel="source" hidden>
+          <div class="shellblock"><span class="p">$</span> <b>git clone https://github.com/lambda-symbolics/autolith</b>
+<span class="p">$</span> <b>cd autolith</b>
+<span class="p">$</span> <b>./script/bootstrap</b>
+<span class="p">$</span> <b>./script/check</b>
+<span class="p">$</span> <b>./bin/autolith</b></div>
+        </div>
+
+        <div class="panel" role="tabpanel" data-tabpanel="windows" hidden>
+          <div class="install">
+            <code>irm https://sh.lambda-symbolics.com/autolith.ps1 | iex</code>
+            <button class="install__copy" data-copy="irm https://sh.lambda-symbolics.com/autolith.ps1 | iex">Copy</button>
+          </div>
+          <p class="prose panel__note">Windows gets packaged binaries from 0.50.0. A source checkout still works through <code>script\bootstrap.ps1</code>.</p>
+        </div>
+
+        <div class="stack-2 install__auth">
+          <p class="code__cap">Then sign in to a provider</p>
+          <div class="shellblock"><span class="p">$</span> <b>autolith auth anthropic</b>
+<span class="p">$</span> <b>autolith auth chatgpt</b>
+<span class="p">$</span> <b>autolith auth fireworks</b>
+<span class="p">$</span> <b>autolith auth gemini</b>
+<span class="p">$</span> <b>autolith auth grok</b>
+<span class="p">$</span> <b>autolith auth mistral</b>
+<span class="p">$</span> <b>autolith auth nous</b>
+<span class="p">$</span> <b>autolith auth opencode</b>
+<span class="p">$</span> <b>autolith auth openrouter</b></div>
+          <p class="prose panel__note">
+            A web flow or an API key, whichever the provider offers. One is
+            enough. Then run <code>autolith</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="stack-3">
+        <div class="win shadowband" data-rv="fade">
+        <p class="win__bar">Autolith 0.50.0</p>
+        <dl class="win__body sheet">
+          <div><dt>Licence</dt><dd>ISC</dd></div>
+          <div><dt>Linux</dt><dd>x86_64 and aarch64, glibc and static musl</dd></div>
+          <div><dt>macOS</dt><dd>x86_64 and arm64</dd></div>
+          <div><dt>BSD</dt><dd>FreeBSD, NetBSD, OpenBSD on x86_64</dd></div>
+          <div><dt>Windows</dt><dd>x86_64</dd></div>
+          <div><dt>Updates</dt><dd><code>(update)</code> inside, <code>autolith update</code> outside</dd></div>
+        </dl>
+        </div>
+
+        <p class="warn">
+          <span class="mark" aria-hidden="true"></span>
+          Yes, piping a URL into a shell is evil. Read the installer first.
+          Nix is the preferred installation method on worthy operating
+          systems.
+        </p>      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- =========================================================== close -->
+<div class="swell" aria-hidden="true"><canvas id="swell"></canvas></div>
+<footer class="foot">
+  <div class="wrap wrap--wide">
+    <div class="close">
+      <figure class="mascot win win--paper shadowband" data-rv="fade">
+        <figcaption class="win__bar">Autolith, resident agent</figcaption>
+        <img src="autolith.png" width="998" height="897" alt="The Autolith mascot, a standing block of stone holding a pickaxe, drawn in black ink and bitmap dither">
+      </figure>
+      <div class="close__copy">
+        <h2 class="display d2" data-split>Lisp machines <em>live again!</em></h2>
+        <div class="hero__acts">
+          <a class="btn btn--primary" href="#install"><span>Install Autolith</span></a>
+          <a class="btn btn--ghost" href="https://github.com/lambda-symbolics/autolith"><span>Read the source</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot__grid">
+      <div>
+        <h3>Docs</h3>
+        <ul>
+          <li><a href="https://lambda-symbolics.com/autolith/docs">Guide</a></li>
+          <li><a href="https://lambda-symbolics.com/autolith/docs/live-image">The live image</a></li>
+          <li><a href="https://lambda-symbolics.com/autolith/docs/recursive-inference">Recursive inference</a></li>
+          <li><a href="https://lambda-symbolics.com/autolith/docs/commands">Slash commands</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Project</h3>
+        <ul>
+          <li><a href="https://github.com/lambda-symbolics/autolith">Source</a></li>
+          <li><a href="https://zulip.lambda-symbolics.com">Zulip</a></li>
+          <li><a href="https://sh.lambda-symbolics.com/autolith">Installer script</a></li>
+          <li><a href="https://lambda-symbolics.com">Lambda Symbolics</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Friends of Autolith</h3>
+        <ul>
+          <li><a href="https://github.com/yogthos/samizdat/">samizdat</a></li>
+          <li><a href="https://github.com/browep/cl-sm-harness">sm-harness</a></li>
+          <li><a href="https://github.com/kleisli-io/kli">kli</a></li>
+          <li><a href="https://pricklypear.rocks/">pricklypear</a></li>
+          <li><a href="https://github.com/DeadMeme5441/fractal-engine">fractal-engine</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot__bottom">
+      <a class="lslock" href="https://lambda-symbolics.com" aria-label="Lambda Symbolics">
+        <svg viewBox="3.12 14.86 109.77 31.39" aria-hidden="true"><g> <g> <path d="M28.38,33.26c.69-.06,1.15-.18,1.38-.35.35-.26.53-.77.53-1.54v-6.86c0-.65-.09-1.08-.26-1.29-.17-.2-.46-.31-.86-.31-.19,0-.33,0-.42.03-.09.02-.2.05-.33.09v-.46l.96-.32c.34-.12.91-.32,1.7-.62.79-.3,1.2-.45,1.25-.45s.07.02.08.07c0,.04.01.13.01.25v1.79c.88-.8,1.63-1.35,2.27-1.65.64-.31,1.29-.46,1.96-.46.91,0,1.64.31,2.18.93.28.34.52.79.7,1.37.65-.66,1.23-1.15,1.71-1.47.84-.55,1.7-.82,2.57-.82,1.42,0,2.38.58,2.85,1.74.27.66.41,1.69.41,3.11v5.51c0,.63.14,1.06.42,1.28.28.23.78.37,1.51.44v.34h-5.99v-.37c.77-.07,1.28-.23,1.52-.46.24-.24.36-.73.36-1.46v-5.72c0-.86-.09-1.49-.28-1.9-.33-.73-.97-1.09-1.92-1.09-.58,0-1.15.19-1.71.57-.33.22-.73.58-1.21,1.06v6.79c0,.72.13,1.26.38,1.63.25.37.78.57,1.6.6v.34h-6.09v-.34c.84-.11,1.38-.31,1.61-.61.23-.3.34-1.04.34-2.23v-3.71c0-1.36-.09-2.3-.27-2.81-.29-.87-.91-1.3-1.86-1.3-.54,0-1.07.15-1.59.44-.52.3-.98.68-1.38,1.16v7.26c0,.67.12,1.14.35,1.39.24.26.75.39,1.53.4v.34h-6.04v-.34Z"/> <path d="M49.17,16.72v-.45c1.01-.23,1.92-.49,2.73-.77.81-.28,1.24-.42,1.31-.42.02.05.03.11.03.16v8.08c.23-.42.57-.83,1.03-1.21.81-.66,1.75-1,2.81-1,1.3,0,2.41.55,3.33,1.65.92,1.1,1.38,2.52,1.38,4.27,0,1.88-.6,3.48-1.79,4.82s-2.76,2-4.71,2c-.98,0-1.95-.19-2.89-.58-.95-.39-1.42-.78-1.42-1.17v-14.03c0-.51-.07-.88-.21-1.1-.14-.22-.47-.32-.98-.32l-.6.07ZM54.23,32.64c.61.2,1.14.3,1.6.3,1.23,0,2.15-.46,2.74-1.39.59-.93.89-2.05.89-3.37s-.28-2.53-.83-3.65c-.56-1.12-1.45-1.68-2.7-1.68-.63,0-1.24.19-1.84.58-.6.38-.9.87-.9,1.46v6.76c.08.46.42.79,1.03.99Z"/> <path d="M65.04,22.98c1.12-1.22,2.56-1.82,4.32-1.82s3.2.58,4.35,1.73,1.72,2.68,1.72,4.59c0,1.76-.56,3.29-1.67,4.59-1.12,1.3-2.56,1.95-4.33,1.95s-3.14-.62-4.31-1.87c-1.18-1.25-1.76-2.81-1.76-4.7,0-1.76.56-3.25,1.68-4.47ZM67.16,22.64c-.89.81-1.33,2.19-1.33,4.17,0,1.57.36,3.04,1.07,4.41.71,1.36,1.7,2.04,2.97,2.04.99,0,1.76-.46,2.29-1.37.54-.91.8-2.11.8-3.58s-.34-2.97-1.02-4.33c-.68-1.35-1.67-2.03-2.97-2.03-.7,0-1.31.23-1.82.69Z"/> <path d="M76.82,33.23c.82-.08,1.38-.25,1.67-.5.29-.25.44-.75.44-1.48v-12.97c0-.58-.05-.99-.15-1.21-.18-.37-.54-.56-1.08-.56-.12,0-.26.01-.4.04-.15.03-.33.07-.55.12v-.44c1.19-.32,2.63-.74,4.31-1.27.06,0,.1.03.11.08.01.05.02.17.02.34v15.91c0,.77.13,1.27.4,1.49.27.23.81.37,1.64.43v.37h-6.42v-.37Z"/> <path d="M84.34,33.23c.95-.09,1.54-.25,1.79-.48.25-.23.37-.87.37-1.9v-6.33c0-.58-.04-.97-.12-1.19-.13-.36-.41-.54-.84-.54-.1,0-.19,0-.29.03-.09.02-.36.09-.8.21v-.41l.57-.19c1.55-.5,2.63-.88,3.24-1.14.25-.11.41-.16.48-.16.02.06.03.13.03.2v9.53c0,1.01.12,1.64.36,1.9s.79.42,1.65.49v.37h-6.45v-.37ZM86.45,15.49c.27-.27.59-.41.98-.41s.71.13.98.4c.27.27.4.6.4.98s-.13.7-.4.97c-.27.27-.6.4-.98.4s-.72-.13-.98-.4c-.27-.27-.4-.59-.4-.97s.13-.7.4-.98Z"/> <path d="M100.98,21.94c.8.57,1.2,1.19,1.2,1.87,0,.29-.1.56-.31.81-.2.25-.52.38-.94.38-.31,0-.58-.11-.82-.32-.23-.21-.4-.52-.51-.93l-.16-.64c-.12-.47-.31-.8-.6-1-.29-.19-.68-.28-1.16-.28-1.01,0-1.86.44-2.55,1.32-.69.88-1.04,2.05-1.04,3.51,0,1.34.38,2.54,1.15,3.6.76,1.06,1.8,1.59,3.1,1.59.92,0,1.74-.3,2.45-.9.41-.35.87-.9,1.38-1.65l.37.23c-.5,1.06-1.04,1.9-1.59,2.52-1.07,1.19-2.31,1.78-3.72,1.78s-2.6-.54-3.66-1.63c-1.06-1.09-1.59-2.57-1.59-4.43s.58-3.41,1.74-4.72c1.16-1.32,2.62-1.98,4.39-1.98,1.11,0,2.06.28,2.86.85Z"/> <path d="M104.84,29.42h.44c.2,1.01.48,1.78.82,2.32.62.99,1.52,1.49,2.71,1.49.66,0,1.18-.18,1.57-.55.38-.37.58-.84.58-1.43,0-.37-.11-.73-.33-1.08-.22-.34-.61-.68-1.17-1.01l-1.49-.85c-1.09-.58-1.89-1.17-2.4-1.76-.51-.59-.77-1.29-.77-2.1,0-.99.35-1.8,1.06-2.44.71-.64,1.6-.96,2.67-.96.47,0,.98.09,1.55.27.56.18.88.27.95.27.16,0,.27-.02.35-.07.07-.04.13-.11.19-.21h.32l.09,3.7h-.41c-.18-.86-.42-1.53-.72-2-.55-.88-1.34-1.33-2.38-1.33-.62,0-1.11.19-1.46.57-.35.38-.53.83-.53,1.34,0,.81.61,1.54,1.83,2.18l1.75.94c1.88,1.03,2.83,2.22,2.83,3.58,0,1.04-.39,1.9-1.17,2.56-.78.66-1.8,1-3.07,1-.53,0-1.13-.09-1.8-.27-.67-.18-1.07-.27-1.19-.27-.11,0-.2.04-.28.11-.08.08-.14.17-.19.27h-.34v-4.29Z"/> </g> <path class="ls-l" d="M12.96,24.66c1.47-1.04,3.02-1.94,4.64-2.77.84-.37,1.68-.81,2.79-.74,3.89.5,1.7,5.26.68,7.45-.75,1.65-1.62,3.21-2.36,4.83l-.61-.48c.99-.81,1.98-1.62,2.88-2.53,2.71-2.73,4.91-5.87,7.08-9.04,0,0,1.06.73,1.06.73-3.25,7.4-7.2,15.32-11.04,22.45-.2.34-.59,1.06-.81,1.39-.45.68-1.16.02-1.3-.51-.11-.31-.18-.62-.17-.95,0-.08.07-.15.16-.15.07,0,.12.05.14.1.14.38.45.96.69,1.13-.02,0,.02,0-.04.01-.11.06-.07.04-.08.05.56-.89,1.82-3.66,2.31-4.64,1.52-3.24,4.58-9.75,6.11-12.98,1.11-2.16,1.79-4.47,2.98-6.63.44-.7,1.54-.04,1.09.68-1.5,2.13-3.03,4.28-4.82,6.21-1.79,1.89-3.72,3.66-5.74,5.31-.31.27-.79-.12-.61-.48,1.08-2.71,7.62-13.57-.04-10.43-1.62.71-3.22,1.48-4.81,2.3-.18.11-.35-.19-.17-.3h0Z"/> <path d="M3.98,28.19c.46,1.22,1,2.19,1.62,2.92,1.08,1.27,2.42,1.9,4.02,1.9.87,0,1.61-.27,2.25-.82.63-.55.95-1.31.95-2.3,0-.88-.32-1.65-.95-2.31-.42-.42-1.29-1.04-2.62-1.87l-2.32-1.45c-.7-.44-1.25-.89-1.67-1.34-.77-.86-1.15-1.8-1.15-2.84,0-1.37.46-2.51,1.37-3.42.91-.91,2.12-1.37,3.62-1.37.62,0,1.36.15,2.24.46.87.31,1.37.46,1.49.46.34,0,.57-.08.7-.24.13-.16.23-.38.3-.68h.56l.6,5.79h-.65c-.44-1.74-1.15-2.96-2.13-3.65-.98-.69-1.94-1.04-2.9-1.04-.74,0-1.39.22-1.94.66-.55.44-.83,1.05-.83,1.82,0,.7.21,1.3.64,1.79.42.5,1.08,1.03,1.98,1.58l2.39,1.47c1.49.92,2.55,1.76,3.16,2.53.6.78.91,1.7.91,2.76,0,1.42-.54,2.61-1.61,3.57s-2.45,1.43-4.12,1.43c-.84,0-1.72-.16-2.63-.48-.92-.32-1.44-.48-1.57-.48-.32,0-.53.1-.64.29-.11.19-.18.4-.22.62h-.6l-.81-5.79h.62Z"/> </g></svg>
+      </a>
+      <p>Lambda Symbolics OÜ. ISC licensed.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="asciinema-player.min.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>
