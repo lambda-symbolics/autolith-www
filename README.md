@@ -16,11 +16,11 @@ tool responses, links in running text.
 No horizontal rule ever separates two sections. Spacing does that. Rules exist
 only to bound an object: a window frame, a code block, a table cell, a tab.
 
-Colour is the Lambda Symbolics green, and only on the house lambda: the
-logotype beside the wordmark in the nav, in the hero, and in the footer
-lockup, plus the reader caret, the shell prompts, and the 9px square beside
-the install warning. Everything else is ink or paper. The mark renders as
-#15795f on paper (Hiisi's light-ground form of #3fb68b) and #3fb68b on ink.
+Colour is the Lambda Symbolics green, and only on the house lambda in the
+footer lockup, plus the reader caret, the shell prompts, and the 9px square
+beside the install warning. Everything else is ink or paper. The mark renders
+as #3fb68b on the inverted footer. The nav and the hero carry the word alone:
+the logotype next to it was one mark too many.
 
 The page is off-white throughout. The footer is the single inversion.
 
@@ -44,6 +44,22 @@ The page is off-white throughout. The footer is the single inversion.
   pure ink or pure paper before it is blitted back, so no anti-aliased edge
   can smuggle a grey onto the page. It is positioned clear of the type from a
   measured box rather than hiding behind a scrim.
+- Five things happen to the tower, not three. Besides the pull, the drop and
+  the recut there is a quarter turn, which swaps a brick's footprint without
+  moving anything else, and a split, which takes a piece off one end and
+  throws it clear. Anything that leaves the tower now tumbles while it falls,
+  lands with a ring of dust, and comes to rest square. Every so often a bar
+  runs up the whole stack and each course it crosses goes hot behind it.
+- Weather, on wide screens only, where the block has sky. A cloud gathers as
+  it crosses and comes apart again at the far end, so it can drift the whole
+  width without ever appearing out of nothing over the type. A flock goes past
+  every half minute or so. The grass leans with a wind made of three sine
+  waves, which is enough to stop it looking like a printed pattern.
+- Four plates between sections, from the same one bit: a Mobius band, a window
+  over a corpus, two interfering sources, and a block of layers that fans
+  apart. Two are solids lit by the hero's lamp and painted back to front, two
+  are fields written a pixel at a time against the same Bayer matrix. Each
+  one renders only while it is on screen, at sixteen frames a second.
 - Pinned desugar: scroll scrubs a per-character morph from a plain sentence to
   the Lisp form it actually is.
 - Live reader: type into it. Prose becomes a call to prompt. Open a
@@ -65,7 +81,8 @@ stops the motion.
 - `logo/ls-lambda.svg`, `logo/ls-wordmark.svg`, `logo/favicon.svg` from
   `logos-lambda-symbolics.zip`, stripped of the 4 MB clipped-away reference
   raster the exporter left behind. The favicon is the same path in a square
-  viewBox, since a favicon that is letterboxed is a favicon nobody can see
+  viewBox, since a favicon that is letterboxed is a favicon nobody can see.
+  The lambda now appears only there and in the footer
 - `casts/` plus `asciinema-player.*`, three real recorded sessions, loaded on demand
 
 ## Debug parameters
