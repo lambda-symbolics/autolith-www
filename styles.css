@@ -171,12 +171,8 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .nav.is-stuck.is-ink{background:var(--ink)}
 .nav__in{display:flex;align-items:center;gap:1.5rem;height:var(--navh,76px);transition:height .3s var(--ease)}
 .nav.is-stuck .nav__in{--navh:62px}
-.brand{display:flex;align-items:baseline;gap:.22em;text-decoration:none;flex:none;
+.brand{text-decoration:none;flex:none;
   font-family:var(--serif);font-weight:700;font-size:1.22rem;letter-spacing:-.022em;line-height:1}
-.brand svg{width:auto;height:1.16em;fill:var(--green-ink);translate:0 .216em;
-  transition:rotate .45s var(--ease)}
-.brand:hover svg{rotate:-10deg}
-.brand__name{font-family:inherit;font-weight:inherit}
 .nav__links{display:flex;gap:.1rem;margin-left:auto;align-items:center}
 .nav__links a{
   font-family:var(--mono);font-size:.79rem;text-decoration:none;padding:.9em .65em;
@@ -220,9 +216,8 @@ body.menu-open .menu a{opacity:1;transform:none;transition-delay:calc(var(--d)*5
 .hero__in{position:relative;z-index:2;width:100%;padding-block:clamp(7rem,14vh,9rem) clamp(3rem,8vh,5rem)}
 .hero__copy{max-width:min(100%,790px)}
 .hero h1{max-width:none}
-.hero__name{display:flex;align-items:baseline;gap:.2em;font-family:var(--serif);font-weight:700;
+.hero__name{font-family:var(--serif);font-weight:700;
   font-size:clamp(3.3rem,8.2vw,6.8rem);line-height:.9;letter-spacing:-.038em}
-.hero__name .lsmark{width:auto;height:.92em;flex:none;fill:var(--green-ink);translate:0 .128em}
 .hero__claim{margin-top:clamp(.75rem,1.8vh,1.3rem);font-size:clamp(1.42rem,2.9vw,2.45rem);
   line-height:1.06;max-width:23ch}
 .hero__lede{margin-top:clamp(1.3rem,3vh,2rem);max-width:44ch;font-size:clamp(1.08rem,1.3vw,1.28rem);line-height:1.45}
