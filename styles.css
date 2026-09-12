@@ -458,6 +458,24 @@ body.menu-open .menu a{opacity:1;transform:none;transition-delay:calc(var(--d)*5
 /* ---------------------------------------------------------------- swell
    The page does not change colour, it dithers into it. One bit, in motion. */
 
+/* ------------------------------------------------------------- plates
+   Small figures between sections. A plate is an object, not a rule: it
+   sits in the room two bands already leave and adds nothing to it. */
+.plate{position:relative;z-index:1;
+  width:100%;max-width:var(--wide);margin-inline:auto;padding-inline:var(--gut);
+  margin-block:calc(var(--band-y) * -.46);
+  display:flex;align-items:flex-end;gap:clamp(1.1rem,2.6vw,2.2rem)}
+.plate--right{flex-direction:row-reverse}
+.plate__c{display:block;flex:none;width:clamp(176px,23vw,296px);aspect-ratio:8/5;
+  image-rendering:pixelated;background:var(--paper)}
+.plate__cap{font-style:italic;font-size:.9rem;line-height:1.4;max-width:31ch;padding-bottom:.15rem}
+.plate__cap b{font-weight:700;font-style:italic}
+@media (max-width:720px){
+  .plate{flex-direction:column;align-items:flex-start;gap:.85rem;
+    margin-block:calc(var(--band-y) * -.3)}
+  .plate--right{flex-direction:column;align-items:flex-end;text-align:right}
+}
+
 .swell{position:relative;height:clamp(210px,30vh,400px);background:var(--paper);overflow:hidden;line-height:0}
 .swell canvas{width:100%;height:100%;display:block;image-rendering:pixelated}
 
