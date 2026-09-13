@@ -55,11 +55,18 @@ The page is off-white throughout. The footer is the single inversion.
   width without ever appearing out of nothing over the type. A flock goes past
   every half minute or so. The grass leans with a wind made of three sine
   waves, which is enough to stop it looking like a printed pattern.
-- Four plates between sections, from the same one bit: a Mobius band, a window
-  over a corpus, two interfering sources, and a block of layers that fans
-  apart. Two are solids lit by the hero's lamp and painted back to front, two
-  are fields written a pixel at a time against the same Bayer matrix. Each
-  one renders only while it is on screen, at sixteen frames a second.
+- Four plates between sections, centred, from the same one bit: a Mobius band,
+  a window over a corpus, two interfering sources, and a block of layers that
+  fans apart. Two are solids lit by the hero's lamp and painted back to front,
+  two are fields written a pixel at a time against the same Bayer matrix. They
+  carry no captions, because a plate is not evidence of anything.
+- Five smaller ones out in the gutter, centred between the text column and the
+  page edge, and only from 1440px up, where there is room to be beside the
+  page rather than in it: a lit body turning under a swinging lamp, a box that
+  keeps its up, punched tape running, and a ripple. Same engine, same
+  attribute; only the class differs.
+- Every figure renders at sixteen frames a second, and only while it is on
+  screen.
 - Pinned desugar: scroll scrubs a per-character morph from a plain sentence to
   the Lisp form it actually is.
 - Live reader: type into it. Prose becomes a call to prompt. Open a
