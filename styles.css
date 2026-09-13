@@ -472,6 +472,22 @@ body.menu-open .menu a{opacity:1;transform:none;transition-delay:calc(var(--d)*5
   .plate{margin-block:calc(var(--band-y) * -.3)}
 }
 
+/* --------------------------------------------------------- marginalia
+   Small figures out in the gutter, tracking the edge of the text column.
+   They appear only where there is room for them to be beside the page
+   rather than in it. */
+.marg{--mw:clamp(70px,5.6vw,112px);
+  display:none;position:absolute;top:var(--mt,28%);
+  width:var(--mw);aspect-ratio:1;
+  image-rendering:pixelated;pointer-events:none}
+.marg--tall{aspect-ratio:1/2.9}
+/* centred in the gutter: halfway between the text column and the page edge */
+@media (min-width:1440px){
+  .marg{display:block}
+  .marg--l{right:calc(75% + 298px - var(--mw) / 2)}
+  .marg--r{left:calc(75% + 298px - var(--mw) / 2)}
+}
+
 .swell{position:relative;height:clamp(210px,30vh,400px);background:var(--paper);overflow:hidden;line-height:0}
 .swell canvas{width:100%;height:100%;display:block;image-rendering:pixelated}
 

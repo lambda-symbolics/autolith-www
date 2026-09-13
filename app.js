@@ -1552,7 +1552,7 @@ function plates(){
       return [X, y * cp + Z * sp, Z * cp - y * sp];
     };
     const tone = (nx, ny, nz) => {
-      const l = 0.10 + 0.86 * Math.max(0, nx * LX + ny * LY + nz * LZ);
+      const l = 0.07 + 0.92 * Math.max(0, nx * LX + ny * LY + nz * LZ);
       return clamp(Math.round((1 - l) * 16), 1, 16);
     };
     function quad(g, tiles, a, b, c, d, k){
@@ -1707,11 +1707,106 @@ function plates(){
     }
   }
 
+  /* --------------------------------------------------------- marginalia
+     Four small ones for the gutter. They are quiet on purpose: a figure
+     beside the page should not compete with the page. */
+
+  /* a lit body, turning under a lamp that swings */
+  function orb(g, w, h, t, img){
+    const d = img.data;
+    const cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.45;
+    const a = Math.sin(t * 0.23) * 1.1;
+    const lx = Math.cos(a) * 0.74, ly = 0.44;
+    const lz = Math.sqrt(Math.max(0, 1 - lx * lx - ly * ly));
+    for (let y = 0; y < h; y++){
+      const py = (y - cy) / R;
+      for (let x = 0; x < w; x++){
+        const pxn = (x - cx) / R;
+        const r2 = pxn * pxn + py * py;
+        let v = 0;
+        if (r2 <= 1){
+          const pz = Math.sqrt(1 - r2);
+          const u = Math.atan2(pz, pxn) + t * 0.38;      // it turns
+          const la = Math.asin(clamp(-py, -1, 1));
+          const land = 0.93 + 0.16 * (Math.sin(u * 2.7 + 1.3) * Math.sin(la * 3.1)
+                                    + 0.6 * Math.sin(u * 5.3) * Math.cos(la * 2.2));
+          let lum = pxn * lx + (-py) * ly + pz * lz;
+          lum = (0.26 + 0.76 * Math.max(0, lum)) * land;
+          v = clamp(1 - lum, 0, 1);
+        }
+        const on = v * 17 > BAYER4[(y & 3) * 4 + (x & 3)];
+        const i = (y * w + x) * 4;
+        d[i] = on ? 0 : 255; d[i + 1] = on ? 0 : 254; d[i + 2] = on ? 0 : 250;
+        d[i + 3] = 255;
+      }
+    }
+  }
+
+  /* one solid, turning under the same lamp as the tower. It keeps its up,
+     because a box that tumbles freely lands on orientations where all three
+     visible faces take the same tone and the whole thing goes to mush. */
+  function cube(g, w, h, t, tiles){
+    const V = view(t * 0.42, 0.40 + 0.17 * Math.sin(t * 0.27), w, h, 0.92);
+    V.box(g, tiles, { x: 0, y: 0, z: 0, w: 0.38, d: 0.38, h: 0.38, rot: null });
+  }
+
+  /* punched tape, running. Drawn the way tape is drawn on paper: the strip
+     is the page, the holes are the ink. */
+  function tape(g, w, h, t, img){
+    const d = img.data;
+    const CH = 4, PITCH = 6;
+    const pad = 3.2;
+    const step = (w - pad * 2) / CH;
+    const sprocket = pad + step * 1.5;
+    for (let y = 0; y < h; y++){
+      const fy = y + t * 5.5;
+      const row = Math.floor(fy / PITCH);
+      const ry = fy - row * PITCH - PITCH / 2;
+      for (let x = 0; x < w; x++){
+        let on = x < 1 || x > w - 2;                    // the two edges of the tape
+        const ch = Math.floor((x - pad) / step);
+        if (ch >= 0 && ch < CH && hash(ch + 1, row) > 0.42){
+          const dx = x - (pad + ch * step + step / 2);
+          if (dx * dx + ry * ry * 1.35 < 2.6) on = true;
+        }
+        const sx = x - sprocket;
+        if (sx * sx * 3.2 + ry * ry * 1.6 < 1.1) on = true;
+        const i = (y * w + x) * 4;
+        d[i] = on ? 0 : 255; d[i + 1] = on ? 0 : 254; d[i + 2] = on ? 0 : 250;
+        d[i + 3] = 255;
+      }
+    }
+  }
+
+  /* something dropped in, and the rings leaving */
+  function pulse(g, w, h, t, img){
+    const d = img.data;
+    const cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.5;
+    for (let y = 0; y < h; y++){
+      const dy = y - cy;
+      for (let x = 0; x < w; x++){
+        const dx = x - cx;
+        const r = Math.sqrt(dx * dx + dy * dy);
+        let v = 0.5 + 0.5 * Math.cos(r * 0.95 - t * 2.6);
+        v = v * v * 0.45 + v * 0.55;
+        v *= clamp(1.5 - r / R * 1.5, 0, 1);
+        const on = v * 17 > BAYER4[(y & 3) * 4 + (x & 3)];
+        const i = (y * w + x) * 4;
+        d[i] = on ? 0 : 255; d[i + 1] = on ? 0 : 254; d[i + 2] = on ? 0 : 250;
+        d[i + 3] = 255;
+      }
+    }
+  }
+
   const KIND = {
     mobius: { draw: mobius },
     layers: { draw: layers },
     corpus: { draw: corpus, raw: true },
-    moire:  { draw: moire,  raw: true }
+    moire:  { draw: moire,  raw: true },
+    orb:    { draw: orb,    raw: true },
+    cube:   { draw: cube },
+    tape:   { draw: tape,   raw: true },
+    pulse:  { draw: pulse,  raw: true }
   };
 
   function mount(cv, kind){
