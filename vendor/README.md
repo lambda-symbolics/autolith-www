@@ -20,7 +20,8 @@ the CSS-minifier dependency introduced in 1.3.0. CSS is maintained separately.
 The Quicklisp snapshot directory names identify the vendored releases.
 Licenses are in each library's LICENSE/COPYING file or source headers.
 
-The bootstrap in `script/build` pins the official SBCL 2.6.8 Linux x86-64
-binary archive from SourceForge and its SHA-256. SBCL is downloaded into an
-ignored cache, not included in deployment output. Review the source URL and
-checksum together when upgrading it.
+The bootstrap in `script/build` pins the official SBCL 2.4.0 Linux x86-64
+binary archive from SourceForge and its SHA-256. Its glibc 2.34 requirement
+matches Vercel's build host; the SBCL 2.6.8 archive requires glibc 2.38. SBCL
+is downloaded into an ignored cache, not included in deployment output.
+Review the source URL, checksum and host ABI together when upgrading it.

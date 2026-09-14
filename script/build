@@ -10,8 +10,9 @@ if [ "$(uname -s)/$(uname -m)" != Linux/x86_64 ]; then
   echo 'Install SBCL on this host, then run script/build again.' >&2
   exit 1
 fi
-version=2.6.8
-checksum=5391773774b94554a015db9f992370d06937fb6f0cdb0b2142281aebef9e96c1
+# This official build requires glibc 2.34, matching Vercel's build host.
+version=2.4.0
+checksum=50afb9765d6a2f937f609ac33ebe553326347aef23eddd49c46d76456a5b3095
 cache=".cache/sbcl-$version"
 if [ ! -f "$cache/ready" ]; then
   mkdir -p "$cache"

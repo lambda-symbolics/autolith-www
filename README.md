@@ -36,7 +36,7 @@ conversion is unnecessary for this page.
 ```
 
 Serve `dist/` with any static HTTP server. A source build uses SBCL on `PATH`.
-On Linux x86-64 without SBCL, the bootstrap downloads the pinned SBCL 2.6.8
+On Linux x86-64 without SBCL, the bootstrap downloads the pinned SBCL 2.4.0
 binary, verifies its SHA-256 and installs it under `.cache/`. All Lisp
 library sources are vendored, so no Quicklisp setup or dependency download is
 needed. Downloading the runtime requires `curl`, `tar`, `bzip2` and `sha256sum`.
@@ -47,10 +47,10 @@ SITE_DOWNLOAD_SBCL=1 ./script/build
 ```
 
 Use that command to exercise the downloadable runtime even with a local SBCL.
-A measured cold Linux build took 12 seconds, including runtime download and
-compilation. Page generation itself took 18 ms. Network speed and host load
-affect these measurements. Build caches are disposable; content is read afresh
-on every invocation. Only `dist/` is published.
+This binary supports glibc 2.34, as provided on Vercel's build host. Local
+page generation takes about 15 ms; runtime download and initial compilation
+add several seconds. Build caches are disposable; content is read afresh on
+every invocation. Only `dist/` is published.
 
 ## Check
 
