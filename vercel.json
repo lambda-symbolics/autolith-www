@@ -1,4 +1,8 @@
 {
+  "framework": null,
+  "installCommand": "echo 'No deployment dependencies to install'",
+  "buildCommand": "./script/build",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [

@@ -1,0 +1,13 @@
+{
+  "name": "autolith-www",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/browser.mjs"
+  },
+  "description": "Browser checks only. Production generation uses Common Lisp and HSX.",
+  "devDependencies": {
+    "axe-core": "4.13.0",
+    "playwright": "1.63.0"
+  }
+}

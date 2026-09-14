@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+./script/build --test
+for file in public/js/*.js; do node --check "$file"; done
+node tests/browser.mjs
+git diff --check -- . ':!vendor'
+git diff --cached --check -- . ':!vendor'

@@ -1,1 +1,6 @@
+.cache/
+.site-build/
+dist/
+node_modules/
+test-results/
 .vercel

@@ -1,2 +1,7 @@
-node_modules
-.attic
+node_modules/
+.cache/
+.site-build/
+dist/
+test-results/
+tests/
+.attic/

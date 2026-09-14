@@ -1,0 +1,34 @@
+#!/bin/sh
+# Bootstrap a native Lisp only when the host does not provide one.
+set -eu
+cd "$(dirname "$0")/.."
+export XDG_CACHE_HOME="$(pwd)/.cache"
+if [ "${SITE_DOWNLOAD_SBCL:-0}" != 1 ] && command -v sbcl >/dev/null 2>&1; then
+  exec sbcl --noinform --no-sysinit --no-userinit --script script/build.lisp "$@"
+fi
+if [ "$(uname -s)/$(uname -m)" != Linux/x86_64 ]; then
+  echo 'Install SBCL on this host, then run script/build again.' >&2
+  exit 1
+fi
+version=2.6.8
+checksum=5391773774b94554a015db9f992370d06937fb6f0cdb0b2142281aebef9e96c1
+cache=".cache/sbcl-$version"
+if [ ! -f "$cache/ready" ]; then
+  mkdir -p "$cache"
+  staging=$(mktemp -d "$cache/download.XXXXXX")
+  trap 'rm -rf "$staging"' EXIT HUP INT TERM
+  curl -fsSL --retry 3 --connect-timeout 15 --max-time 120 \
+    "https://downloads.sourceforge.net/project/sbcl/sbcl/$version/sbcl-$version-x86-64-linux-binary.tar.bz2" \
+    -o "$staging/sbcl.tar.bz2"
+  printf '%s  %s\n' "$checksum" "$staging/sbcl.tar.bz2" | sha256sum -c -
+  tar -xjf "$staging/sbcl.tar.bz2" -C "$staging"
+  INSTALL_ROOT="$(pwd)/$staging/install" sh -c \
+    'cd "$1" && sh install.sh' sh "$staging/sbcl-$version-x86-64-linux" >/dev/null
+  mv "$staging/install" "$cache/runtime"
+  touch "$cache/ready"
+  rm -rf "$staging"
+  trap - EXIT HUP INT TERM
+fi
+export SBCL_HOME="$(pwd)/$cache/runtime/lib/sbcl"
+exec "$cache/runtime/bin/sbcl" --noinform --no-sysinit --no-userinit \
+  --script script/build.lisp "$@"
