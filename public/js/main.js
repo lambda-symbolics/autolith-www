@@ -1,4 +1,4 @@
-import { $$, STILL, motionSetup } from './runtime.js';
+import { $$, STILL } from './runtime.js';
 import { navSetup } from './navigation.js';
 import { splitAll, observeReveals } from './typography.js';
 import { monolith } from './monolith.js';
@@ -11,7 +11,7 @@ import { tabs, copy, casts } from './controls.js';
 document.documentElement.classList.add('js');
 document.documentElement.classList.toggle('still', STILL);
 const features = [navSetup, tabs, copy, casts, tryit, monolith, sugar,
-                  rlm, figures, swell, plates, imagebox, motionSetup];
+                  rlm, figures, swell, plates, imagebox];
 for (const setup of features) {
   try { setup(); } catch (error) { console.error(`Site feature ${setup.name}:`, error); }
 }

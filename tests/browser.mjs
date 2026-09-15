@@ -89,8 +89,6 @@ try {
       assert.notEqual(await page.locator('#swell').evaluate(canvas => canvas.toDataURL()), wave,
         'Footer wave must keep animating after resize');
       await page.setViewportSize(viewport);
-      await page.locator('#motionToggle').click();
-      assert.equal(await page.locator('#motionToggle').getAttribute('aria-pressed'), 'true');
       await page.addScriptTag({content:axe});
       const violations = await page.evaluate(async () => (await axe.run(document, {
         runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}

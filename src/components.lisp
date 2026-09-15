@@ -33,8 +33,6 @@
             (content ':site ':name))
           (nav :class "nav__links" :id "navLinks" :aria-label "Sections"
             (~navigation-links))
-          (button :id "motionToggle" :class "motion-toggle" :type "button"
-                  :aria-pressed "false" :hidden t "Pause animation")
           (button :class "nav__burger" :id "burger" :type "button"
                   :aria-label "Open menu" :aria-expanded "false" :aria-controls "menu"
             (i) (i))))

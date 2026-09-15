@@ -9,16 +9,15 @@ export const easeIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) 
 export const BAYER4 = [0,8,2,10, 12,4,14,6, 3,11,1,9, 15,7,13,5];
 
 const ticks = [];
-let paused = STILL;
 let frame = null;
 
 function schedule() {
-  if (frame === null && !paused && !document.hidden) frame = requestAnimationFrame(tick);
+  if (frame === null && !STILL && !document.hidden) frame = requestAnimationFrame(tick);
 }
 
 function tick(now) {
   frame = null;
-  if (paused || document.hidden) return;
+  if (STILL || document.hidden) return;
   for (const callback of ticks) callback(now);
   schedule();
 }
@@ -30,20 +29,4 @@ export function onTick(callback) {
   schedule();
 }
 
-export function motionSetup() {
-  const button = $('#motionToggle');
-  function update() {
-    document.documentElement.classList.toggle('still', paused);
-    button.textContent = paused ? 'Resume animation' : 'Pause animation';
-    button.setAttribute('aria-pressed', String(paused));
-    button.disabled = STILL;
-    if (button.disabled) button.textContent = 'Animation off';
-    if (paused && frame !== null) { cancelAnimationFrame(frame); frame = null; }
-    dispatchEvent(new CustomEvent('motionchange', { detail: { paused } }));
-    schedule();
-  }
-  button.addEventListener('click', () => { paused = !paused; update(); });
-  document.addEventListener('visibilitychange', schedule);
-  button.hidden = false;
-  update();
-}
+document.addEventListener('visibilitychange', schedule);

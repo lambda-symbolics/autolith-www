@@ -534,7 +534,6 @@ html.still{scroll-behavior:auto}
 .foot .mark{background:var(--green)}
 
 /* Progressive enhancement and motion preferences. */
-.motion-toggle{font-family:var(--mono);font-size:.65rem;white-space:nowrap;text-decoration:underline}
 .player__mount{position:absolute;inset:0}
 body.menu-open{overflow:hidden}
 html:not(.js) [data-tabpanel][hidden]{display:block!important}

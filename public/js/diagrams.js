@@ -233,11 +233,10 @@ function imagebox() {
   const cells = $$('i', box);
   let timer = null;
   let visible = false;
-  let paused = STILL;
   function update() {
     clearInterval(timer);
     timer = null;
-    if (visible && !paused && !document.hidden) {
+    if (visible && !STILL && !document.hidden) {
       timer = setInterval(() => {
         cells.forEach(cell => cell.classList.remove('lit'));
         cells[Math.floor(Math.random() * cells.length)].classList.add('lit');
@@ -248,7 +247,6 @@ function imagebox() {
     visible = entries[0].isIntersecting;
     update();
   }, { threshold: .25 }).observe(box);
-  addEventListener('motionchange', event => { paused = event.detail.paused; update(); });
   document.addEventListener('visibilitychange', update);
 }
 
