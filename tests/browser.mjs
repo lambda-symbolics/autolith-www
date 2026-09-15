@@ -49,6 +49,19 @@ try {
         .map(element => [element.tagName, element.id, element.className, Math.round(element.getBoundingClientRect().right)]).slice(0, 12));
     assert.deepEqual(overflow, [], name + ' horizontal overflow');
 
+    for (const block of await page.locator('.shellblock').all()) {
+      const commands = await block.locator('b').allTextContents();
+      const lines = (await block.textContent()).split('\n').map(line => line.replace(/^\$ /, ''));
+      assert.deepEqual(lines, commands, 'Shell commands need real line separators');
+      if (await block.isVisible()) {
+        const tops = await block.locator('b').evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().top));
+        assert(tops.every((top, index) => index === 0 || top > tops[index - 1]), 'Each command must occupy its own line');
+      }
+    }
+    if (name === 'desktop') {
+      await page.locator('.install__auth').screenshot({path:'test-results/provider-commands.png'});
+    }
+
     if (name !== 'no-js') {
       const firstTab = page.locator('.hero [role="tab"]').first();
       await firstTab.focus();

@@ -51,6 +51,19 @@
         (code :tabindex "0" command)
         (button :class "install__copy" :type "button" :data-copy command "Copy")))))
 
+(defcomp ~shell-commands (&key commands)
+  "Render shell commands with explicit line separators and unselectable prompts."
+  (hsx
+    (div :class "shellblock" :tabindex "0" :role "region" :aria-label "Code example"
+      (loop for command in commands
+            for first = t then nil collect
+        (hsx
+          (<>
+            (unless first (string #\Newline))
+            (span :class "p" :aria-hidden "true" "$")
+            " "
+            (b command)))))))
+
 (defcomp ~hero-install ()
   "Render the compact installation selector."
   (hsx
