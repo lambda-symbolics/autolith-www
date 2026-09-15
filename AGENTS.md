@@ -10,7 +10,8 @@ and behavioral tests are executable truth. Keep the project small and readable.
 - Generate dist/; do not check generated pages or build caches into Git.
 - Use Common Lisp, ASDF and UIOP for generation and data processing.
 - Use plain ES modules for browser behavior. Add dependencies only for a concrete need.
-- Keep content readable without JavaScript. Honor reduced motion and keyboard access.
+- Keep content readable without JavaScript and preserve keyboard access.
+- Animate by default regardless of system motion preferences. Keep explicit pause controls.
 - Preserve the ink, paper, green and one-bit visual design.
 - Keep credentials and deployment state out of source and Git.
 - Do not leave TODOs, FIXMEs, stubs or partial implementations.

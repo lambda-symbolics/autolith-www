@@ -546,11 +546,6 @@ html:not(.js) .hero{padding-top:2rem}
 html:not(.js) .sugar__glyphs{display:none}
 :focus-visible{outline:2px solid var(--green);outline-offset:4px}
 .still *, .still *::before, .still *::after{animation:none!important;transition:none!important}
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  [data-rv],.lineclip>span{opacity:1!important;transform:none!important}
-}
 .two>*{min-width:0}
 .code pre{max-width:100%}
 .stack-2,.stack-3,.lede-block{grid-template-columns:minmax(0,1fr)}

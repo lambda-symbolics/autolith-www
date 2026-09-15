@@ -1,6 +1,5 @@
 const query = new URLSearchParams(location.search);
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-export const STILL = query.has('still') || reducedMotion.matches;
+export const STILL = query.has('still');
 export const FORCE_STAGE = /^[012]$/.test(query.get('stage')) ? Number(query.get('stage')) : null;
 export const $ = (selector, root = document) => root.querySelector(selector);
 export const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -37,14 +36,13 @@ export function motionSetup() {
     document.documentElement.classList.toggle('still', paused);
     button.textContent = paused ? 'Resume animation' : 'Pause animation';
     button.setAttribute('aria-pressed', String(paused));
-    button.disabled = STILL || reducedMotion.matches;
+    button.disabled = STILL;
     if (button.disabled) button.textContent = 'Animation off';
     if (paused && frame !== null) { cancelAnimationFrame(frame); frame = null; }
     dispatchEvent(new CustomEvent('motionchange', { detail: { paused } }));
     schedule();
   }
   button.addEventListener('click', () => { paused = !paused; update(); });
-  reducedMotion.addEventListener('change', () => { paused = reducedMotion.matches || STILL; update(); });
   document.addEventListener('visibilitychange', schedule);
   button.hidden = false;
   update();

@@ -75,8 +75,8 @@ figures. The reader demonstrates prompt syntax; it does not execute Lisp.
 The asciinema player is downloaded only when a recording is requested.
 
 The palette is black ink on off-white `#fffefa`, with green accents and one-bit
-dither. The footer is inverted. Honor `prefers-reduced-motion`; use the navigation
-motion control to pause animations. Core copy and installation panels are
+dither. The footer is inverted. Animations run by default regardless of system
+motion preferences; use the navigation control to pause them. Core copy and installation panels are
 available without JavaScript. `?still=1` selects static figures, `?stage=0|1|2`
 selects a reader-morph stage, and `?t=<seconds>` advances the tower for a capture.
 

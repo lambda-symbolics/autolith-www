@@ -65,15 +65,32 @@ try {
         assert.equal(await page.locator('#burger').getAttribute('aria-expanded'), 'false');
         assert(await page.locator('#burger').evaluate(element => element === document.activeElement));
       }
-      if (name === 'reduced') {
-        assert(await page.locator('html').evaluate(element => element.classList.contains('still')));
-        const before = await page.locator('#monolith').evaluate(canvas => canvas.toDataURL());
-        await page.waitForTimeout(200);
-        assert.equal(await page.locator('#monolith').evaluate(canvas => canvas.toDataURL()), before);
-      } else {
-        await page.locator('#motionToggle').click();
-        assert.equal(await page.locator('#motionToggle').getAttribute('aria-pressed'), 'true');
+      assert.equal(await page.locator('html').evaluate(element => element.classList.contains('still')), false);
+      const canvases = page.locator('.plate__c, #swell');
+      assert.equal(await canvases.count(), 5);
+      for (const canvas of await canvases.all()) {
+        await canvas.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(250);
+        const label = await canvas.getAttribute('data-plate') || 'swell';
+        const dimensions = await canvas.evaluate(element => [element.width, element.height]);
+        assert(dimensions.every(size => size > 8), `${name}: ${label} initialized while hidden`);
+        const before = await canvas.evaluate(element => element.toDataURL());
+        await page.waitForTimeout(250);
+        assert.notEqual(await canvas.evaluate(element => element.toDataURL()), before,
+          `${name}: ${label} must animate when visible`);
+        if (name === 'desktop') await canvas.screenshot({path:`test-results/figure-${label}.png`});
       }
+      const viewport = page.viewportSize();
+      await page.setViewportSize({width:viewport.width - 10, height:viewport.height});
+      await page.locator('#swell').scrollIntoViewIfNeeded();
+      await page.waitForTimeout(250);
+      const wave = await page.locator('#swell').evaluate(canvas => canvas.toDataURL());
+      await page.waitForTimeout(250);
+      assert.notEqual(await page.locator('#swell').evaluate(canvas => canvas.toDataURL()), wave,
+        'Footer wave must keep animating after resize');
+      await page.setViewportSize(viewport);
+      await page.locator('#motionToggle').click();
+      assert.equal(await page.locator('#motionToggle').getAttribute('aria-pressed'), 'true');
       await page.addScriptTag({content:axe});
       const violations = await page.evaluate(async () => (await axe.run(document, {
         runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}

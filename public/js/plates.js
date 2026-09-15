@@ -59,8 +59,8 @@ function swell(){
   }
 
   resize();
-  addEventListener("resize", () => { resize(); frame(performance.now() + 1e6); });
-  if (STILL) frame(performance.now() + 1e6);
+  addEventListener("resize", () => { resize(); lastDraw = -Infinity; frame(performance.now()); });
+  if (STILL) { lastDraw = -Infinity; frame(performance.now()); }
   else onTick(frame);
 }
 
