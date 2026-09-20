@@ -72,11 +72,12 @@ try {
       assert((await page.locator('#replOut').innerText()).includes('hello <script>'));
       assert.equal(await page.locator('#replOut script').count(), 0);
       if (name === 'mobile') {
-        await page.locator('#burger').click();
-        assert.equal(await page.locator('#burger').getAttribute('aria-expanded'), 'true');
-        await page.keyboard.press('Escape');
-        assert.equal(await page.locator('#burger').getAttribute('aria-expanded'), 'false');
-        assert(await page.locator('#burger').evaluate(element => element === document.activeElement));
+        // The narrow bar drops the section links and keeps the mark and the
+        // call to action. Nothing is left behind an overlay.
+        assert(await page.locator('.nav .brand svg').isVisible());
+        assert(await page.locator('.nav__cta').isVisible());
+        assert.equal(await page.locator('#navLinks').isVisible(), false);
+        assert.equal(await page.locator('#burger, .menu').count(), 0);
       }
       assert.equal(await page.locator('html').evaluate(element => element.classList.contains('still')), false);
       const canvases = page.locator('.plate__c, #swell');

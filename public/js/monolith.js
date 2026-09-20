@@ -376,7 +376,43 @@ function monolith(){
   }
 
   /* ------------------------------------------------------------ the canvas */
+
+  /* The bar floats over the hero, so the tower is fitted to the band beneath
+     it rather than to the whole canvas. HEAD is how far the tallest thing
+     drawn reaches above the tower's centre, in units of the block height: the
+     stack tops out at 1, and a brick dropped in above it starts RISE higher.
+     FOOT covers the ground shadow and the grass. Both are in projected units.
+     They allow for a brick that is also turned towards the camera, which
+     magnifies it, so the tower keeps its distance from the bar at every
+     rotation rather than only at rest. */
+  const HEAD = 1.05, FOOT = 0.62, GAP = 14, MAXH = 660;
   let keep = { x0: 0, x1: 0, y0: 0, y1: 0 };
+  let fitted = MAXH, centreY = 0, skyTop = 0;
+
+  /* The bar's resting height comes from site.css, and its own padding carries
+     the safe-area inset, so the two together are the band to stay clear of.
+     Reading the resting height rather than the current one keeps the fit
+     steady when the bar shrinks on scroll. */
+  function band(){
+    const bar = $("#nav");
+    const rest = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue("--navh-rest"));
+    const inset = bar ? parseFloat(getComputedStyle(bar).paddingTop) || 0 : 0;
+    return (rest || 76) + inset;
+  }
+
+  /* --monolith-scale on the hero takes the tower down further, for when the
+     fit is right but the block still wants to be smaller. */
+  function fitBlock(){
+    const scale = parseFloat(
+      getComputedStyle(hero).getPropertyValue("--monolith-scale")) || 1;
+    const top = band() + GAP;
+    skyTop = top;
+    const span = Math.max(160, H - GAP - top);
+    fitted = Math.min(MAXH, span / (HEAD + FOOT)) * scale;
+    centreY = top + (span - fitted * (HEAD + FOOT)) * 0.5 + HEAD * fitted;
+  }
+
   function measureKeepOut(){
     const copy = hero.querySelector(".hero__copy");
     const hr = hero.getBoundingClientRect();
@@ -400,6 +436,7 @@ function monolith(){
     off.width = rw; off.height = rh;
     buildTiles();
     build();
+    fitBlock();
     measureKeepOut();
   }
 
@@ -469,12 +506,12 @@ function monolith(){
     }
 
     /* placement: beside the type on wide screens, under it on narrow ones */
-    const blockH = mobile ? 268 : Math.min(H * 0.70, 660);
+    const blockH = mobile ? 268 : fitted;
     const scl = blockH;
     const F = 3.4, D = 3.4;
     const halfW = scl * 0.40;                 // the grass counts as the block
     const cx = (mobile ? W * 0.52 : Math.max(W * 0.775, keep.x0 + halfW)) / S;
-    const cyp = (mobile ? keep.y1 + blockH * 0.5 : H * 0.5 - 32) / S;
+    const cyp = (mobile ? keep.y1 + blockH * 0.5 : centreY) / S;
     const sc = scl / S;
 
     function px(x, y, z){
@@ -489,12 +526,13 @@ function monolith(){
     og.fillStyle = "#ffffff";
     og.fillRect(0, 0, rw, rh);
 
+    /* Nothing is drawn in the bar's band. The fit above keeps the tower clear
+       of it on its own; this is what makes that structural rather than a
+       matter of the constants staying right. */
     og.save();
-    if (mobile){
-      og.beginPath();
-      og.rect(0, Math.max(0, (keep.y1 - 8) / S), rw, rh);
-      og.clip();
-    }
+    og.beginPath();
+    og.rect(0, Math.max(0, (mobile ? keep.y1 - 8 : skyTop - GAP) / S), rw, rh);
+    og.clip();
 
     /* --------------------------------------------------------- the weather
        A cloud gathers, crosses, and comes apart again, so it can drift the
@@ -507,7 +545,7 @@ function monolith(){
         if (g < 0.06) continue;
         const R = c.r * sc * (0.22 + 0.78 * g);
         const X = cx + (u * 2.7 - 1.35) * sc;
-        const Y = Math.max(rh * 0.12, (0.165 + c.h * 0.085) * rh);
+        const Y = Math.max(skyTop / S + R * 1.45, (0.165 + c.h * 0.085) * rh);
         og.fillStyle = tiles[clamp(Math.round(1 + 5.6 * g), 1, 6)];
         og.beginPath();
         for (let k = 0; k < c.n; k++){
@@ -526,8 +564,9 @@ function monolith(){
         const u = -0.12 + (flock.t * flock.sp + b.o) * 0.42;
         if (u < -0.1 || u > 1.12) continue;
         const X = flock.dir > 0 ? u * rw : (1 - u) * rw;
-        const Y = (0.135 + b.d) * rh + Math.sin(flock.t * 0.9 + b.ph) * rh * 0.014;
         const sp = sc * 0.036;                                  // half a span
+        const Y = Math.max(skyTop / S + sp + rh * 0.014,
+                           (0.135 + b.d) * rh + Math.sin(flock.t * 0.9 + b.ph) * rh * 0.014);
         const up = 0.22 + 0.78 * (0.5 + 0.5 * Math.sin(flock.t * 6.2 + b.ph));
         og.beginPath();
         og.moveTo(X - sp, Y - sp * 0.78 * up);
