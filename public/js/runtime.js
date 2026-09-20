@@ -1,5 +1,6 @@
 const query = new URLSearchParams(location.search);
-export const STILL = query.has('still');
+// The copy editor serves data-still so headline splitting leaves its DOM alone.
+export const STILL = query.has('still') || document.documentElement.dataset.still === '1';
 export const FORCE_STAGE = /^[012]$/.test(query.get('stage')) ? Number(query.get('stage')) : null;
 export const $ = (selector, root = document) => root.querySelector(selector);
 export const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

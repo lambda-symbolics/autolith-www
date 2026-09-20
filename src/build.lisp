@@ -1,16 +1,20 @@
 (in-package #:autolith-www)
 
+(defparameter *site-public-exclusions* '("edit")
+  "Subdirectories of PUBLIC/ that serve development only and never reach DIST/.")
+
 (defun site--copy-directory (source destination)
   "Copy the static asset tree without introducing build-time dependencies."
   (ensure-directories-exist destination)
   (dolist (file (uiop:directory-files source))
     (uiop:copy-file file (merge-pathnames (file-namestring file) destination)))
   (dolist (directory (uiop:subdirectories source))
-    (site--copy-directory
-     directory
-     (merge-pathnames
-      (make-pathname :directory (list ':relative (first (last (pathname-directory directory)))))
-      destination))))
+    (let ((name (first (last (pathname-directory directory)))))
+      (unless (member name *site-public-exclusions* :test #'string=)
+        (site--copy-directory
+         directory
+         (merge-pathnames (make-pathname :directory (list ':relative name))
+                          destination))))))
 
 (defun site-build ()
   "Generate the complete static site into DIST/ after validating its copy."

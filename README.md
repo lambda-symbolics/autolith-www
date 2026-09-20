@@ -14,6 +14,7 @@ The browser receives HTML, CSS and plain ES modules. Node is used only for tests
 - `src/page.lisp`: page metadata and section order.
 - `public/`: files copied to the output, including CSS, JS, fonts and recordings.
 - `vendor/`: pinned Lisp source dependencies and licenses.
+- `src/edit/`, `public/edit/`: the local editor described under Edit in place.
 
 Copy files are data, read with reader evaluation disabled. Use strings and a
 small inline vocabulary: `:em`, `:strong`, `:b`, `:i`, `:code`, `:kbd`, `:span`,
@@ -28,6 +29,37 @@ small inline vocabulary: `:em`, `:strong`, `:b`, `:i`, `:code`, `:kbd`, `:span`,
 Missing keys, duplicate keys, invalid markup and unreadable data fail the build.
 Use HSX for layout and reusable components; use copy files for prose. Org-mode
 conversion is unnecessary for this page.
+
+## Edit in place
+
+```sh
+./script/edit
+```
+
+This starts a local editing server on <http://127.0.0.1:7777/>, or on a port
+given as the first argument. It renders the page from `content/` on every
+request and writes edits straight back to those files, so it is a development
+tool rather than part of the deployment. It listens on the loopback interface,
+performs no authentication and has no undo beyond Git.
+
+Click any prose on the page and type. `Ctrl-B` wraps the selection in `:strong`,
+`Ctrl-I` in `:em`, `Ctrl-K` in a link to an `https://` URL or a `#anchor`, and
+`Ctrl-\` strips markup from it. `Enter` inserts a line break, and `Escape`
+leaves the field. A field saves when it loses focus, and `Ctrl-S` saves every
+pending change. Copy with no place on the page, such as the page title, the
+canonical URL and the installation commands, is in the panel at the bottom
+right.
+
+Saves keep each file's leading comment and rewrite the rest of it with one key
+per line. Markup outside the vocabulary in `content/` is refused with a message
+and the file is left alone. Text is normalized the way a browser normalizes it,
+so hand-written leading and trailing spaces inside a copy string collapse on
+the first save.
+
+The editing server serves the page with headline splitting disabled, which
+keeps the DOM stable while a heading is edited. Its own assets live in
+`public/edit/` and are excluded from `dist/`; its Lisp dependencies belong to
+the separate `autolith-www/edit` system, which `./script/build` never loads.
 
 ## Build
 

@@ -1,12 +1,15 @@
 (in-package #:autolith-www)
 
+(defparameter *edit-panel* nil
+  "A function rendering the editing panel, installed by the editing server.")
+
 (defun site-page ()
   "Compose the landing page from HSX components and editable copy."
   (let ((title (content-text ':site ':title))
         (description (content-text ':site ':description))
         (url (content-text ':site ':url)))
     (hsx
-      (html :lang "en"
+      (html :lang "en" :data-still (when *edit-mode* "1")
         (head
           (meta :charset "UTF-8")
           (meta :name "viewport" :content "width=device-width, initial-scale=1, viewport-fit=cover")
@@ -27,7 +30,11 @@
                 :as "font" :type "font/woff2" :crossorigin t)
           (link :rel "stylesheet" :href "css/site.css")
           (link :rel "stylesheet" :href "asciinema-player.css")
-          (script :type "module" :src "js/main.js"))
+          (when *edit-mode*
+            (hsx (link :rel "stylesheet" :href "edit/editor.css")))
+          (script :type "module" :src "js/main.js")
+          (when *edit-mode*
+            (hsx (script :type "module" :src "edit/editor.js"))))
         (body
           (a :class "skip" :href "#main" "Skip to content")
           (~navigation)
@@ -49,4 +56,6 @@
             (~plate :kind "layers")
             (~section-install))
           (div :class "swell" :aria-hidden "true" (canvas :id "swell"))
-          (~section-footer))))))
+          (~section-footer)
+          (when *edit-panel*
+            (funcall *edit-panel*)))))))

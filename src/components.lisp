@@ -9,7 +9,7 @@
 
 (defun content-text (section key)
   "Read a plain-text copy value for an attribute or command."
-  (let ((nodes (content section key)))
+  (let ((nodes (content-nodes section key)))
     (unless (every #'stringp nodes)
       (content--fail (list section key) "Expected plain text."))
     (format nil "~{~a~}" nodes)))

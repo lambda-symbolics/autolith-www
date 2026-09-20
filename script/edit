@@ -1,0 +1,16 @@
+#!/bin/sh
+# Serve the copy editor, reusing the build bootstrap's Lisp acquisition.
+set -eu
+cd "$(dirname "$0")/.."
+export XDG_CACHE_HOME="$(pwd)/.cache"
+if [ "${SITE_DOWNLOAD_SBCL:-0}" != 1 ] && command -v sbcl >/dev/null 2>&1; then
+  exec sbcl --noinform --no-sysinit --no-userinit --script script/edit.lisp "$@"
+fi
+cache=".cache/sbcl-2.4.0"
+if [ ! -f "$cache/ready" ]; then
+  echo 'Run ./script/build once to acquire SBCL, or install SBCL on this host.' >&2
+  exit 1
+fi
+export SBCL_HOME="$(pwd)/$cache/runtime/lib/sbcl"
+exec "$cache/runtime/bin/sbcl" --noinform --no-sysinit --no-userinit \
+  --script script/edit.lisp "$@"
