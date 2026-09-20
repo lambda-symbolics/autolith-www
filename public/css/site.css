@@ -163,8 +163,11 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
    A letterhead, not app chrome. It shares the substrate and carries no rule
    beneath it. */
 
+/* The bar sits flush with the top so it passes behind Safari's translucent
+   controls rather than starting below them. The safe-area inset is left to
+   the gutter, which keeps the contents clear of the notch in landscape. */
 .nav{position:fixed;inset:0 0 auto 0;z-index:60;color:var(--ink);
-  padding-top:env(safe-area-inset-top,0px);transition:background-color .3s var(--ease)}
+  transition:background-color .3s var(--ease)}
 .nav.is-stuck{background:var(--paper)}
 .nav.is-ink{color:var(--paper)}
 .nav.is-stuck.is-ink{background:var(--ink)}
