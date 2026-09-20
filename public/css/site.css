@@ -25,6 +25,9 @@
   --mono:"CMUT","CMU Typewriter Text","Courier New",Courier,monospace;
 
   --gut:clamp(20px,5vw,64px);
+  /* The resting height of the fixed bar. monolith.js reads this to keep the
+     tower clear of it, so the value lives here and nowhere else. */
+  --navh-rest:76px;
   --wide:1320px;
   --read:66ch;
 
@@ -66,7 +69,8 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 
 /* ----------------------------------------------------------- primitives */
 
-.wrap{width:100%;max-width:var(--wide);margin-inline:auto;padding-inline:var(--gut)}
+.wrap{width:100%;max-width:var(--wide);margin-inline:auto;
+  padding-inline:calc(var(--gut) + env(safe-area-inset-left,0px)) calc(var(--gut) + env(safe-area-inset-right,0px))}
 .band{position:relative;isolation:isolate;padding-block:var(--band-y);background:var(--bg);color:var(--fg)}
 .band--flush{padding-block:0}
 
@@ -159,15 +163,20 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
    A letterhead, not app chrome. It shares the substrate and carries no rule
    beneath it. */
 
-.nav{position:fixed;inset:0 0 auto 0;z-index:60;color:var(--ink);transition:background-color .3s var(--ease)}
+.nav{position:fixed;inset:0 0 auto 0;z-index:60;color:var(--ink);
+  padding-top:env(safe-area-inset-top,0px);transition:background-color .3s var(--ease)}
 .nav.is-stuck{background:var(--paper)}
 .nav.is-ink{color:var(--paper)}
 .nav.is-stuck.is-ink{background:var(--ink)}
-.nav__in{display:flex;align-items:center;gap:1.5rem;height:var(--navh,76px);transition:height .3s var(--ease)}
+.nav__in{display:flex;align-items:center;gap:1.5rem;height:var(--navh,var(--navh-rest));transition:height .3s var(--ease)}
 .nav.is-stuck .nav__in{--navh:62px}
-.brand{text-decoration:none;flex:none;
-  font-family:var(--serif);font-weight:700;font-size:1.22rem;letter-spacing:-.022em;line-height:1}
-.nav__links{display:flex;gap:.1rem;margin-left:auto;align-items:center}
+.brand{text-decoration:none;flex:none;margin-right:auto;display:flex;align-items:center;color:inherit}
+/* The mark fills its box, so the box height is the height it shows. It is
+   the only thing on the left of the bar, so it carries a larger size than
+   the word it replaced. */
+.brand svg{display:block;height:38px;width:auto}
+.brand .ls-l{fill:var(--green)}
+.nav__links{display:flex;gap:.1rem;align-items:center}
 .nav__links a{
   font-family:var(--mono);font-size:.79rem;text-decoration:none;padding:.9em .65em;
   text-decoration-thickness:1px;text-underline-offset:4px;
@@ -175,36 +184,24 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .nav__links a:hover{text-decoration:underline}
 .nav__links a.is-active{font-weight:700;text-decoration:underline}
 .nav__cta{
-  margin-left:.9rem;border:1px solid currentColor;padding:.55em 1.1em!important;font-weight:700;
+  flex:none;border:1px solid currentColor;padding:.55em 1.1em;font-weight:700;
+  font-family:var(--mono);font-size:.79rem;text-decoration:none;
   transition:background-color .22s var(--ease),color .22s var(--ease);
 }
 .nav__cta:hover{text-decoration:none!important;background:currentColor}
 .nav:not(.is-ink) .nav__cta:hover span{color:var(--paper)}
 .nav.is-ink .nav__cta:hover span{color:var(--ink)}
-.nav__burger{display:none;margin-left:auto;width:46px;height:46px;position:relative}
-.nav__burger i{position:absolute;left:12px;right:12px;height:1.5px;background:currentColor;transition:transform .35s var(--ease)}
-.nav__burger i:nth-child(1){top:18px}
-.nav__burger i:nth-child(2){bottom:18px}
-body.menu-open .nav__burger i:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
-body.menu-open .nav__burger i:nth-child(2){transform:translateY(-4.5px) rotate(-45deg)}
-
-.menu{
-  position:fixed;inset:0;z-index:55;background:var(--paper);color:var(--ink);
-  display:flex;flex-direction:column;justify-content:center;padding:6rem var(--gut) 3rem;
-  clip-path:inset(0 0 100% 0);transition:clip-path .6s var(--ease-io);pointer-events:none;
-}
-body.menu-open .menu{clip-path:inset(0 0 0 0);pointer-events:auto}
-.menu a{font-family:var(--serif);font-weight:700;font-size:clamp(1.9rem,8vw,3rem);line-height:1.22;text-decoration:none;display:block;opacity:0;transform:translateY(16px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
-body.menu-open .menu a{opacity:1;transform:none;transition-delay:calc(var(--d)*55ms + 150ms)}
-.menu__foot{margin-top:2.5rem;display:flex;gap:1.4rem;flex-wrap:wrap}
-.menu__foot a{font-family:var(--mono);font-size:.86rem;font-weight:400}
-@media (max-width:1040px){.nav__links{display:none}.nav__burger{display:block}}
-@media (min-width:1041px){.menu{display:none}}
+/* Below this width the section links stop fitting. The bar keeps the mark
+   and the install link, and the page is read by scrolling. */
+@media (max-width:1040px){.nav__links{display:none}}
 
 /* ----------------------------------------------------------------- hero
    Off-white, at full strength, with the slab of source standing in it. */
 
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;background:var(--paper);overflow:hidden}
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;background:var(--paper);overflow:hidden;
+  /* Scales the tower after it has been fitted under the bar. Lower it here,
+     per breakpoint if needed, when the block should sit smaller. */
+  --monolith-scale:1}
 #monolith{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:0;transition:opacity 1s ease}
 #monolith.ready{opacity:1}
 .hero__in{position:relative;z-index:2;width:100%;padding-block:clamp(7rem,14vh,9rem) clamp(3rem,8vh,5rem)}
@@ -530,14 +527,12 @@ body.menu-open .menu a{opacity:1;transform:none;transition-delay:calc(var(--d)*5
 .still .tryit__out .fresh{background:none;color:inherit}
 html.still{scroll-behavior:auto}
 
-.nav.is-ink .brand svg{fill:var(--green)}
 .foot .mark{background:var(--green)}
 
 /* Progressive enhancement and motion preferences. */
 .player__mount{position:absolute;inset:0}
-body.menu-open{overflow:hidden}
 html:not(.js) [data-tabpanel][hidden]{display:block!important}
-html:not(.js) .tabs,html:not(.js) .nav__burger,html:not(.js) .install__copy,html:not(.js) .player__load{display:none}
+html:not(.js) .tabs,html:not(.js) .install__copy,html:not(.js) .player__load{display:none}
 html:not(.js) .nav{position:static}
 html:not(.js) .nav__in{height:auto;min-height:76px;flex-wrap:wrap;padding-block:1rem}
 html:not(.js) .nav__links{display:flex;flex-wrap:wrap}

@@ -4,8 +4,24 @@
   '(("image" "Live image") ("repl" "The REPL")
     ("mutation" "Self-modification") ("context" "RLM")
     ("security" "Security") ("sessions" "Sessions")
-    ("state" "State") ("yours" "Yours") ("install" "Install"))
-  "Section links shared by the desktop and mobile navigation.")
+    ("state" "State") ("yours" "Yours"))
+  "Section links in the bar. The install call to action is rendered separately.")
+
+(defun site-inline-svg (relative-path)
+  "Read an SVG asset for inlining, without its embedded stylesheet.
+
+Inlining lets the mark inherit the bar's colour. The asset's own <style> is
+dropped so its rules stay out of the document, and site.css carries them."
+  (let* ((source (uiop:read-file-string
+                  (merge-pathnames (concatenate 'string "public/" relative-path)
+                                   *site-root*)))
+         (start (search "<style>" source))
+         (end (search "</style>" source)))
+    (string-trim '(#\Newline #\Space)
+                 (if (and start end (< start end))
+                     (concatenate 'string (subseq source 0 start)
+                                  (subseq source (+ end (length "</style>"))))
+                     source))))
 
 (defun content-text (section key)
   "Read a plain-text copy value for an attribute or command."
@@ -19,29 +35,21 @@
   (hsx
     (<>
       (loop for (id label) in *navigation* collect
-        (hsx (a :href (concatenate 'string "#" id)
-                :class (when (equal id "install") "nav__cta")
-                (span label)))))))
+        (hsx (a :href (concatenate 'string "#" id) (span label)))))))
 
 (defcomp ~navigation ()
-  "Render both navigation layouts from the same links."
+  "Render the fixed bar: the mark, the section links and the install link.
+
+Below the width where the section links stop fitting they are hidden, and the
+bar keeps the mark and the call to action."
   (hsx
-    (<>
-      (header :class "nav" :id "nav"
-        (div :class "wrap wrap--wide nav__in"
-          (a :class "brand" :href "#top" :aria-label "Autolith, back to top"
-            (content ':site ':name))
-          (nav :class "nav__links" :id "navLinks" :aria-label "Sections"
-            (~navigation-links))
-          (button :class "nav__burger" :id "burger" :type "button"
-                  :aria-label "Open menu" :aria-expanded "false" :aria-controls "menu"
-            (i) (i))))
-      (div :class "menu" :id "menu" :inert t
-        (nav :aria-label "Mobile sections" (~navigation-links))
-        (div :class "menu__foot"
-          (a :href (content-text ':site ':source) "Source")
-          (a :href (content-text ':site ':docs) "Docs")
-          (a :href (content-text ':site ':community) "Zulip"))))))
+    (header :class "nav" :id "nav"
+      (div :class "wrap wrap--wide nav__in"
+        (a :class "brand" :href "#top" :aria-label "Lambda Symbolics, back to top"
+          (raw! (site-inline-svg "logo/ls-lambda.svg")))
+        (nav :class "nav__links" :id "navLinks" :aria-label "Sections"
+          (~navigation-links))
+        (a :class "nav__cta" :href "#install" (span "Install"))))))
 
 (defcomp ~install-command (&key method)
   "Render a command and its matching clipboard button."
