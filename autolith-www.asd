@@ -15,3 +15,14 @@
                  (:file "yours") (:file "install") (:file "footer")))
    (:file "src/page")
    (:file "src/build")))
+
+(asdf:defsystem "autolith-www/edit"
+  :description "A local server for editing site copy in place."
+  :version "1.0.0"
+  :depends-on ("autolith-www" "bordeaux-threads" "hunchentoot")
+  :serial t
+  :components
+  ((:file "src/edit/printer")
+   (:file "src/edit/markup")
+   (:file "src/edit/panel")
+   (:file "src/edit/server")))

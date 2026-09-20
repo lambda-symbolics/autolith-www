@@ -3,6 +3,12 @@
 (defvar *content* (make-hash-table :test #'eq)
   "Section names mapped to validated copy property lists.")
 
+(defparameter *edit-mode* nil
+  "True while the editing server renders a page, never during a static build.")
+
+(defparameter *edit-rendered-keys* nil
+  "Copy fragments rendered in place, collected as (section . key) while editing.")
+
 (define-condition content-error (error)
   ((location :initarg :location :reader content-error-location
              :documentation "The file or key that could not be read.")
@@ -74,10 +80,26 @@
        (first node) (second node)
        (mapcar #'content--element (rest (rest node))))))
 
-(defun content (section key)
+(defun content-nodes (section key)
   "Render one named copy fragment, failing the build for a missing key."
   (let* ((missing (gensym))
          (value (getf (gethash section *content*) key missing)))
     (when (eq value missing)
       (content--fail (list section key) "No such copy key."))
     (mapcar #'content--element value)))
+
+(defun content-designator (section key)
+  "Name one copy fragment for the editor, as in \"hero:hero__lede\"."
+  (string-downcase (format nil "~a:~a" (symbol-name section) (symbol-name key))))
+
+(defun content (section key)
+  "Render one copy fragment, wrapped in an editable marker while editing."
+  (let ((nodes (content-nodes section key)))
+    (if (not *edit-mode*)
+        nodes
+        (progn
+          (pushnew (cons section key) *edit-rendered-keys* :test #'equal)
+          (hsx/element:create-element
+           ':span (list ':class "edit-field"
+                        ':data-edit (content-designator section key))
+           nodes)))))

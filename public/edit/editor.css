@@ -1,0 +1,80 @@
+/* Chrome for the local copy editor. Never copied into dist/. */
+
+.edit-field{
+  outline:1px dashed rgba(21,121,95,.45);
+  outline-offset:2px;
+  border-radius:2px;
+  transition:background-color .12s linear,outline-color .12s linear;
+}
+.edit-field:hover{outline-color:var(--green-ink);background:rgba(63,182,139,.10)}
+.edit-field:focus{
+  outline:2px solid var(--green-ink);
+  background:rgba(63,182,139,.14);
+}
+.edit-field.is-dirty{outline-style:solid;outline-color:var(--green-ink)}
+.inverted .edit-field{outline-color:rgba(63,182,139,.6)}
+
+.edit-status{
+  position:fixed;
+  left:12px;
+  bottom:12px;
+  z-index:9999;
+  max-width:min(46ch,calc(100vw - 24px));
+  padding:.5rem .75rem;
+  font:400 13px/1.35 var(--mono);
+  color:var(--paper);
+  background:var(--ink);
+  border:1px solid var(--ink);
+  opacity:0;
+  transform:translateY(4px);
+  transition:opacity .15s linear,transform .15s linear;
+  pointer-events:none;
+}
+.edit-status.is-shown{opacity:1;transform:none}
+.edit-status.is-error{background:#7a1616;border-color:#7a1616}
+
+.edit-panel{
+  position:fixed;
+  right:12px;
+  bottom:12px;
+  z-index:9998;
+  width:min(30rem,calc(100vw - 24px));
+  font:400 13px/1.4 var(--mono);
+}
+.edit-panel__box{
+  background:var(--paper);
+  border:1px solid var(--ink);
+  max-height:min(60vh,34rem);
+  overflow:auto;
+}
+.edit-panel__summary{
+  padding:.5rem .75rem;
+  cursor:pointer;
+  background:var(--ink);
+  color:var(--paper);
+  position:sticky;
+  top:0;
+}
+.edit-panel__fields{
+  display:grid;
+  gap:.6rem;
+  padding:.75rem;
+}
+.edit-panel__field{display:grid;gap:.2rem}
+.edit-panel__name{color:var(--green-ink)}
+.edit-panel__input{
+  font:inherit;
+  color:var(--ink);
+  background:var(--paper);
+  border:1px solid rgba(0,0,0,.45);
+  padding:.35rem .5rem;
+  width:100%;
+  resize:vertical;
+}
+.edit-panel__input:focus{outline:2px solid var(--green-ink);outline-offset:1px}
+.edit-panel__input.is-dirty{border-color:var(--green-ink)}
+
+@media (max-width:720px){
+  .edit-panel{left:12px;width:auto}
+  .edit-status{bottom:auto;top:12px}
+}
