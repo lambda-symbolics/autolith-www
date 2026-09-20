@@ -1,36 +1,35 @@
 ;; Copy for state. Text and inline HSX-compatible markup.
 (:title
- ("Keep knowledge at the right scope.")
-:lede
- (" A fact you want forever, a commitment for this month, a step for this hour, and an exact heap expire on different schedules. Autolith writes them to separate readable stores rather than one database or one saved core. ")
-:subtitle
+ ("The levels of knowledge")
+ :lede
+ ("Autolith has several tools and places where it can store information, each with a different purpose and functionality to remind the agent of their existence.")
+ :subtitle
  ("Conversations")
-:paragraph
- ("Append-only portable S-expressions with exact resume commands, crash-tail repair, and read-only replay navigation.")
-:subtitle-2
+ :paragraph
+ ("Append-only portable S-expressions-based format which serves as a ledger of everything you said, AL said, and everything that happened, including errors and crashes.")
+ :subtitle-2
  ("Memories")
-:paragraph-2
- ("Workspace or global facts and preferences, recalled under a bounded budget.")
-:subtitle-3
+ :paragraph-2
+ ("Scoped memories where general facts to be remembered are stored.")
+ :subtitle-3
  ("Agenda")
-:paragraph-3
- ("Durable commitments and blockers for one workspace, delivered in full on every request. An item can carry memory identifiers.")
-:subtitle-4
+ :paragraph-3
+ ("Long term tracking and planning. Imagine it being like a limited-size Jira / Kanban board.")
+ :subtitle-4
  ("Plan")
-:paragraph-4
- ("One ordered working list per workspace, at most thirty-two steps, replaced wholesale.")
-:subtitle-5
- ("Private image commits")
-:paragraph-5
- ("Complete replay scripts for durable definitions and settings, retained in private Git.")
-:subtitle-6
+ :paragraph-4
+ ("Short-term temporary planning, if you've ever used Codex or Claude Code, you know what this is")
+ :subtitle-5
+ ("Git image commits")
+ :paragraph-5
+ ("Complete replay scripts for durable definitions and settings.")
+ :subtitle-6
  ("Generations")
-:paragraph-6
- ("A saved core, the exact source commit, a reconstruction script, a manifest, and a journal position.")
-:subtitle-7
+ :paragraph-6
+ ("We stole this from Nix. A generation contains a saved image version (core), and everything else needed to restore Autolith to a previous state.")
+ :subtitle-7
  ("Worker images")
-:paragraph-7
- ("Immutable experimental cores with parentage and notes, for trying something at full size.")
-:bento__foot
- (" Every store is append-only or transactional. Shared-state transactions serialize across processes, so two agents can share one workspace. ")
-)
+ :paragraph-7
+ ("AL can have long-running child Lisp images in which it can develop and triage small programs and experiments. These can be checkpointerd and roll-backed too.")
+ :bento__foot
+ ("Stores are either append-only or transactional. Shared-state storage places are serialized across processes, meaning that 2+ AL instances can work in the workspace at the same time. "))

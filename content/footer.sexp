@@ -1,14 +1,13 @@
 ;; Copy for the footer section. Inline markup: (:em () "text").
 (:caption
- ("Autolith, resident agent")
-:title
+ ("Autolith, carving itself")
+ :title
  ("Lisp machines " (:em nil "live again!"))
-:subtitle
+ :subtitle
  ("Docs")
-:subtitle-2
+ :subtitle-2
  ("Project")
-:subtitle-3
+ :subtitle-3
  ("Friends of Autolith")
-:paragraph
- ("Lambda Symbolics OÜ. ISC licensed.")
-)
+ :paragraph
+ ("Lambda Symbolics OÜ. AL is ISC licensed and rocks."))

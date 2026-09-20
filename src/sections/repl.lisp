@@ -12,7 +12,7 @@
             (div :class "sugar__stage"
               (span :class "sugar__glyphs" :id "sugar" :aria-hidden "true")
               (span :class "sr"
-               "The sentence \"Hello Autolith! How do you do?\" is read as the Lisp form (prompt :to 'autolith \"Hello Autolith! How do you do?\")"))
+               "The sentence \"Hello Autolith! What's your favorite rock?\" is read as the Lisp form (prompt :to 'autolith \"Hello Autolith! What's your favorite rock?\")"))
             (p :class "sugar__caption" :id "sugarCaption"
               (content ':repl ':sugarcaption)))))
       (div :class "wrap wrap--wide repl__after"
