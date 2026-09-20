@@ -1,8 +1,15 @@
 ;; Page metadata. Update the URL when the permanent domain is assigned.
-(:name ("Autolith")
- :title ("Autolith, a live Common Lisp agent")
- :description ("A terminal programming agent inside a live Common Lisp image. Work in your repository, inspect and change the running agent, and process material larger than a model's context window.")
- :url ("https://autolith-www.vercel.app")
- :docs ("https://lambda-symbolics.com/autolith/docs")
- :source ("https://github.com/lambda-symbolics/autolith")
- :community ("https://zulip.lambda-symbolics.com"))
+(:name
+ ("Autolith")
+ :title
+ ("Autolith, the live Common Lisp agent")
+ :description
+ ("A live self-modifying terminal agent with RLM. The Emacs of agents. Autolith can mold itself to any usecase, is fast and efficient, and can process large amounts of data at once.")
+ :url
+ ("https://autolith.rocks")
+ :docs
+ ("https://lambda-symbolics.com/autolith/docs")
+ :source
+ ("https://github.com/lambda-symbolics/autolith")
+ :community
+ ("https://zulip.lambda-symbolics.com"))

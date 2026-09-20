@@ -16,7 +16,7 @@ function sugar(){
   }
 
   function compose(){
-    BODY = innerWidth < 700 ? "Hello Autolith!" : "Hello Autolith! How do you do?";
+    BODY = innerWidth < 700 ? "Hello Autolith!" : "Hello Autolith! What's your favorite rock?";
     const PRE  = "(prompt ";
     const MID  = ":to 'autolith ";
     const Q    = '"';
