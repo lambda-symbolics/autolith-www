@@ -71,7 +71,9 @@
               (li
                 (a :href "https://github.com/ghuntley/jiti" "jiti"))
               (li
-                (a :href "https://github.com/1hachem/lisptc" "lisptc")))))
+                (a :href "https://github.com/1hachem/lisptc" "lisptc"))
+              (li
+                (a :href "https://github.com/mattneel/elixos" "elixos")))))
         (div :class "foot__bottom"
           (a :class "lslock" :href "https://lambda-symbolics.com" :aria-label "Lambda Symbolics"
             (svg :viewbox "3.12 14.86 109.77 31.39" :aria-hidden "true"
