@@ -498,11 +498,12 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 
 .foot{position:relative;isolation:isolate;margin-top:-1px;--dither:radial-gradient(#fffefa 1px,transparent 1px);background:var(--ink);color:var(--paper);padding-block:clamp(4.5rem,11vh,8rem) 2.5rem}
 .band--short{padding-block:0 var(--band-y)}
-.friend{max-width:880px}
-.friend__body{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:clamp(1.4rem,4vw,3rem);align-items:center;padding:clamp(1.4rem,3vw,2.2rem)}
+.friend__body{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:clamp(1.4rem,4vw,3rem);align-items:center;padding:clamp(1.4rem,3vw,2.2rem)}
 @media (max-width:700px){.friend__body{grid-template-columns:minmax(0,1fr)}}
-.friend__logo{display:block;max-width:200px;color:var(--fg)}
+.friend__logo{display:block;max-width:260px;color:var(--fg)}
 .friend__logo svg{display:block;width:100%;height:auto}
+.friend__logo svg path{transition:fill .25s var(--ease)}
+.friend__logo:hover svg path,.friend__logo:focus-visible svg path{fill:var(--green-ink)}
 .friend__copy{display:grid;gap:.8rem;max-width:56ch}
 .friend__link{font-family:var(--mono);font-size:.76rem;overflow-wrap:anywhere}
 .friend__link a{text-decoration:underline;text-underline-offset:2px}
