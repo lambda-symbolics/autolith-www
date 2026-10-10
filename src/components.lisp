@@ -3,8 +3,8 @@
 (defparameter *navigation*
   '(("image" "Live image") ("repl" "The REPL")
     ("mutation" "Self-modification") ("context" "RLM")
-    ("security" "Security") ("sessions" "Sessions")
-    ("state" "State") ("yours" "Yours"))
+    ("sessions" "Sessions") ("missions" "Missions")
+    ("security" "Security") ("state" "State") ("yours" "Yours"))
   "Section links in the bar. The install call to action is rendered separately.")
 
 (defun site-inline-svg (relative-path)

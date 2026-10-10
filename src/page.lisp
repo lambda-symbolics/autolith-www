@@ -49,6 +49,7 @@
             (~plate :kind "corpus")
             (~section-sessions)
             (~section-live)
+            (~section-missions)
             (~plate :kind "moire")
             (~section-security)
             (~section-state)
