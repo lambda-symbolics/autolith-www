@@ -3,7 +3,7 @@
 (defparameter *navigation*
   '(("image" "Live image") ("repl" "The REPL")
     ("mutation" "Self-modification") ("context" "RLM")
-    ("sessions" "Sessions") ("missions" "Missions")
+    ("sessions" "Sessions") ("missions" "Missions") ("tasks" "Tasks")
     ("security" "Security") ("state" "State") ("yours" "Yours"))
   "Section links in the bar. The install call to action is rendered separately.")
 

@@ -131,6 +131,29 @@ function figures(){
     ]
   });
 
+  const task = $("#taskFig");
+  if (task) flow(task, {
+    id: "task", w: 392, h: 384,
+    nodes: [
+      { id: "pri", x: 122, y: 4,   w: 148, h: 40, label: "primary turn", kind: "boxn solid", size: 12, order: 0 },
+      { id: "wa",  x: 4,   y: 96,  w: 116, h: 44, label: ["worktree", "child A"], size: 11, order: 1 },
+      { id: "wb",  x: 138, y: 96,  w: 116, h: 44, label: ["worktree", "child B"], size: 11, order: 1 },
+      { id: "wc",  x: 272, y: 96,  w: 116, h: 44, label: ["worktree", "child C"], size: 11, order: 1 },
+      { id: "art", x: 60,  y: 190, w: 272, h: 46, label: ["engineering artifacts", "patch, checks, evidence"], size: 11, order: 3 },
+      { id: "chk", x: 60,  y: 272, w: 272, h: 38, label: "check, then apply in order", size: 11, order: 4 },
+      { id: "con", x: 122, y: 344, w: 148, h: 36, label: "turn continues", kind: "boxn solid", size: 12, order: 6 }
+    ],
+    edges: [
+      { from: "pri", to: "wa", fromSide: "b", toSide: "t", order: 1 },
+      { from: "pri", to: "wb", fromSide: "b", toSide: "t", order: 1, label: "task.run", lx: 230, ly: 70 },
+      { from: "pri", to: "wc", fromSide: "b", toSide: "t", order: 1 },
+      { from: "wa", to: "art", fromSide: "b", toSide: "t", order: 2 },
+      { from: "wb", to: "art", fromSide: "b", toSide: "t", order: 2 },
+      { from: "wc", to: "art", fromSide: "b", toSide: "t", order: 2 },
+      { from: "art", to: "chk", fromSide: "b", toSide: "t", order: 4, label: "task.worktree", lx: 246, ly: 256 },
+      { from: "chk", to: "con", fromSide: "b", toSide: "t", order: 5, dashed: true, label: "completion notice", lx: 252, ly: 330 }
+    ]
+  });
 }
 
 /* --------------------------------------------------------- rlm fan-out */

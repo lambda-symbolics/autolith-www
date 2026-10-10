@@ -81,7 +81,7 @@ try {
       }
       assert.equal(await page.locator('html').evaluate(element => element.classList.contains('still')), false);
       const canvases = page.locator('.plate__c, #swell');
-      assert.equal(await canvases.count(), 5);
+      assert.equal(await canvases.count(), 6);
       for (const canvas of await canvases.all()) {
         await canvas.scrollIntoViewIfNeeded();
         await page.waitForTimeout(250);
