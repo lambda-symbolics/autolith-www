@@ -24,7 +24,7 @@
               (content ':tasks ':prose-2))))
         (dl :class "deflist deflist--two tasks__list" :data-rv t
           (div
-            (dt "/tasks")
+            (dt "(tasks)")
             (dd
               (content ':tasks ':inventory)))
           (div
