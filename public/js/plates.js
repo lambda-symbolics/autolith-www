@@ -359,7 +359,58 @@ function plates(){
     }
   }
 
+  /* worktrees: a trunk, and branches that leave it, carry their commits
+     and come back. It lies along the longer side, so it fits a plate or
+     the gutter. */
+  function branches(g, w, h, t, img){
+    const d = img.data;
+    const tall = h > w * 1.2;
+    const L = tall ? h : w, S = tall ? w : h;
+    const mid = S / 2, s = t * 6, P = Math.max(40, L * 0.36), BEAD = 11;
+    const live = [];
+    for (let k = Math.floor((s - L * 2) / P); k <= Math.ceil((s + L) / P); k++){
+      const a = k * P + hash(k, 1.7) * P * 0.5 - s;
+      const len = P * (1.1 + hash(k, 2.3) * 0.9);
+      if (a > L || a + len < 0) continue;
+      const side = hash(k, 3.1) > 0.5 ? 1 : -1;
+      live.push({ a, len, off: side * S * (0.16 + hash(k, 4.9) * 0.2), ph: hash(k, 5.3) * BEAD });
+    }
+    const ramp = 0.24;
+    const smooth = u => u * u * (3 - 2 * u);
+    const lane = (b, x) => {
+      const u = (x - b.a) / b.len;
+      if (u <= 0 || u >= 1) return null;
+      const e = u < ramp ? smooth(u / ramp) : (u > 1 - ramp ? smooth((1 - u) / ramp) : 1);
+      return mid + b.off * e;
+    };
+    for (let y = 0; y < h; y++){
+      for (let x = 0; x < w; x++){
+        const along = tall ? y : x, across = tall ? x : y;
+        let on = Math.abs(across - mid) < 0.75;
+        let v = clamp(1 - Math.abs(across - mid) / 6, 0, 1) * 0.28;
+        const tb = Math.round((along + s) / BEAD) * BEAD - s;
+        if ((along - tb) ** 2 + (across - mid) ** 2 < 2.8) on = true;
+        for (const b of live){
+          const c = lane(b, along);
+          if (c === null) continue;
+          const dist = Math.abs(across - c);
+          if (dist < 0.75) on = true;
+          v = Math.max(v, clamp(1 - dist / 6, 0, 1) * 0.28);
+          const bb = Math.round((along - b.a - b.ph) / BEAD) * BEAD + b.a + b.ph;
+          const bc = lane(b, bb);
+          if (bc !== null && Math.abs(bc - mid) > Math.abs(b.off) * 0.98
+              && (along - bb) ** 2 + (across - bc) ** 2 < 2.8) on = true;
+        }
+        if (!on) on = v * 17 > BAYER4[(y & 3) * 4 + (x & 3)];
+        const i = (y * w + x) * 4;
+        d[i] = on ? 0 : 255; d[i + 1] = on ? 0 : 254; d[i + 2] = on ? 0 : 250;
+        d[i + 3] = 255;
+      }
+    }
+  }
+
   const KIND = {
+    branches: { draw: branches, raw: true },
     mobius: { draw: mobius },
     layers: { draw: layers },
     corpus: { draw: corpus, raw: true },
