@@ -130,6 +130,7 @@ function figures(){
       { from: "gen", to: "dia", fromSide: "b", toSide: "t", elbow: true, order: 4, label: "conversation restored", lx: 236, ly: 231 }
     ]
   });
+
 }
 
 /* --------------------------------------------------------- rlm fan-out */
@@ -250,5 +251,72 @@ function imagebox() {
   document.addEventListener('visibilitychange', update);
 }
 
+/* ------------------------------------------------------ mission ledger
+   The page renders the finished mission, so the figure reads without
+   JavaScript. Armed, it starts empty and runs once: allowances fill with a
+   reservation ahead of the spend, gates execute in order (a retried gate
+   fails first), and the verdict lands last. */
+function mission(){
+  const host = $("#missionViz");
+  if (!host || STILL) return;
+  const budgets = $$(".budget", host).map(el => {
+    const num = $("[data-count]", el);
+    return { el, num, fill: parseFloat(el.dataset.fill), count: Number(num.dataset.count),
+             text: num.textContent };
+  });
+  const gates = $$(".gate", host);
+  const stamp = $(".mission__stamp", host);
+  const format = n => n.toLocaleString("en-US");
 
-export { figures, rlm, imagebox };
+  const events = [];
+  let at = 500;
+  for (const gate of gates){
+    for (let k = 1; k < Number(gate.dataset.attempts || 1); k++){
+      events.push([at, gate, "run"], [at + 650, gate, "fail"]);
+      at += 950;
+    }
+    events.push([at, gate, "run"], [at + 650, gate, "pass"]);
+    at += 950;
+  }
+  const total = at;
+
+  const arm = () => {
+    host.classList.add("armed");
+    gates.forEach(g => g.classList.remove("run", "fail", "pass"));
+    stamp.classList.remove("on");
+    for (const b of budgets){
+      b.el.style.setProperty("--now", "0%");
+      b.el.style.setProperty("--res", "0%");
+      b.num.textContent = "0";
+    }
+  };
+
+  const play = () => {
+    const t0 = performance.now();
+    for (const [time, gate, state] of events){
+      setTimeout(() => {
+        gate.classList.remove("run", "fail", "pass");
+        gate.classList.add(state);
+      }, time);
+    }
+    setTimeout(() => stamp.classList.add("on"), total + 250);
+    const frame = now => {
+      const p = clamp((now - t0) / total, 0, 1);
+      const e = 1 - Math.pow(1 - p, 2);
+      for (const b of budgets){
+        b.el.style.setProperty("--now", (b.fill * e).toFixed(2) + "%");
+        b.el.style.setProperty("--res", p < 1 ? Math.min(9, 100 - b.fill * e).toFixed(2) + "%" : "0%");
+        b.num.textContent = p < 1 ? format(Math.round(b.count * e)) : b.text;
+      }
+      if (p < 1) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  };
+
+  arm();
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting){ play(); io.disconnect(); } }, { threshold: 0.35 });
+  io.observe(host);
+}
+
+
+export { figures, rlm, imagebox, mission };
