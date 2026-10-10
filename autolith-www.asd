@@ -12,7 +12,8 @@
     :components ((:file "hero") (:file "image") (:file "repl")
                  (:file "mutation") (:file "context") (:file "sessions")
                  (:file "live") (:file "security") (:file "state")
-                 (:file "yours") (:file "install") (:file "footer")))
+                 (:file "yours") (:file "install") (:file "friends")
+                 (:file "footer")))
    (:file "src/page")
    (:file "src/build")))
 
