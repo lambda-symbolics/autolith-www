@@ -44,4 +44,12 @@
           (div
             (dt "Instructions")
             (dd
-              (content ':yours ':paragraph-8))))))))
+              (content ':yours ':paragraph-8)))
+          (div
+            (dt "Settings")
+            (dd
+              (content ':yours ':paragraph-9)))
+          (div
+            (dt "Help")
+            (dd
+              (content ':yours ':paragraph-10))))))))

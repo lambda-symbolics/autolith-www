@@ -8,7 +8,7 @@
  :prose
  (" " (:b nil "self.redefine") " compiles and installs a complete definition into the image and appends it to the journal." (:br nil) (:br nil) (:b nil "self.exercise") " runs asserts against the pending change to let Autolith verify it did not screw up the change." (:br nil) (:br nil) (:b nil "self.diff") " lets Autolith review all pending changes." (:br nil) (:br nil) (:b nil "self.discard") " is used to discard the live changes that did not really work out, or that you decided you don't want anymore.")
  :prose-2
- (" " (:b nil "self.commit") " turns a pending change into an automatic commit in Autolith's internal git repo. That way, your modified image can be rebuilt when needed.")
+ (" " (:b nil "self.commit") " turns a pending change into an automatic commit in Autolith's internal git repo. That way, your modified image can be rebuilt when needed." (:br nil) (:br nil) "After an update, overrides whose tracked source has moved on are skipped instead of silently replacing new code, and " (:code nil "(fix-skipped-definitions)") " asks Autolith to rebuild them against the current source.")
  :caption-2
  ((:b nil "Figure 3.") " When Autolith crashes.")
  :subtitle

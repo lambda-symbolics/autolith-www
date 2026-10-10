@@ -45,9 +45,10 @@
               (p :class "code__cap"
                 (content ':install ':code__cap))
               (~shell-commands
-                :commands (loop for provider in '("anthropic" "chatgpt" "fireworks"
-                                                 "gemini" "grok" "mistral" "nous"
-                                                 "opencode" "openrouter")
+                :commands (loop for provider in '("anthropic" "chatgpt" "copilot"
+                                                 "fireworks" "gemini" "grok"
+                                                 "mistral" "nous" "opencode"
+                                                 "openrouter")
                                 collect (format nil "autolith auth ~a" provider)))
               (p :class "prose panel__note"
                 (content ':install ':prose-4))))

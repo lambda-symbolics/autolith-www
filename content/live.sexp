@@ -6,7 +6,7 @@
  :code__cap
  ("From any other terminal on the machine")
  :prose
- ("These are basic monitoring tools you can use to watch running Autolith sessions and instruct them. Autolith also has an authenticated Lisp REPL TCP endpoint, which lets you do anything you like to the agent, with no limitations." (:br nil) (:br nil) "We will support ACP very soon." (:br nil) (:br nil) "Calling it a rock formation was considered, but none sounded that well, so old Windows NT terminology it is.")
+ ("These are basic monitoring tools you can use to watch running Autolith sessions and instruct them. Autolith also has an opt-in management REPL into the running image, authenticated on every connection, which lets you do anything you like to the agent, with no limitations." (:br nil) (:br nil) "Editors can drive the same sessions over the Agent Client Protocol: point your editor at " (:code nil "autolith acp") " and it gets streamed answers, reasoning, tool activity, approvals, steering, durable follow-ups, and job control." (:br nil) (:br nil) "Calling it a rock formation was considered, but none sounded that well, so old Windows NT terminology it is.")
  :note
  ()
  :subtitle

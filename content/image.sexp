@@ -12,9 +12,9 @@
  :subtitle
  ("In your repository")
  :paragraph
- ("Effective filesystem, shell, and search tools that let the agent quickly navigate any project. Integrations LSP servers are available and Autolith can connect itself to your projects in other ways.")
+ ("Effective filesystem, shell, and search tools that let the agent quickly navigate any project. Language servers supply diagnostics, renames, and code actions, and Autolith can connect itself to your projects in other ways.")
  :paragraph-2
- ("Run Autolith inside your own workflows through its headless mode, which prescribes the input and output schemas.")
+ ("Run Autolith inside your own workflows through its headless mode, which prescribes the input and output schemas and can stream live S-expression events while it works.")
  :subtitle-2
  ("In its image")
  :paragraph-3
