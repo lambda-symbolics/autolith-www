@@ -131,5 +131,7 @@ permanent domain. Build duration and total deployment latency are separate.
 
 Fonts, logos and artwork were carried over from the existing site, originally
 sourced from `lambda-symbolics/ls-landing`. The recordings and asciinema player
-are also retained. Dependency versions and licenses are listed in
-`vendor/README.md`. Repository practices in `AGENTS.md` are adapted from Autolith.
+are also retained. The Chakany Systems logo in `public/logo/` is taken from
+chakany.systems for the friends section. Dependency versions and licenses are
+listed in `vendor/README.md`. Repository practices in `AGENTS.md` are adapted
+from Autolith.

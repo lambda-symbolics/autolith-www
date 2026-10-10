@@ -54,7 +54,8 @@
             (~section-state)
             (~section-yours)
             (~plate :kind "layers")
-            (~section-install))
+            (~section-install)
+            (~section-friends))
           (div :class "swell" :aria-hidden "true" (canvas :id "swell"))
           (~section-footer)
           (when *edit-panel*
