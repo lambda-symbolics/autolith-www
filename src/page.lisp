@@ -50,6 +50,8 @@
             (~section-sessions)
             (~section-live)
             (~section-missions)
+            (~plate :kind "branches")
+            (~section-tasks)
             (~plate :kind "moire")
             (~section-security)
             (~section-state)

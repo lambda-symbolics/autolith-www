@@ -12,7 +12,7 @@
     :components ((:file "hero") (:file "image") (:file "repl")
                  (:file "mutation") (:file "context") (:file "sessions")
                  (:file "live") (:file "missions")
-                 (:file "security") (:file "state")
+                 (:file "tasks") (:file "security") (:file "state")
                  (:file "yours") (:file "install") (:file "friends")
                  (:file "footer")))
    (:file "src/page")

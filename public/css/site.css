@@ -333,6 +333,7 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 
 /* --------------------------------------------------------- rlm fan-out */
 
+.tasks__list{margin-top:clamp(3rem,7vh,4.8rem)}
 /* mission ledger: the finished state is the default, .armed replays it */
 .mission__body{display:grid;gap:clamp(1.2rem,2.6vh,1.7rem);padding:clamp(1.1rem,2.4vw,1.8rem)}
 .mission__objective{font-style:italic;font-size:clamp(1.05rem,1.4vw,1.22rem);line-height:1.3}
