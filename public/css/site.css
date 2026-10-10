@@ -333,7 +333,39 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 
 /* --------------------------------------------------------- rlm fan-out */
 
+/* cost charts: finished by default, .armed empties them and .play runs them */
 .tasks__list{margin-top:clamp(3rem,7vh,4.8rem)}
+.costviz{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,3.5vw,3rem);margin-bottom:clamp(3rem,7vh,4.8rem)}
+@media (max-width:900px){.costviz{grid-template-columns:1fr}}
+.chart__body{display:grid;gap:1.3rem;padding:clamp(1.1rem,2.4vw,1.7rem)}
+.chart__note{font-style:italic;font-size:.9rem;line-height:1.4}
+.lanes,.meters{display:grid;gap:1.3rem}
+.lane{display:grid;grid-template-columns:5.6rem minmax(0,1fr) 6.4rem;gap:.8rem;align-items:end;font-family:var(--mono);font-size:.74rem}
+.lane__track{position:relative;height:40px;border-bottom:1px solid var(--fg)}
+.lane__job{position:absolute;left:0;bottom:0;width:100%;height:9px;border:1px solid var(--fg);background:var(--dither);background-size:3px 3px}
+.lane__req{position:absolute;left:var(--at);bottom:15px;width:12px;height:20px;margin-left:-12px;background:var(--fg)}
+.lane__req--wake{background:var(--green);border:1px solid var(--fg)}
+.lane__count{text-align:right;white-space:nowrap}
+.meter{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.35rem .8rem;align-items:center;font-family:var(--mono);font-size:.74rem}
+.meter__bar{position:relative;height:16px;border:1px solid var(--fg);overflow:hidden}
+.meter__fill{position:absolute;top:0;bottom:0;left:0;width:var(--w);background:var(--fg)}
+.meter__rest{position:absolute;top:0;bottom:0;left:var(--w);right:0;background:var(--dither);background-size:3px 3px}
+.meter__value{grid-column:2}
+@media (max-width:560px){
+  .lane{grid-template-columns:1fr auto;row-gap:.5rem}
+  .lane__track{grid-column:1/-1;grid-row:2}
+}
+.armed .lane__job{width:0}
+.armed .lane__req{opacity:0;transform:translateY(8px)}
+.armed .lane__count,.armed .meter__value,.armed .meter__rest{opacity:0}
+.armed .meter__fill{width:0}
+.armed.play .lane__job{width:100%;transition:width 4.2s linear .2s}
+.armed.play .lane__req{opacity:1;transform:none;transition:opacity .25s var(--ease),transform .35s var(--ease);transition-delay:calc(var(--t) + .2s)}
+.armed.play .lane__count{opacity:1;transition:opacity .5s var(--ease) 4.6s}
+.armed.play .meter__fill{width:var(--w);transition:width 1.3s var(--ease) .2s}
+.armed.play .meter__rest{opacity:1;transition:opacity .6s var(--ease) 1.5s}
+.armed.play .meter__value{opacity:1;transition:opacity .5s var(--ease) 1.2s}
+
 /* mission ledger: the finished state is the default, .armed replays it */
 .mission__body{display:grid;gap:clamp(1.2rem,2.6vh,1.7rem);padding:clamp(1.1rem,2.4vw,1.8rem)}
 .mission__objective{font-style:italic;font-size:clamp(1.05rem,1.4vw,1.22rem);line-height:1.3}
