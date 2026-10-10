@@ -341,5 +341,19 @@ function mission(){
   io.observe(host);
 }
 
+/* ----------------------------------------------------------- charts
+   The page renders each chart finished. Armed, it empties, and it plays
+   its CSS transitions once it is mostly on screen. */
+function charts(){
+  if (STILL) return;
+  for (const chart of $$("[data-chart]")){
+    chart.classList.add("armed");
+    const io = new IntersectionObserver(es => {
+      if (es[0].isIntersecting){ chart.classList.add("play"); io.disconnect(); }
+    }, { threshold: 0.4 });
+    io.observe(chart);
+  }
+}
 
-export { figures, rlm, imagebox, mission };
+
+export { figures, rlm, imagebox, mission, charts };

@@ -52,6 +52,7 @@
             (~section-missions)
             (~plate :kind "branches")
             (~section-tasks)
+            (~section-cost)
             (~plate :kind "moire")
             (~section-security)
             (~section-state)
