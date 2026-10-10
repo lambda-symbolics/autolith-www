@@ -16,8 +16,8 @@
  :durability
  ("Gate attempts, fingerprints, evidence, and spend restore with the conversation and survive compaction, independently of anything the model summarized.")
  :note
- ("For lighter work, " (:code nil "/goal") " sets an objective without the ceremony. Start a mission with " (:code nil "/mission start") " and watch it with " (:code nil "/mission status") ".")
+ ("For lighter work, " (:code nil "(goal \"…\")") " sets an objective without the ceremony. Start a mission with " (:code nil "(mission \"start …\")") " and watch it with " (:code nil "(mission \"status\")") ".")
  :win__bar
- ("/mission status")
+ ("(mission \"status\")")
  :objective
  ("Deliver the accepted build"))
