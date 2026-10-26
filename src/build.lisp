@@ -16,8 +16,11 @@
          (merge-pathnames (make-pathname :directory (list ':relative name))
                           destination))))))
 
-(defun site-build ()
-  "Generate the complete static site into DIST/ after validating its copy."
+(defun site-build (&key og-card-p)
+  "Generate the complete static site into DIST/ after validating its copy.
+
+With OG-CARD-P, DIST/ also gets og-card.html, the page script/og captures as
+the Open Graph image."
   (let* ((start (get-internal-real-time))
          (output (merge-pathnames "dist/" *site-root*))
          (staging (merge-pathnames ".site-build/" *site-root*)))
@@ -33,6 +36,12 @@
                                      :external-format :utf-8)
                (write-string html stream)
                (terpri stream))
+             (when og-card-p
+               (with-open-file (stream (merge-pathnames "og-card.html" staging)
+                                       :direction :output :if-exists :supersede
+                                       :external-format :utf-8)
+                 (write-string (render-to-string (site-og-card)) stream)
+                 (terpri stream)))
              (when (probe-file output)
                (uiop:delete-directory-tree output :validate t))
              (rename-file staging output))

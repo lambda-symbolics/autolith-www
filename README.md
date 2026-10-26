@@ -127,6 +127,18 @@ vercel deploy --prod --yes
 Keep `.vercel/` local. Update the URL in `content/site.sexp` when assigning a
 permanent domain. Build duration and total deployment latency are separate.
 
+## Social card
+
+```sh
+./script/og
+```
+
+`public/og.png`, the Open Graph and Twitter card image, is a 1200 by 630
+screenshot of the page `src/og.lisp` composes from the hero copy, the Lambda
+Symbolics wordmark and the mascot. The script renders that page into `dist/og-card.html`,
+captures it with Playwright's Chromium (set `CHROMIUM` as for the checks) and
+rebuilds `dist/` without it. Run it again whenever that copy or artwork changes.
+
 ## Assets and provenance
 
 Fonts, logos and artwork were carried over from the existing site, originally

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Render the social card page and capture it as public/og.png.
+set -eu
+cd "$(dirname "$0")/.."
+./script/build --og-card
+node script/og.mjs
+./script/build
