@@ -23,7 +23,12 @@
           (meta :property "og:type" :content "website")
           (meta :property "og:url" :content url)
           (meta :property "og:image" :content (concatenate 'string url "/og.png"))
+          (meta :property "og:image:width" :content "1200")
+          (meta :property "og:image:height" :content "630")
+          (meta :property "og:image:alt"
+                :content "Autolith, the Common Lisp agent that rewrites itself, beside its rock mascot.")
           (meta :name "twitter:card" :content "summary_large_image")
+          (meta :name "twitter:image" :content (concatenate 'string url "/og.png"))
           (link :rel "preload" :href "fonts/cmu-typewriter-regular.woff2"
                 :as "font" :type "font/woff2" :crossorigin t)
           (link :rel "preload" :href "fonts/times-new-roman-regular.woff2"

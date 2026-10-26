@@ -16,6 +16,7 @@
                  (:file "yours") (:file "install") (:file "friends")
                  (:file "footer")))
    (:file "src/page")
+   (:file "src/og")
    (:file "src/build")))
 
 (asdf:defsystem "autolith-www/edit"
