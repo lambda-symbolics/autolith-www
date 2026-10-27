@@ -356,4 +356,108 @@ function charts(){
 }
 
 
-export { figures, rlm, imagebox, mission, charts };
+/* ------------------------------------------------------ knowledge ledgers
+   The page renders each ledger finished, so it reads without JavaScript.
+   Armed, a ledger starts empty and plays once it is on screen: facts arrive
+   and the rule derives the departure, then the meeting keeps moving and the
+   departure follows it; three turns fold into a procedure that runs as one
+   call; and probes rule hypotheses out until one cause is left. */
+function knowledge(){
+  if (STILL) return;
+
+  // A timeline of steps; reveal() hides an element until its step.
+  const ledger = (host, build) => {
+    if (!host) return;
+    const steps = [];
+    let at = 400;
+    const later = (fn, gap = 0) => { steps.push([at, fn]); at += gap; };
+    const reveal = (el, gap = 480) => {
+      el.dataset.step = "";
+      later(() => el.classList.add("on"), gap);
+    };
+    const after = build({ reveal, later });
+    host.classList.add("armed");
+    const io = new IntersectionObserver(es => {
+      if (!es[0].isIntersecting) return;
+      io.disconnect();
+      for (const [time, fn] of steps) setTimeout(fn, time);
+      if (after) setTimeout(after, at);
+    }, { threshold: 0.35 });
+    io.observe(host);
+  };
+
+  // Replace a value the way a recomputation does: dither, then the new ink.
+  const swap = (el, text) => {
+    el.classList.add("busy");
+    setTimeout(() => {
+      el.textContent = text;
+      el.classList.remove("busy");
+      el.classList.add("fresh");
+      setTimeout(() => el.classList.remove("fresh"), 900);
+    }, 380);
+  };
+
+  const derive = $("#deriveViz");
+  ledger(derive, ({ reveal, later }) => {
+    const facts = $$(".kb__fact", derive);
+    const start = $(".kb__val", facts[0]);
+    const leave = $(".kb__derived .kb__val", derive);
+    const stamp = $(".kb__stamp", derive);
+    const moved = [start.textContent, leave.textContent];
+    const first = [start.dataset.earlier, leave.dataset.earlier];
+    start.textContent = first[0];
+    leave.textContent = first[1];
+    for (const fact of facts.slice(0, 3)) reveal(fact, 420);
+    reveal($(".kb__rule", derive), 560);
+    reveal($(".kb__derived", derive), 900);
+    later(() => stamp.classList.add("on"));
+    return () => {
+      let shifted = false;
+      const move = () => {
+        shifted = !shifted;
+        const [when, leaving] = shifted ? moved : first;
+        stamp.classList.remove("on");
+        swap(start, when);
+        setTimeout(() => swap(leave, leaving), 700);
+        setTimeout(() => stamp.classList.add("on"), 1500);
+      };
+      setTimeout(() => { move(); setInterval(move, 5600); }, 1800);
+    };
+  });
+
+  const procedure = $("#procedureViz");
+  ledger(procedure, ({ reveal, later }) => {
+    const calls = row => $$(".kb__calls span", row).forEach(call => later(() => call.classList.add("on"), 190));
+    for (const turn of $$(".kb__turn", procedure)){
+      reveal(turn, 260);
+      calls(turn);
+      later(() => {}, 240);
+    }
+    later(() => $(".kb__turns", procedure).classList.add("folded"), 380);
+    reveal($(".kb__learned", procedure), 1000);
+    reveal($(".kb__next", procedure), 720);
+    reveal($(".kb__fits", procedure), 620);
+    reveal($(".kb__run", procedure), 380);
+    calls($(".kb__run", procedure));
+    later(() => $(".kb__stamp", procedure).classList.add("on"));
+  });
+
+  const diagnosis = $("#diagnosisViz");
+  ledger(diagnosis, ({ reveal, later }) => {
+    const chips = $$(".kb__hypotheses li", diagnosis);
+    for (const chip of chips) reveal(chip, 220);
+    later(() => {}, 420);
+    for (const probe of $$(".kb__probe", diagnosis)){
+      const ruled = chips.find(chip => chip.dataset.hypothesis === probe.dataset.rulesOut);
+      reveal(probe, 120);
+      later(() => probe.classList.add("run"), 820);
+      later(() => { probe.classList.remove("run"); probe.classList.add("done"); }, 460);
+      later(() => ruled && ruled.classList.add("out"), 640);
+    }
+    later(() => $(".kb__cause", diagnosis).classList.add("found"), 420);
+    reveal($(".kb__verdict", diagnosis), 520);
+    later(() => $(".kb__stamp", diagnosis).classList.add("on"));
+  });
+}
+
+export { figures, rlm, imagebox, mission, charts, knowledge };
