@@ -4,7 +4,8 @@
   '(("image" "Live image") ("repl" "The REPL")
     ("mutation" "Self-modification") ("context" "RLM")
     ("sessions" "Sessions") ("missions" "Missions") ("tasks" "Tasks")
-    ("cost" "Cost") ("security" "Security") ("state" "State") ("yours" "Yours"))
+    ("knowledge" "Knowledge") ("cost" "Cost") ("security" "Security")
+    ("state" "State") ("yours" "Yours"))
   "Section links in the bar. The install call to action is rendered separately.")
 
 (defun site-inline-svg (relative-path)
