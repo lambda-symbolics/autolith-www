@@ -1,15 +1,8 @@
 (require :asdf)
 
-;;; Hunchentoot's TLS support is irrelevant to a loopback editing server and
-;;; would pull in a foreign-library dependency, so it is disabled before the
-;;; system definition is read.
-(pushnew :hunchentoot-no-ssl *features*)
-
 (let ((root (uiop:pathname-parent-directory-pathname
              (uiop:pathname-directory-pathname *load-truename*))))
-  (asdf:initialize-source-registry
-   `(:source-registry (:directory ,root)
-     (:tree ,(merge-pathnames "vendor/" root)) :ignore-inherited-configuration))
+  (load (merge-pathnames "script/setup.lisp" root))
   (asdf:initialize-output-translations
    '(:output-translations :enable-user-cache :ignore-inherited-configuration))
   (let ((*compile-verbose* nil) (*load-verbose* nil))
