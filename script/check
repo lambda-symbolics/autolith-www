@@ -1,8 +1,12 @@
 #!/bin/sh
 set -eu
 cd "$(dirname "$0")/.."
+case " $* " in
+  *" --fix "*) exec sbcl --script script/check-source.lisp "$@" ;;
+esac
 ./script/build --test
 for file in public/js/*.js; do node --check "$file"; done
 node tests/browser.mjs
 git diff --check -- . ':!vendor'
 git diff --cached --check -- . ':!vendor'
+sbcl --script script/check-source.lisp "$@"
