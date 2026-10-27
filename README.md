@@ -99,6 +99,13 @@ preferences, no-JavaScript content and automated WCAG A/AA checks with axe.
 Screenshots are written to `test-results/` for visual review. Automated checks
 do not constitute an accessibility certification.
 
+The check ends with the Lisp source checks of
+[cheque](https://github.com/lambda-symbolics/cheque), as `cheque.sexp`
+configures them. `./script/check --fix` runs only those and repairs what cheque
+can repair. cheque and its tools are development dependencies: `checks/qlfile`
+lists them, and the check installs them on first use into
+`~/.cache/cheque/tools/`.
+
 ## Browser code
 
 `public/js/main.js` initializes independent enhancements. Navigation and tabs
