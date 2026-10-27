@@ -8,7 +8,7 @@
   (let ((*compile-verbose* nil) (*load-verbose* nil))
     (asdf:load-system "autolith-www/edit"))
   (let* ((argument (first (uiop:command-line-arguments)))
-         (port (if argument (parse-integer argument) 7777)))
+         (port     (if argument (parse-integer argument) 7777)))
     (uiop:symbol-call :autolith-www :edit-server-start :port port)
     (format t "Editing http://127.0.0.1:~d/ . Press Ctrl-C to stop.~%" port)
     (finish-output))

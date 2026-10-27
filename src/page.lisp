@@ -5,9 +5,9 @@
 
 (defun site-page ()
   "Compose the landing page from HSX components and editable copy."
-  (let ((title (content-text ':site ':title))
+  (let ((title       (content-text ':site ':title))
         (description (content-text ':site ':description))
-        (url (content-text ':site ':url)))
+        (url         (content-text ':site ':url)))
     (hsx
       (html :lang "en" :data-still (when *edit-mode* "1")
         (head
@@ -26,7 +26,7 @@
           (meta :property "og:image:width" :content "1200")
           (meta :property "og:image:height" :content "630")
           (meta :property "og:image:alt"
-                :content "Autolith, the Common Lisp agent that rewrites itself, beside its rock mascot.")
+                :content  "Autolith, the Common Lisp agent that rewrites itself, beside its rock mascot.")
           (meta :name "twitter:card" :content "summary_large_image")
           (meta :name "twitter:image" :content (concatenate 'string url "/og.png"))
           (link :rel "preload" :href "fonts/cmu-typewriter-regular.woff2"

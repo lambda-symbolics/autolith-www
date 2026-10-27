@@ -18,8 +18,8 @@ dropped so its rules stay out of the document, and site.css carries them."
   (let* ((source (uiop:read-file-string
                   (merge-pathnames (concatenate 'string "public/" relative-path)
                                    *site-root*)))
-         (start (search "<style>" source))
-         (end (search "</style>" source)))
+         (start  (search "<style>" source))
+         (end    (search "</style>" source)))
     (string-trim '(#\Newline #\Space)
                  (if (and start end (< start end))
                      (concatenate 'string (subseq source 0 start)
@@ -84,12 +84,12 @@ bar keeps the mark and the call to action."
               for index from 0 collect
           (hsx (button :role "tab" :type "button"
                        :aria-selected (if (zerop index) "true" "false")
-                       :data-tab (format nil "h-~(~a~)" method)
+                       :data-tab      (format nil "h-~(~a~)" method)
                        label))))
       (loop for method in '(:nix :binary :source) for index from 0 collect
         (hsx
           (div :data-tabpanel (format nil "h-~(~a~)" method)
-               :hidden (not (zerop index))
+               :hidden        (not (zerop index))
             (~install-command :method method)))))))
 
 (defcomp ~plate (&key kind)

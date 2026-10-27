@@ -21,8 +21,8 @@
 
 With OG-CARD-P, DIST/ also gets og-card.html, the page script/og captures as
 the Open Graph image."
-  (let* ((start (get-internal-real-time))
-         (output (merge-pathnames "dist/" *site-root*))
+  (let* ((start   (get-internal-real-time))
+         (output  (merge-pathnames "dist/" *site-root*))
          (staging (merge-pathnames ".site-build/" *site-root*)))
     (content-load)
     (let ((html (render-to-string (site-page))))

@@ -11,7 +11,7 @@
   (handler-case
       (with-input-from-string (stream text)
         (let* ((*read-eval* nil)
-               (value (read stream nil ':eof)))
+               (value       (read stream nil ':eof)))
           (unless (and (listp value) (eq (read stream nil ':eof) ':eof))
             (content--fail location "Expected one list of inline nodes."))
           (mapc (lambda (node) (content--validate-node node location)) value)
@@ -37,7 +37,7 @@ markup and COPY-WRITE-ERROR for an unknown section, key or file."
   (multiple-value-bind (section key) (copy-designator-parse designator)
     (let ((nodes (copy-parse text designator)))
       (bordeaux-threads:with-lock-held (*copy-lock*)
-        (let ((plist (content-read (copy-path section)))
+        (let ((plist   (content-read (copy-path section)))
               (missing (gensym)))
           (when (eq (getf plist key missing) missing)
             (error 'copy-write-error :path designator :detail "No such copy key."))
