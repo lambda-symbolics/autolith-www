@@ -57,7 +57,7 @@
      (write-string "nil" stream))
     (t
      (write-char #\( stream)
-     (loop for (key value) on attributes by #'cddr
+     (loop for (key value) on attributes by #'plist-next
            for leading = t then nil
            do (unless leading
                 (write-char #\Space stream))
@@ -96,7 +96,7 @@
 (defun copy--print-plist (plist stream)
   "Print a copy property list, one key per line with its value list beneath it."
   (format stream "(~{~a~^~% ~})~%"
-          (loop for (key value) on plist by #'cddr
+          (loop for (key value) on plist by #'plist-next
                 collect (copy--print-entry key value))))
 
 ;;; Rewriting files

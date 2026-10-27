@@ -28,7 +28,7 @@
                               collect section)
                         #'string< :key #'symbol-name)))
     (loop for section in sections
-          append (loop for (key value) on (gethash section *content*) by #'cddr
+          append (loop for (key value) on (gethash section *content*) by #'plist-next
                        unless (member (cons section key) rendered :test #'equal)
                          collect (list section key value)))))
 

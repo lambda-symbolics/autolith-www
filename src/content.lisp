@@ -3,6 +3,10 @@
 (defparameter *site-root* (asdf:system-source-directory "autolith-www")
   "Root of the source checkout, including content and public assets.")
 
+(defun plist-next (plist)
+  "Return PLIST after its first key and value, for stepping through it in LOOP."
+  (nthcdr 2 plist))
+
 (defvar *content* (make-hash-table :test #'eq)
   "Section names mapped to validated copy property lists.")
 
@@ -35,7 +39,7 @@
                (member (first node) '(:em :strong :b :i :code :kbd :span :a :br))
                (listp (second node))
                (evenp (length (second node)))
-               (loop for (key value) on (second node) by #'cddr
+               (loop for (key value) on (second node) by #'plist-next
                      always (and (member key '(:href :class :aria-hidden))
                                  (stringp value)
                                  (or (not (eq key ':href))
@@ -58,7 +62,7 @@
           (unless (and (listp data) (evenp (length data))
                        (eq (read stream nil ':eof) ':eof))
             (content--fail path "Expected one property list."))
-          (loop for (key value) on data by #'cddr do
+          (loop for (key value) on data by #'plist-next do
             (unless (and (keywordp key) (not (member key seen)) (listp value))
               (content--fail path "Expected unique keyword keys and lists of text."))
             (push key seen)
