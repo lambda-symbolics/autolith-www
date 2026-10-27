@@ -34,13 +34,13 @@
 
 (defun edit--field (section key value)
   "Render one panel field, as text where possible and as sexp otherwise."
-  (let* ((text (edit--plain-text value))
-         (source (or text (edit--value-source value)))
+  (let* ((text       (edit--plain-text value))
+         (source     (or text (edit--value-source value)))
          (designator (content-designator section key))
-         (form (if text "text" "sexp"))
-         (multiline (or (null text)
-                        (find #\Newline source)
-                        (> (length source) 72))))
+         (form       (if text "text" "sexp"))
+         (multiline  (or (null text)
+                         (find #\Newline source)
+                         (> (length source) 72))))
     (hsx
       (label :class "edit-panel__field"
         (span :class "edit-panel__name" designator)

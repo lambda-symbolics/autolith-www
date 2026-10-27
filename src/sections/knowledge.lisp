@@ -130,11 +130,11 @@
                     (li :data-hypothesis "credentials" "credentials")
                     (li :data-hypothesis "stale-endpoint" :class "kb__cause" "stale-endpoint"))
                   (ol :class "kb__probes"
-                    (~knowledge-probe :call "service.ping {\"service\":\"billing\"}"
-                                      :result "service.reachable(billing, true)"
+                    (~knowledge-probe :call      "service.ping {\"service\":\"billing\"}"
+                                      :result    "service.reachable(billing, true)"
                                       :rules-out "unavailable")
-                    (~knowledge-probe :call "service.config {\"service\":\"billing\"}"
-                                      :result "endpoint.current(billing, false)"
+                    (~knowledge-probe :call      "service.config {\"service\":\"billing\"}"
+                                      :result    "endpoint.current(billing, false)"
                                       :rules-out "credentials"))
                   (p :class "kb__verdict"
                     "stale-endpoint. Repair: update its endpoint.")

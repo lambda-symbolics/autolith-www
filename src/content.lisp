@@ -57,8 +57,8 @@
   (handler-case
       (with-open-file (stream path :external-format :utf-8)
         (let* ((*read-eval* nil)
-               (data (read stream nil ':eof))
-               (seen nil))
+               (data        (read stream nil ':eof))
+               (seen        nil))
           (unless (and (listp data) (evenp (length data))
                        (eq (read stream nil ':eof) ':eof))
             (content--fail path "Expected one property list."))
@@ -90,7 +90,7 @@
 (defun content-nodes (section key)
   "Render one named copy fragment, failing the build for a missing key."
   (let* ((missing (gensym))
-         (value (getf (gethash section *content*) key missing)))
+         (value   (getf (gethash section *content*) key missing)))
     (when (eq value missing)
       (content--fail (list section key) "No such copy key."))
     (mapcar #'content--element value)))

@@ -109,7 +109,7 @@ never observes a half-written copy file."
   (let ((path (copy-path section)))
     (unless (and plist (listp plist) (evenp (length plist)))
       (error 'copy-write-error :path path :detail "Expected a non-empty property list."))
-    (let ((header (copy--header path))
+    (let ((header  (copy--header path))
           (staging (make-pathname :type "sexp-writing" :defaults path)))
       (with-open-file (stream staging :direction :output :if-exists :supersede
                                       :external-format :utf-8)

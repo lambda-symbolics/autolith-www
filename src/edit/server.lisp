@@ -7,8 +7,8 @@
 ;;; takes part in the static build.
 
 (defclass edit-acceptor (hunchentoot:acceptor)
-  ((dispatchers :initarg :dispatchers
-                :reader edit-acceptor-dispatchers
+  ((dispatchers :initarg       :dispatchers
+                :reader        edit-acceptor-dispatchers
                 :documentation "Request dispatchers tried in order."))
   (:documentation "An HTTP acceptor serving the editable page and copy saves."))
 
@@ -33,16 +33,16 @@
 
 Requires *EDIT-MODE*. The result feeds the panel that covers the remainder."
   (let ((*edit-rendered-keys* nil)
-        (*edit-panel* nil))
+        (*edit-panel*         nil))
     (render-to-string (site-page))
     *edit-rendered-keys*))
 
 (defun edit--render ()
   "Render the editable page from the copy files as they stand on disk."
   (content-load)
-  (let* ((*edit-mode* t)
-         (rendered (edit--rendered-keys))
-         (*edit-panel* (lambda () (edit-panel rendered)))
+  (let* ((*edit-mode*          t)
+         (rendered             (edit--rendered-keys))
+         (*edit-panel*         (lambda () (edit-panel rendered)))
          (*edit-rendered-keys* nil))
     (render-to-string (site-page))))
 
@@ -63,7 +63,7 @@ Requires *EDIT-MODE*. The result feeds the panel that covers the remainder."
   "Write one posted copy value back to its file and reload the site copy."
   (setf (hunchentoot:content-type*) "text/plain; charset=utf-8")
   (let ((designator (hunchentoot:post-parameter "copy"))
-        (value (hunchentoot:post-parameter "value")))
+        (value      (hunchentoot:post-parameter "value")))
     (handler-case
         (cond
           ((not (and designator value))
@@ -110,8 +110,8 @@ writes to the working tree and performs no authentication."
   (edit-server-stop)
   (content-load)
   (let ((acceptor (make-instance 'edit-acceptor
-                                 :address address
-                                 :port port
+                                 :address     address
+                                 :port        port
                                  :dispatchers (edit--dispatchers))))
     (hunchentoot:start acceptor)
     (setf *edit-acceptor* acceptor)))
