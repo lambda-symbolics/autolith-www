@@ -1,5 +1,8 @@
 (in-package #:autolith-www)
 
+(defparameter *site-root* (asdf:system-source-directory "autolith-www")
+  "Root of the source checkout, including content and public assets.")
+
 (defvar *content* (make-hash-table :test #'eq)
   "Section names mapped to validated copy property lists.")
 

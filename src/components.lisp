@@ -1,5 +1,7 @@
 (in-package #:autolith-www)
 
+(hsx:register-web-components svg g path)
+
 (defparameter *navigation*
   '(("image" "Live image") ("repl" "The REPL")
     ("mutation" "Self-modification") ("context" "RLM")
