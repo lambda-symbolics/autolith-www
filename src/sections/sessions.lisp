@@ -11,7 +11,7 @@
         (div :class "demos tabgroup" :data-rv t
           (div :class "tabs demos__tabs" :role "tablist" :aria-label "Recorded sessions"
             (button :role "tab" :aria-selected "true" :data-tab "d-oversized"
-             "Answer over 3.1 MB")
+             "Answer over 3.7 MB")
             (button :role "tab" :aria-selected "false" :data-tab "d-mutation"
              "Break and recover")
             (button :role "tab" :aria-selected "false" :data-tab "d-continuity"
@@ -19,13 +19,13 @@
           (div :class "demo" :role "tabpanel" :data-tabpanel "d-oversized"
             (div :class "player" :data-cast "casts/oversized-context.cast" :data-cols "120" :data-rows "34"
               (div :class "player__poster"
-                (pre :tabindex "0" "  :::.      :::        AUTOLITH v0.35.0
-  ;;`;;     ;;;        ─────────────────────────────────
- ,[[ '[[,   [[[        model      gpt-5.6-terra
-c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
+                (pre :tabindex "0" "  :::.      :::        AUTOLITH v0.67.5
+  ;;`;;     ;;;        ───────────────────────────────────────
+ ,[[ '[[,   [[[        model         gpt-6.1-sol (effort high)
+c$$$cc$$$c  $$'        workspace     /root/demo/autolith/
  888   888,o88oo,.__
  YMM   \"\"` \"\"\"\"YUMMM")
-                (button :class "player__load" "Play the recording, 4 min 36 s")
+                (button :class "player__load" "Play the recording, 5 min 48 s")
                 (a :class "recording-download" :href
                  "casts/oversized-context.cast" "Download recording")))
             (dl :class "sheet demo__meta"
@@ -44,13 +44,13 @@ c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
           (div :class "demo" :role "tabpanel" :data-tabpanel "d-mutation" :hidden t
             (div :class "player" :data-cast "casts/live-mutation.cast" :data-cols "120" :data-rows "34"
               (div :class "player__poster"
-                (pre :tabindex "0" "  :::.      :::        AUTOLITH v0.35.0
-  ;;`;;     ;;;        ─────────────────────────────────
- ,[[ '[[,   [[[        model      gpt-5.6-terra
-c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
+                (pre :tabindex "0" "  :::.      :::        AUTOLITH v0.67.5
+  ;;`;;     ;;;        ───────────────────────────────────────
+ ,[[ '[[,   [[[        model         gpt-6.1-sol (effort high)
+c$$$cc$$$c  $$'        workspace     /root/demo/autolith/
  888   888,o88oo,.__
  YMM   \"\"` \"\"\"\"YUMMM")
-                (button :class "player__load" "Play the recording, 6 min 19 s")
+                (button :class "player__load" "Play the recording, 1 min 32 s")
                 (a :class "recording-download" :href "casts/live-mutation.cast"
                  "Download recording")))
             (dl :class "sheet demo__meta"
@@ -70,13 +70,13 @@ c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
             (div :class "player" :data-cast "casts/continuity.cast" :data-cols "120" :data-rows "34"
               (div :class "player__poster"
                 (pre :tabindex "0"
-                 "root@lho-thinkpad: ~/common-lisp/frob # ./bin/autolith
-  :::.      :::        AUTOLITH v0.35.0
-  ;;`;;     ;;;        ─────────────────────────────────
- ,[[ '[[,   [[[        model      gpt-5.6-terra
-c$$$cc$$$c  $$'        workspace  /root/common-lisp/frob/
+                 "root@lho-thinkpad: ~/demo/autolith # ./bin/autolith --permissions full
+  :::.      :::        AUTOLITH v0.67.5
+  ;;`;;     ;;;        ───────────────────────────────────────
+ ,[[ '[[,   [[[        model         gpt-6.1-sol (effort high)
+c$$$cc$$$c  $$'        workspace     /root/demo/autolith/
  888   888,o88oo,.__")
-                (button :class "player__load" "Play the recording, 10 min 11 s")
+                (button :class "player__load" "Play the recording, 3 min 25 s")
                 (a :class "recording-download" :href "casts/continuity.cast"
                  "Download recording")))
             (dl :class "sheet demo__meta"
