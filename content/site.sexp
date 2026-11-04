@@ -4,7 +4,7 @@
  :title
  ("Autolith, the live Common Lisp agent")
  :description
- ("A live self-modifying terminal agent with RLM. The Emacs of agents. Autolith can mold itself to any usecase, is fast and efficient, and can process large amounts of data at once.")
+ ("A self-modifying Common Lisp terminal agent. The Emacs of agents: inspect and extend it live, delegate work, and use recursive inference for material beyond one context window.")
  :url
  ("https://autolith.rocks")
  :docs

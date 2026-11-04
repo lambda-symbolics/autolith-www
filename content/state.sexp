@@ -1,24 +1,24 @@
 ;; Copy for state. Text and inline HSX-compatible markup.
 (:title
- ("The levels of knowledge")
+ ("What Autolith remembers")
  :lede
- ("Autolith has several tools and places where it can store information, each with a different purpose and functionality to remind the agent of their existence.")
+ ("Conversations, memories, agendas, and plans serve different purposes. Replay scripts and saved images preserve changes to the agent itself.")
  :subtitle
  ("Conversations")
  :paragraph
- ("Append-only portable S-expressions-based format which serves as a ledger of everything you said, AL said, and everything that happened, including errors and crashes.")
+ ("An append-only, portable S-expression record of messages, tool activity, and runtime events, including errors and crashes.")
  :subtitle-2
  ("Memories")
  :paragraph-2
- ("Scoped memories where general facts to be remembered are stored.")
+ ("Notes recalled for the current workspace, plus global notes shared across workspaces.")
  :subtitle-3
  ("Agenda")
  :paragraph-3
- ("Long term tracking and planning. Imagine it being like a limited-size Jira / Kanban board.")
+ ("Long-term commitments, blockers, and decisions. Think of a small Kanban board shared across sessions.")
  :subtitle-4
  ("Plan")
  :paragraph-4
- ("Short-term temporary planning, if you've ever used Codex or Claude Code, you know what this is")
+ ("A short-term checklist for the current task, with progress recorded as the agent works.")
  :subtitle-5
  ("Git image commits")
  :paragraph-5
@@ -26,10 +26,10 @@
  :subtitle-6
  ("Generations")
  :paragraph-6
- ("We stole this from Nix. A generation contains a saved image version (core), and everything else needed to restore Autolith to a previous state.")
+ ("We stole this from Nix. A generation pairs a saved Lisp core with the metadata needed to select and restore that version of the agent.")
  :subtitle-7
  ("Worker images")
  :paragraph-7
- ("AL can have long-running child Lisp images in which it can develop and triage small programs and experiments. These can be checkpointerd and roll-backed too.")
+ ("AL runs programs and experiments in heap-isolated Lisp workers. Save a useful worker image and restore it for later work.")
  :bento__foot
- ("Stores are either append-only or transactional. Shared-state storage places are serialized across processes, meaning that 2+ AL instances can work in the workspace at the same time. "))
+ ("Stores are append-only or transactional. Writes to shared state are serialized across processes, so multiple AL instances can use the same workspace."))
