@@ -32,12 +32,12 @@
   (hsx
     (div :class "meters"
       (div :class "meter" :style "--w:100%"
-        (span "inline, 0.50")
+        (span "inline (v0.50)")
         (span :class "meter__bar"
           (i :class "meter__fill"))
         (span :class "meter__value" "65,536 characters"))
       (div :class "meter" :style "--w:9.2%"
-        (span "preview now")
+        (span "retained-log preview")
         (span :class "meter__bar"
           (i :class "meter__fill")
           (i :class "meter__rest"))

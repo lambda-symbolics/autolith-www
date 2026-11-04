@@ -18,7 +18,7 @@
                 (i "Linux, macOS, BSD"))
               (button :role "tab" :aria-selected "false" :data-tab "source"
                 "Source "
-                (i "any platform"))
+                (i "supported hosts"))
               (button :role "tab" :aria-selected "false" :data-tab "windows"
                 "Windows "
                 (i "x86_64")))

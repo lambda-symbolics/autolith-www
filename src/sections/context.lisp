@@ -19,7 +19,7 @@
               (content ':context ':prose-2))
             (dl :class "sheet"
               (div
-                (dt "Budget")
+                (dt "Example budget")
                 (dd
                   (content ':context ':paragraph)))
               (div

@@ -6,17 +6,17 @@
  :subtitle
  ("Your messages are just calls to" (:em nil " (prompt ...)"))
  :prose
- ("You can try it here. This syntax lets you send messages to sub-agents (you will see their responses if they decide to respond). ")
+ ("Try the reader below to see how a message becomes a Lisp form. This is a syntax demonstration, not a running agent. In Autolith, use :to to address a child agent.")
  :win__bar
  ("The reader")
  :replnote
  ("Read as a call to " (:code nil "(prompt)") ", addressed to the primary agent.")
  :prose-2
- (" You don't need to know Lisp." (:br nil) (:br nil) "Plain text works, and most people never need to type a Lisp form." (:br nil) (:br nil) "But... If you want to learn it, AL is a good place to start: the input is a Lisp REPL, the agent sees what you typed, its result, and any condition (AKA error) it produced, so you can ask it why it failed and let it help you out. ")
+ (" You don't need to know Lisp." (:br nil) (:br nil) "Plain text works, and most people never need to type a Lisp form." (:br nil) (:br nil) "If you want to learn Lisp, start at the prompt. The agent sees the form you entered, its result, and any signaled condition, so you can ask it to explain an error.")
  :subtitle-2
  ("Prompts can be computed.")
  :prose-3
- ("Text, commands, tools, and Common Lisp are the same text input. A Lisp form runs in the Autolith image and the agent sees its result. Read a prompt off disk, template it, or, I dunno, generate it from the program you are debugging. ")
+ ("Text, commands, tool calls, and Lisp forms share one input prompt. A Lisp form runs in the Autolith image, and the agent sees its result. Read a prompt from disk, fill in a template, or generate it from the program you are debugging.")
  :subtitle-3
  ("And you can steer any child in the tree.")
  :prose-4

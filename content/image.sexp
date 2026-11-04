@@ -2,24 +2,24 @@
 (:title
  ("The whole agent is one Common Lisp " (:em nil "image."))
  :prose
- ("Autolith is a self-sufficient runtime that lets agents maintain all sorts of states and tools, from MCP servers, to memories, additional tools, agendas and LSP servers. Some might say it's a mono" (:strong nil "lith") ".")
+ ("Autolith manages MCP connections, memories, tools, agendas, and language servers in one Lisp runtime. Some might say it's a mono" (:strong nil "lith") ".")
  :prose-2
  ("Common Lisp provides " (:code nil "describe") ", conditions, restarts, CLOS protocols, and source forms at runtime. The agent uses them to inspect and change its own implementation.")
  :prose-3
- ("File search is powered through the amazing and blazingly fast " (:a (:href "https://github.com/dmtrKovalenko/fff.nvim") "fff") " Rust library. Autolith can spawn and maintain persistent Lisp workers for experiments and scripts.")
+ ("File search uses the " (:a (:href "https://github.com/dmtrKovalenko/fff.nvim") "fff") " Rust library. Autolith can spawn and maintain persistent Lisp workers for experiments and scripts.")
  :caption
  ("The Autolith rock formation")
  :subtitle
  ("In your repository")
  :paragraph
- ("Effective filesystem, shell, and search tools that let the agent quickly navigate any project. Language servers supply diagnostics, renames, and code actions, and Autolith can connect itself to your projects in other ways.")
+ ("Read and edit files, run commands, and search your project. Connect a language server for diagnostics, renames, and code actions.")
  :paragraph-2
- ("Run Autolith inside your own workflows through its headless mode, which prescribes the input and output schemas and can stream live S-expression events while it works.")
+ ("Run Autolith inside your workflows in headless mode. Supply input and output schemas and stream S-expression events while it works.")
  :subtitle-2
  ("In its image")
  :paragraph-3
- ("A runtime it can inspect, test, and extend, with heap-isolated workers for experiments. The " (:strong nil "bedrock") " of safe self-modification.")
+ ("A runtime it can inspect, test, and extend, with heap-isolated workers for experiments. The " (:strong nil "bedrock") " for trying a change before installing it in the active agent.")
  :paragraph-4
- ("Autolith implements RLM to process large amounts of data effectively")
+ ("Use recursive inference to divide material too large for one model context.")
  :paragraph-5
  ("Portable conversations, memories, agendas, checkpoints. If Autolith breaks itself, it can recover via its recovery image."))

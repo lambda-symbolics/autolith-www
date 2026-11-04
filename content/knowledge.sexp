@@ -2,7 +2,7 @@
 (:title
  ("Facts with " (:em nil "receipts") ", rules that keep up.")
  :lede
- ("Beside prose memories, Autolith keeps structured facts. Each one cites its evidence and says why it is believed. Rules derive new facts locally, contracts check tool calls before they run, and work you repeat becomes a procedure.")
+ ("Alongside prose memories, Autolith keeps structured facts with their sources and basis. Rules derive facts locally, contracts check tool requirements before execution, and repeated tool sequences can become procedures.")
  :derive__bar
  ("memory:facts · rule departure v1")
  :derive__caption
@@ -22,19 +22,19 @@
  :diagnosis__stamp
  ("cause found")
  :prose
- ("Where a fact came from decides its basis, not what the model calls it. A file Autolith read is an observation, your own words are a user assertion, and a derived fact keeps the basis of its premises, so reasoning from an assumption never produces an observation. Two facts that disagree are both kept and shown as conflicted; nothing quietly picks a winner.")
+ ("A fact's basis follows its source. A file Autolith read is an observation; your words are a user assertion. Derived facts inherit the basis of their premises, so an assumption cannot become an observation through reasoning. Conflicting facts are both kept and marked as disputed.")
  :procedure__prose
- ("When three turns make the same tool calls in the same order, Autolith learns a procedure after the turn, without a model request. Values that vary become parameters, matched to the words that varied in your requests. The next request that fits is offered one " (:code nil "procedure.run") ", and every call inside it still asks its own approval.")
+ ("When three turns repeat a matching tool sequence, Autolith can learn a procedure without a model request. Varying values become parameters matched to the changing words in your requests. For a later matching request, the agent receives a notice to use " (:code nil "procedure.run") ". Each call inside it goes through its own approval checks.")
  :diagnosis__prose
- ("Instead of trying repairs in turn, " (:code nil "diagnosis.run") " takes up to four hypotheses and the probes that tell them apart. The probe that separates the most remaining hypotheses per cost runs first, at most three with no model request between them. A case no probe can settle is reported as still open.")
+ ("Before trying repairs, " (:code nil "diagnosis.run") " takes up to four hypotheses and probes that distinguish them. It ranks probes by how well they separate the remaining hypotheses relative to their cost, then runs up to three without another model request. If the probes cannot settle the case, it reports it as open.")
  :evidence
  ("Files, pages, tool results, missions, or your own words. Web pages expire a week after retrieval, and file evidence holds only for the exact content observed.")
  :rules
  ("Dates, durations, numbers, and quantities in units. A rule the model proposes derives nothing until you admit it, and a search that runs out of budget reports unknown, never false.")
  :contracts
- ("A call whose required facts do not hold is refused before it runs, with the reason. Successful calls turn their JSON results, MCP results included, into observed facts.")
+ ("A matching contract refuses a call whose required facts do not hold and explains why. After a successful call, its declared observation mappings turn selected JSON result fields, including MCP results, into observed facts.")
  :gates
- ("Plan steps take their values from facts and follow them when they change. A mission gate passes only on undisputed observations or your statements, never on the model's predictions.")
+ ("Plan steps can name required facts and use their current values. Fact-based mission gates accept undisputed observations or your statements, not the model's predictions.")
  :recipes
  ("Starter vocabularies for appointments and service dependencies define their predicates and propose their rules in one operation.")
  :inspect

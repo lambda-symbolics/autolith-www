@@ -36,7 +36,7 @@
                  "Recursive inference"))
               (li
                 (a :href "https://lambda-symbolics.com/autolith/docs/commands"
-                 "Slash commands"))))
+                 "Commands"))))
           (div
             (h3
               (content ':footer ':subtitle-2))
