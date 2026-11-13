@@ -12,7 +12,7 @@
             (div :class "sugar__stage"
               (span :class "sugar__glyphs" :id "sugar" :aria-hidden "true")
               (span :class "sr"
-               "The sentence \"Hello Autolith! What's your favorite rock?\" is read as the Lisp form (prompt :to 'autolith \"Hello Autolith! What's your favorite rock?\")"))
+                 "The sentence \"Hello Autolith! What's your favorite rock?\" is read as the Lisp form (channel.send :text \"Hello Autolith! What's your favorite rock?\")"))
             (p :class "sugar__caption" :id "sugarCaption"
               (content ':repl ':sugarcaption)))))
       (div :class "wrap wrap--wide repl__after"
@@ -43,11 +43,11 @@
               (content ':repl ':prose-3))
             (figure :class "code"
               (pre :tabindex "0"
-                (span :class "cm" ";; a computed prompt")
+                  (span :class "cm" ";; a computed message")
                 "
-("
-                (span :class "kw" "prompt")
-                " ("
+                  "
+                  (span :class "kw" "channel.send")
+                  " :text ("
                 (span :class "kw" "read-file")
                 " \"review-notes.org\"))
 
@@ -72,7 +72,7 @@
             (figure :class "code"
               (pre :tabindex "0"
                 "("
-                (span :class "kw" "prompt")
-                " :to 'test-review
-        \"Run the focused tests and
+                  (span :class "kw" "channel.send")
+                  " :channel \"@test-review\" :text
+          \"Run the focused tests and
          report only failures.\")"))))))))
