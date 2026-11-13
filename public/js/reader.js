@@ -17,8 +17,8 @@ function sugar(){
 
   function compose(){
     BODY = innerWidth < 700 ? "Hello Autolith!" : "Hello Autolith! What's your favorite rock?";
-    const PRE  = "(prompt ";
-    const MID  = ":to 'autolith ";
+    const PRE  = "(channel.send ";
+    const MID  = ":text ";
     const Q    = '"';
     const SUF  = '")';
 
@@ -125,7 +125,7 @@ function sugar(){
 
 export { sugar, tryit };
 /* ------------------------------------------------- the reader, live
-   Prose is sugar for (prompt ...). A form is already a form. The page
+   Prose is sugar for (channel.send :text ...). A form is already a form. The page
    applies the same rule Autolith applies, on whatever you type. */
 function tryit(){
   const input = $("#replInput");
@@ -149,8 +149,8 @@ function tryit(){
     out.textContent = "";
 
     if (!text){
-      out.append(tag("dimmed", "(prompt :to 'autolith \"…\")"));
-      note.textContent = "Read as a call to (prompt), addressed to the primary agent.";
+        out.append(tag("dimmed", "(channel.send :text \"…\")"));
+        note.textContent = "Read as a call to (channel.send), addressed to the current channel.";
       note.classList.remove("is-form");
       prevBody = "";
       return;
@@ -165,11 +165,11 @@ function tryit(){
     }
 
     const body = esc(text);
-    out.append(tag(null, "("));
-    out.append(tag("kw", "prompt"));
-    out.append(tag(null, " "));
-    out.append(tag("kw", ":to"));
-    out.append(tag(null, " 'autolith "));
+      out.append(tag(null, "("));
+      out.append(tag("kw", "channel.send"));
+      out.append(tag(null, " "));
+      out.append(tag("kw", ":text"));
+      out.append(tag(null, " "));
 
     // the wrapper holds still; only the part you just typed lights up
     const shared = body.startsWith(prevBody) ? prevBody.length : 0;
@@ -179,7 +179,7 @@ function tryit(){
     out.append(tag(null, ")"));
     prevBody = body;
 
-    note.textContent = "Read as a call to (prompt), addressed to the primary agent.";
+    note.textContent = "Read as a call to (channel.send), addressed to the current channel.";
     note.classList.remove("is-form");
 
     if (!STILL){

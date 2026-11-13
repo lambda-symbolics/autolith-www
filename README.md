@@ -110,7 +110,7 @@ lists them, and the check installs them on first use into
 
 `public/js/main.js` initializes independent enhancements. Navigation and tabs
 are separate from the reader demonstration, diagrams, tower and decorative
-figures. The reader demonstrates prompt syntax; it does not execute Lisp.
+figures. The reader demonstrates channel.send syntax; it does not execute Lisp.
 The asciinema player is downloaded only when a recording is requested.
 
 The palette is black ink on off-white `#fffefa`, with green accents and one-bit
