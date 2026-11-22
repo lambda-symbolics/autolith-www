@@ -30,6 +30,4 @@
             (dd (content ':yours ':providers)))
           (div
             (dt "The live runtime")
-            (dd (content ':yours ':runtime))))
-        (p :class "note" :data-rv t
-          (content ':yours ':note))))))
+            (dd (content ':yours ':runtime))))))))

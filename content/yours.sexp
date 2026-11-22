@@ -14,6 +14,4 @@
  :providers
  ("Use subscription sign-ins, API keys, or local Google Cloud credentials. Choose among built-in providers or configure an OpenAI-compatible endpoint.")
  :runtime
- ("Load startup code in init.lisp, add commands, or define request-local context. Ask Autolith to inspect and explain an extension before keeping it.")
- :note
- ("Commands require authorization, and file edits require an observed revision. Choose permission policies for unattended work explicitly. Process isolation contains accidents; it does not make hostile code safe."))
+ ("Load startup code in init.lisp, add commands, or define request-local context. Ask Autolith to inspect and explain an extension before keeping it."))
