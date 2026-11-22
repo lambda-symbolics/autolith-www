@@ -82,20 +82,21 @@ bar keeps the mark and the call to action."
 
 (defcomp ~hero-install ()
   "Render the compact installation selector."
-  (hsx
-    (div :class "hero__install tabgroup" :data-rv t :style "--d:5"
-      (div :class "tabs" :role "tablist" :aria-label "Install Autolith"
-        (loop for (method label) in '((:nix "Nix") (:binary "Binary") (:source "Source"))
-              for index from 0 collect
-          (hsx (button :role "tab" :type "button"
-                       :aria-selected (if (zerop index) "true" "false")
-                       :data-tab      (format nil "h-~(~a~)" method)
-                       label))))
-      (loop for method in '(:nix :binary :source) for index from 0 collect
-        (hsx
-          (div :data-tabpanel (format nil "h-~(~a~)" method)
-               :hidden        (not (zerop index))
-            (~install-command :method method)))))))
+  (let ((methods '((:nix "Nix") (:binary "Binary"))))
+    (hsx
+      (div :class "hero__install tabgroup" :data-rv t :style "--d:5"
+        (div :class "tabs" :role "tablist" :aria-label "Install Autolith"
+          (loop for (method label) in methods
+                for index from 0 collect
+            (hsx (button :role "tab" :type "button"
+                         :aria-selected (if (zerop index) "true" "false")
+                         :data-tab      (format nil "h-~(~a~)" method)
+                         label))))
+        (loop for (method) in methods for index from 0 collect
+          (hsx
+            (div :data-tabpanel (format nil "h-~(~a~)" method)
+                 :hidden        (not (zerop index))
+              (~install-command :method method))))))))
 
 (defcomp ~plate (&key kind)
   "Render one decorative inter-section figure."

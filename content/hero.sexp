@@ -6,4 +6,4 @@
  :hero__lede
   ("Ask Autolith to fix a failing test or search a codebase. You can ask it to add a command while it runs. You don't need to know Lisp.")
  :hero__plat
- ("Linux, macOS, FreeBSD, NetBSD, OpenBSD, and Windows. " (:a (:class "ulink" :href "#install") "See more.")))
+ ((:a (:class "ulink" :href "#install") "See more.")))

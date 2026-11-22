@@ -28,7 +28,7 @@
 (let ((before (uiop:read-file-string (merge-pathnames "dist/index.html" *site-root*))))
   (site-build)
   (assert (equal before (uiop:read-file-string (merge-pathnames "dist/index.html" *site-root*))))
-  (dolist (method '(:nix :binary :source :windows))
+  (dolist (method '(:nix :binary :windows))
     (let ((command (content-text ':commands method)))
       (assert (search (hsx/utils:escape-html-text-content command) before)))))
 (format t "Content validation, escaping and deterministic build checks passed.~%")

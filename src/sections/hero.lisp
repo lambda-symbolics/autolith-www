@@ -15,7 +15,9 @@
             (content ':hero ':hero__lede))
           (~hero-install)
           (div :class "hero__acts" :data-rv t :style "--d:6"
-            (a :class "btn" :href "https://lambda-symbolics.com/autolith/docs"
-              (span "Read the docs"))
+            (a :class "btn" :href (content-text ':site ':docs)
+              (span "Docs"))
+            (a :class "btn" :href (content-text ':site ':source)
+              (span "GitHub"))
             (p :class "hero__plat"
               (content ':hero ':hero__plat))))))))
