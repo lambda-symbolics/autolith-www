@@ -10,4 +10,4 @@
  :subtitle-3
  ("Friends of Autolith")
  :paragraph
- ("Lambda Symbolics OÜ. AL is ISC licensed and rocks."))
+ ("Lambda Symbolics OÜ. AL is ISC licensed."))
