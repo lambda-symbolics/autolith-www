@@ -1,6 +1,6 @@
 ;; Copy for the footer section. Inline markup: (:em () "text").
 (:caption
- ("Autolith, carving itself")
+ ("Autolith")
  :title
  ("Lisp machines " (:em nil "live again!"))
  :subtitle
