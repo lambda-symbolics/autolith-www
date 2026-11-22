@@ -51,7 +51,7 @@
                  "Installer script"))
               (li
                 (a :href "https://lambda-symbolics.com" "Lambda Symbolics"))))
-          (div
+          (div :class "foot__friends"
             (h3
               (content ':footer ':subtitle-3))
             (ul

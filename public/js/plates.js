@@ -1,4 +1,4 @@
-import { $, $$, STILL, FORCE_STAGE, clamp, lerp, easeIO, onTick, BAYER4 } from './runtime.js';
+import { $, $$, STILL, clamp, lerp, easeIO, onTick, BAYER4 } from './runtime.js';
 /* --------------------------------------------------------------- swell
    An ordered-dither sea. The page is paper at the top of the band and ink
    at the bottom, and the line between them is a moving wave. Two tones and

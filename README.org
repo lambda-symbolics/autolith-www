@@ -1,0 +1,42 @@
+#+title: Autolith website
+
+Static HTML for [[https://autolith.org][autolith.org]] and [[https://autolith.rocks][autolith.rocks]], generated with Common Lisp and HSX.
+
+* Edit
+
+- =content/*.sexp=: copy, metadata, and installation commands.
+- =src/page.lisp= and =src/sections/=: page order and components.
+- =public/=: CSS, browser modules, and other static files.
+
+#+begin_src sh
+./script/edit
+#+end_src
+
+Open [[http://127.0.0.1:7777/][the local editor]]. Click copy to edit it and click away to save. Use =Ctrl-B=,
+=Ctrl-I=, and =Ctrl-K= for bold, italics, and links. =Ctrl-S= saves all pending
+changes. Edit metadata and installation commands in the bottom-right panel.
+
+* Build
+
+#+begin_src sh
+./script/build
+#+end_src
+
+Serve =dist/= with any static HTTP server. Use SBCL on =PATH= or the pinned
+Linux x86-64 runtime downloaded by the build script when SBCL is unavailable.
+
+* Check
+
+#+begin_src sh
+npm ci
+npx playwright install chromium
+./script/check
+#+end_src
+
+With an existing Chromium, skip the browser install and set =CHROMIUM= to its
+path. The checks cover generation, browser behavior, the local editor, and Lisp
+source; browser screenshots go in =test-results/=.
+
+* Deploy
+
+Push =master= to trigger the =autolith-www= production build on Vercel.

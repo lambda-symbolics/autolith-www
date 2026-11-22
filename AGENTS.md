@@ -3,7 +3,7 @@
 ## Purpose and Sources of Truth
 
 Generate the Autolith website as static HTML with Common Lisp and HSX.
-README.md documents editing, building, checking and deployment. Tracked source
+README.org documents editing, building, checking and deployment. Tracked source
 and behavioral tests are executable truth. Keep the project small and readable.
 
 - Keep copy in content/, HSX components in src/, and browser assets in public/.

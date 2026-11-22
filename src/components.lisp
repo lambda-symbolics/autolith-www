@@ -5,8 +5,8 @@
 (defparameter *navigation*
   '(("mutation" "Self-modification") ("knowledge" "Symbolic memory")
     ("context" "RLM") ("tasks" "Channels") ("missions" "Autonomy")
-    ("yours" "Extensions") ("sessions" "Recordings"))
-  "The six capabilities and their recorded evidence, with installation separate.")
+    ("yours" "Extensions"))
+  "The six capabilities, with installation separate.")
 
 (defun site-inline-svg (relative-path)
   "Read an SVG asset for inlining, without its embedded stylesheet.

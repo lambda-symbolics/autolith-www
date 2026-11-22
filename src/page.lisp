@@ -34,7 +34,6 @@
           (link :rel "preload" :href "fonts/times-new-roman-regular.woff2"
                 :as "font" :type "font/woff2" :crossorigin t)
           (link :rel "stylesheet" :href "css/site.css")
-          (link :rel "stylesheet" :href "asciinema-player.css")
           (when *edit-mode*
             (hsx (link :rel "stylesheet" :href "edit/editor.css")))
           (script :type "module" :src "js/main.js")
@@ -54,10 +53,8 @@
             (~section-tasks)
             (~plate :kind "branches")
             (~section-missions)
-            (~section-yours)
             (~plate :kind "moire")
-            (~section-repl)
-            (~section-sessions)
+            (~section-yours)
             (~plate :kind "layers")
             (~section-install)
             (~section-friends))

@@ -1,4 +1,4 @@
-import { $, $$, STILL, FORCE_STAGE, clamp, lerp, easeIO, onTick, BAYER4 } from './runtime.js';
+import { $, $$, STILL, clamp, lerp, easeIO, onTick, BAYER4 } from './runtime.js';
 /* ------------------------------------------------------------ diagrams
    One builder for every figure on the page. Boxes, arrows, labels, drawn
    in ink on paper and animated in reading order. */

@@ -6,7 +6,7 @@ import { chromium } from 'playwright';
 
 const root = resolve('dist');
 const types = {'.html':'text/html', '.js':'text/javascript', '.css':'text/css',
-  '.svg':'image/svg+xml', '.png':'image/png', '.woff2':'font/woff2', '.cast':'application/json'};
+  '.svg':'image/svg+xml', '.png':'image/png', '.woff2':'font/woff2'};
 const server = createServer(async (request, response) => {
   const path = resolve(root, '.' + decodeURIComponent(new URL(request.url, 'http://localhost').pathname));
   if (path !== root && !path.startsWith(root + sep)) { response.writeHead(403).end(); return; }
@@ -62,15 +62,15 @@ try {
       await page.locator('.install__auth').screenshot({path:'test-results/provider-commands.png'});
     }
 
+    const friends = page.locator('.foot__friends li');
+    const columns = await friends.evaluateAll(items => new Set(items.map(item => item.getBoundingClientRect().left)).size);
+    assert.equal(columns, 2, `${name}: footer friend links should occupy two columns`);
     if (name !== 'no-js') {
       const firstTab = page.locator('.hero [role="tab"]').first();
       await firstTab.focus();
       await page.keyboard.press('ArrowRight');
       assert.equal(await page.locator('.hero [role="tab"]').nth(1).getAttribute('aria-selected'), 'true');
       assert(await page.locator('[data-tabpanel="h-binary"]').isVisible());
-      await page.locator('#replInput').fill('hello <script>');
-      assert((await page.locator('#replOut').innerText()).includes('hello <script>'));
-      assert.equal(await page.locator('#replOut script').count(), 0);
       if (name === 'mobile') {
         // The narrow bar drops the section links and keeps the mark and the
         // call to action. Nothing is left behind an overlay.
@@ -108,13 +108,6 @@ try {
         runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}
       })).violations.map(item => ({id:item.id, nodes:item.nodes.map(node => node.target)})));
       assert.deepEqual(violations, [], name + ' accessibility');
-      if (name === 'desktop') {
-        const recording = page.waitForResponse(response => response.url().endsWith('/casts/oversized-context.cast'));
-        await page.locator('.player__load').first().click();
-        assert((await recording).ok());
-        await page.locator('.player__poster.gone').first().waitFor({state:'attached'});
-        await page.waitForTimeout(500);
-      }
     } else {
       for (const panel of await page.locator('[data-tabpanel]').all()) assert(await panel.isVisible());
       assert(await page.locator('#navLinks').isVisible());

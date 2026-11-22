@@ -72,7 +72,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .wrap{width:100%;max-width:var(--wide);margin-inline:auto;
   padding-inline:calc(var(--gut) + env(safe-area-inset-left,0px)) calc(var(--gut) + env(safe-area-inset-right,0px))}
 .band{position:relative;isolation:isolate;padding-block:var(--band-y);background:var(--bg);color:var(--fg)}
-.band--flush{padding-block:0}
 
 .display{font-family:var(--serif);font-weight:700;letter-spacing:-.026em;line-height:1.0;text-wrap:balance}
 .display em{font-style:italic;font-weight:700}
@@ -86,7 +85,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .prose em,.italic{font-style:italic}
 /* the apparatus voice: captions, notes, asides. italic, never grey */
 .note{font-style:italic;font-size:.95rem;line-height:1.45}
-.tryit__foot{margin-top:1.1rem}
 .tag{font-family:var(--mono);font-size:.76rem;line-height:1.4}
 
 .lede-block{display:grid;gap:clamp(.9rem,2vw,1.4rem);max-width:62ch;margin-bottom:clamp(2.6rem,6vh,4.2rem)}
@@ -287,40 +285,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
   .sheet dd{margin-bottom:.85rem}
 }
 
-/* --------------------------------------------------------- repl / sugar */
-
-.scrub{position:relative}
-.scrub__sticky{position:sticky;top:0;min-height:100svh;display:flex;align-items:center;overflow:hidden}
-.sugar{display:grid;gap:clamp(1.8rem,5vh,3.2rem);width:100%}
-.sugar__stage{position:relative;font-family:var(--mono);font-size:clamp(.8rem,2.6vw,2.2rem);line-height:1.8}
-.sugar__glyphs{position:relative;display:block;height:1.8em}
-.sugar__glyphs b{position:absolute;top:0;left:0;font-weight:400;white-space:pre;will-change:transform,opacity;transition:opacity .26s linear}
-.sugar__glyphs b.kw{font-weight:700}
-.sugar__glyphs b.st{font-style:italic}
-.sugar__caption{position:relative;min-height:4.4em;max-width:54ch}
-.sugar__caption span{position:absolute;top:0;left:0;right:0;font-style:italic;font-size:1.05rem;line-height:1.45;opacity:0;transform:translateY(6px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
-.sugar__caption span.on{opacity:1;transform:none}
-@media (max-height:640px){.scrub__sticky{align-items:flex-start;padding-top:6rem}}
-.repl__after{padding-bottom:var(--band-y)}
-
-/* ------------------------------------------------------------- try it */
-
-.tryit{display:grid;gap:clamp(.9rem,1.8vw,1.3rem);padding-bottom:clamp(3rem,7vh,5rem)}
-.tryit__intro{max-width:56ch}
-.tryit__box{max-width:min(100%,920px)}
-.tryit__in{display:flex;align-items:center;gap:.6rem;padding:.9rem clamp(.85rem,1.6vw,1.15rem);border-bottom:1px solid var(--fg)}
-.tryit__caret{font-family:var(--mono);font-weight:700;flex:none;color:var(--green-ink)}
-.tryit__in input{flex:1;min-width:0;font-family:var(--mono);font-size:clamp(.85rem,1.15vw,1rem);color:var(--fg);background:none;border:0;padding:0;line-height:1.6}
-.tryit__in input::placeholder{color:var(--fg);font-style:italic;opacity:1}
-.tryit__in input:focus{outline:none}
-.tryit__in:focus-within{box-shadow:inset 0 0 0 2px var(--fg)}
-.tryit__out{display:block;font-family:var(--mono);font-size:clamp(.82rem,1.1vw,1rem);line-height:1.7;padding:clamp(.9rem,1.7vw,1.2rem);white-space:pre-wrap;word-break:break-word;min-height:3.4em}
-.tryit__out .kw{font-weight:700}
-.tryit__out .st{font-style:italic}
-.tryit__out .dimmed{font-style:italic}
-.tryit__out .fresh{background:var(--fg);color:var(--bg)}
-.tryit__note{font-style:italic;font-size:.95rem}
-
 /* --------------------------------------------------- mutation sequence */
 
 .figpair{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(2rem,4.5vw,4.5rem);align-items:center}
@@ -497,7 +461,7 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .fig .edgelabel text{font-style:italic}
 .fig .bare text{font-style:italic}
 
-/* ---------------------------------------------------------------- demos
+/* ----------------------------------------------------------------- tabs
    A flush compound row of tabs. The active one inverts, atomically. */
 
 .tabs{display:flex;width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none;border:1px solid var(--fg)}
@@ -510,21 +474,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .tabs button:last-child{border-right:0}
 .tabs button:hover{background:var(--fg);color:var(--bg)}
 .tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
-.tabs button i{font-style:italic;font-weight:400;margin-left:.55em;font-size:.9em}
-@media (max-width:720px){.tabs button i{display:none}}
-
-.demo{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(1.6rem,3.2vw,2.8rem);padding-top:clamp(1.6rem,3.5vh,2.6rem)}
-@media (max-width:900px){.demo{grid-template-columns:1fr}}
-.demo[hidden]{display:none}
-/* the recording is the one place a second surface is legal: the screen is
-   the artifact, so it keeps its own true black */
-.player{position:relative;background:#000;border:1px solid var(--fg);aspect-ratio:16/10;overflow:hidden}
-.player__poster{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;background:#000;z-index:2;transition:opacity .4s}
-.player__poster pre{font-family:var(--mono);font-size:clamp(.42rem,1vw,.62rem);color:#fffefa;line-height:1.25;margin:0}
-.player__poster.gone{opacity:0;pointer-events:none}
-.player__load{border:1px solid #fffefa;color:#fffefa;background:#000;padding:.7em 1.3em;font-family:var(--mono);font-weight:700;font-size:.8rem;min-height:46px;transition:background-color .2s,color .2s}
-.player__load:hover{background:#fffefa;color:#000}
-.demo__meta{align-self:start}
 
 /* ---------------------------------------------------------------- bento
    The gaps are the rules. One pixel of ink shows between the cells, so the
@@ -646,7 +595,13 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .foot .btn--primary:hover,.foot .btn--primary:focus-visible{background:var(--ink);color:var(--paper)}
 
 .foot__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.8rem,4vw,3rem);padding-bottom:clamp(2.6rem,6vh,3.8rem)}
-@media (max-width:700px){.foot__grid{grid-template-columns:1fr 1fr}}
+.foot__friends ul{columns:2;column-gap:1rem}
+.foot__friends li{break-inside:avoid}
+.foot__friends a{overflow-wrap:anywhere}
+@media (max-width:700px){
+  .foot__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot__friends{grid-column:1/-1}
+}
 .foot h3{font-family:var(--mono);font-size:.78rem;font-weight:700;margin-bottom:1.1rem}
 .foot li{margin-bottom:.5rem}
 .foot li a{font-size:.99rem;font-style:italic;text-decoration:underline;text-underline-offset:2px}
@@ -669,21 +624,17 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .still #monolith{opacity:1!important;transition:none!important}
 .still .rlm__viz .edge,.still .rlm__viz .node,.still .rlm__viz .caps,
 .still .fig .edge,.still .fig .node{transition:none!important}
-.still .sugar__caption span,.still .sugar__glyphs b{transition:none!important}
-.still .tryit__out .fresh{background:none;color:inherit}
 html.still{scroll-behavior:auto}
 
 .foot .mark{background:var(--green)}
 
 /* Progressive enhancement and motion preferences. */
-.player__mount{position:absolute;inset:0}
 html:not(.js) [data-tabpanel][hidden]{display:block!important}
-html:not(.js) .tabs,html:not(.js) .install__copy,html:not(.js) .player__load{display:none}
+html:not(.js) .tabs,html:not(.js) .install__copy{display:none}
 html:not(.js) .nav{position:static}
 html:not(.js) .nav__in{height:auto;min-height:76px;flex-wrap:wrap;padding-block:1rem}
 html:not(.js) .nav__links{display:flex;flex-wrap:wrap}
 html:not(.js) .hero{padding-top:2rem}
-html:not(.js) .sugar__glyphs{display:none}
 :focus-visible{outline:2px solid var(--green);outline-offset:4px}
 .still *, .still *::before, .still *::after{animation:none!important;transition:none!important}
 .two>*{min-width:0}

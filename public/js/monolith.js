@@ -1,4 +1,4 @@
-import { $, $$, STILL, FORCE_STAGE, clamp, lerp, easeIO, onTick, BAYER4 } from './runtime.js';
+import { $, $$, STILL, clamp, lerp, easeIO, onTick, BAYER4 } from './runtime.js';
 
 function monolith(){
   const cv = $("#monolith");

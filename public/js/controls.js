@@ -1,4 +1,4 @@
-import { $, $$ } from './runtime.js';
+import { $$ } from './runtime.js';
 
 export function tabs() {
   $$('.tabgroup').forEach(group => {
@@ -43,49 +43,6 @@ export function copy() {
         button.textContent = 'Copied';
       } catch { button.textContent = 'Select and copy the command'; }
       setTimeout(() => { button.textContent = old; }, 1800);
-    });
-  });
-}
-
-let playerScript;
-function loadPlayer() {
-  if (!playerScript) playerScript = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'asciinema-player.min.js';
-    script.onload = resolve;
-    script.onerror = () => { script.remove(); playerScript = null; reject(new Error('Player download failed')); };
-    document.head.append(script);
-  });
-  return playerScript;
-}
-
-export function casts() {
-  $$('.player').forEach(player => {
-    const button = $('.player__load', player);
-    button.addEventListener('click', async () => {
-      const label = button.textContent;
-      button.disabled = true;
-      button.textContent = 'Loading recording…';
-      try {
-        await loadPlayer();
-        const mount = document.createElement('div');
-        mount.className = 'player__mount';
-        player.append(mount);
-        const instance = window.AsciinemaPlayer.create(player.dataset.cast, mount, {
-          cols: Number(player.dataset.cols) || 120,
-          rows: Number(player.dataset.rows) || 34,
-          fit: 'both', autoPlay: true, idleTimeLimit: 2, theme: 'asciinema',
-          terminalFontFamily: '"CMUT",monospace'
-        });
-        $('.player__poster', player).classList.add('gone');
-        new MutationObserver(() => {
-          if (player.closest('[data-tabpanel]').hidden) instance.pause();
-        }).observe(player.closest('[data-tabpanel]'), { attributes: true, attributeFilter: ['hidden'] });
-      } catch (error) {
-        button.disabled = false;
-        button.textContent = 'Retry: ' + label;
-        console.error(error);
-      }
     });
   });
 }
