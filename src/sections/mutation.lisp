@@ -14,9 +14,7 @@
             (content ':mutation ':lede)))
         (div :class "figpair"
           (figure :class "figure" :data-rv "fade"
-            (div :class "fig" :id "mutFig")
-            (figcaption
-              (content ':mutation ':caption)))
+            (div :class "fig" :id "mutFig"))
           (div :class "stack-3"
             (p :class "prose"
               (content ':mutation ':prose))
@@ -24,9 +22,7 @@
               (content ':mutation ':prose-2))))
         (div :class "figpair figpair--flip"
           (figure :class "figure" :data-rv "fade"
-            (div :class "fig" :id "recFig")
-            (figcaption
-              (content ':mutation ':caption-2)))
+            (div :class "fig" :id "recFig"))
           (div :class "stack-3"
             (h3 :class "display d3"
               (content ':mutation ':subtitle))

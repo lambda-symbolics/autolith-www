@@ -16,25 +16,4 @@
             (p :class "prose"
               (content ':context ':prose))
             (p :class "prose"
-              (content ':context ':prose-2))
-            (dl :class "sheet"
-              (div
-                (dt "Example budget")
-                (dd
-                  (content ':context ':paragraph)))
-              (div
-                (dt "Corpus")
-                (dd
-                  (content ':context ':paragraph-2)))
-              (div
-                (dt "Root conversation")
-                (dd
-                  (content ':context ':paragraph-3)))
-              (div
-                (dt "Answer")
-                (dd
-                  (content ':context ':paragraph-4)))
-              (div
-                (dt "Trace")
-                (dd
-                  (content ':context ':paragraph-5))))))))))
+              (content ':context ':prose-2))))))))

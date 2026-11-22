@@ -5,8 +5,6 @@
   ("Neurosymbolic means combining model inference with explicit knowledge and local computation. Autolith retains prose memories, sourced facts, and reusable procedures across tasks. Admitted rules derive new facts without another model request, so you do not have to put every detail back into the prompt.")
  :derive__bar
  ("memory:facts · rule departure v1")
- :derive__caption
-  ("Move the meeting; recompute the departure locally.")
  :derive__stamp
  ("recomputed locally")
  :procedure__bar

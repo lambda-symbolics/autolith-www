@@ -60,9 +60,7 @@
                   (div :class "kb__foot"
                     (p :class "kb__meter" "model requests " (b "0"))
                     (p :class "kb__stamp"
-                      (content ':knowledge ':derive__stamp)))))
-              (figcaption
-                (content ':knowledge ':derive__caption)))
+                      (content ':knowledge ':derive__stamp))))))
             (p :class "prose"
               (content ':knowledge ':prose)))
           (div :class "stack-3"

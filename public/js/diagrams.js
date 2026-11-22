@@ -178,10 +178,9 @@ function rlm(){
   // corpus object
   const corpusG = mk("g", { class: "node corpus" });
   corpusG.append(mk("rect", { x: 8, y: MID - 42, width: 80, height: 84 }));
-  corpusG.append(txt(48, MID - 12, "3.1 MB", 13, "middle", "big"));
-  corpusG.append(txt(48, MID + 6, "content-", 9, "middle"));
-  corpusG.append(txt(48, MID + 18, "addressed", 9, "middle"));
-  corpusG.append(txt(48, MID + 32, "sha256", 8, "middle"));
+  corpusG.append(txt(48, MID - 8, "content-", 9, "middle"));
+  corpusG.append(txt(48, MID + 4, "addressed", 9, "middle"));
+  corpusG.append(txt(48, MID + 18, "sha256", 8, "middle"));
   svg.append(corpusG);
 
   const dash = mk("path", { d: `M88 ${MID} H ${COL_ROOT - 20}`, class: "edge dash" });
