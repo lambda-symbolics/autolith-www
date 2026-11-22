@@ -1,12 +1,10 @@
 ;; Persistent agents and coordination through channels.
 (:title
- ("A " (:em nil "World of Channels."))
+ ("Give agents " (:em nil "separate tasks."))
  :lede
- ("Work with persistent agents in channels, not disposable conversations. Build a council of peers or a hierarchy of specialists, each with its own model, reasoning effort, and role. Reuse those channels across tasks to retain their accumulated context and state.")
- :caption
- ("One engineering workflow: parallel agents, deliberate integration.")
+ ("Agents work in channels. If you assign more work in the same channel, the agent can use the earlier conversation.")
  :prose
- ("Give a specialist a bounded assignment while you continue your own work. Inspect its transcript, send a correction, or ask another agent to review its result. Replies and completion notices return through channels.")
+ ("Open a channel to read the transcript or send a correction. You receive replies and completion notices in channels.")
  :prose-2
  ("For independent code changes, children can edit and test in isolated Git worktrees. They return patches or commit ranges with checks and evidence. The parent reviews each artifact before integrating it.")
  :inventory
@@ -16,4 +14,4 @@
  :peers
  ("Coordinate agents directly through durable channel messages. A message conveys information, not extra authority.")
  :continuity
- ("Detach from the terminal and continue later. Conversations and retained work survive restarts; Autolith asks before repeating work with side effects."))
+ ("You can leave the terminal and pick up where you left off after a restart. Autolith asks before repeating work that has side effects."))

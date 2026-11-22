@@ -14,9 +14,7 @@
             (content ':tasks ':lede)))
         (div :class "figpair"
           (figure :class "figure" :data-rv "fade"
-            (div :class "fig" :id "taskFig")
-            (figcaption
-              (content ':tasks ':caption)))
+            (div :class "fig" :id "taskFig"))
           (div :class "stack-3"
             (p :class "prose"
               (content ':tasks ':prose))

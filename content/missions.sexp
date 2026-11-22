@@ -1,12 +1,12 @@
 ;; Copy for the missions section. Inline markup: (:em () "text").
 (:title
-  ("Long-horizon work, " (:em nil "with a finish line."))
+  ("You decide " (:em nil "what counts as done."))
  :lede
-  ("Pursue a goal across turns, scheduled continuations, and restarts. Persistent plans and agendas retain commitments; missions add explicit acceptance criteria, verification gates, and budgets. Completion depends on evidence, not the model declaring success.")
+  ("Use a mission if you need to check the result before you accept it. You can resume a mission after a restart.")
  :criteria
- ("You write the acceptance criteria. The model cannot weaken them, and a criterion without a gate needs your explicit evidence before the mission can pass.")
+ ("You set the acceptance criteria. If a criterion has no automated check, you must provide evidence that it was met.")
  :gates
-  ("Run command, artifact, Lisp, or fact-based checks with explicit limits. Retain each result and its input fingerprint so verification follows the actual work.")
+ ("You can use a test command as a gate. Autolith records each result and the inputs used for the check.")
  :budgets
   ("Bound turns, tokens, and wall-clock time across the primary agent, children, compaction, and recursive inference. Parallel work shares the same allowance.")
  :reviews
@@ -16,7 +16,7 @@
  :durability
   ("Retain plans, gate attempts, evidence, and spend with the conversation. Compaction preserves the working context without replacing the durable records.")
  :note
- ("For lighter work, " (:code nil "(goal \"…\")") " sets an objective without the ceremony. Start a mission with " (:code nil "(mission \"start …\")") " and watch it with " (:code nil "(mission \"status\")") ".")
+ ("Use " (:code nil "(goal \"…\")") " to set a goal without acceptance criteria. Use " (:code nil "(mission \"start …\")") " to start a mission. Run " (:code nil "(mission \"status\")") " to see the results of the checks.")
  :win__bar
  ("(mission \"status\")")
  :objective

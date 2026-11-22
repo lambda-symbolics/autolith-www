@@ -20,16 +20,18 @@
  :diagnosis__stamp
  ("cause found")
  :prose
- ("A fact's basis follows its source. A file Autolith read is an observation; your words are a user assertion. Derived facts inherit the basis of their premises, so an assumption cannot become an observation through reasoning. Conflicting facts are both kept and marked as disputed.")
+ ("Autolith records information read from a file as an observation. It records what you tell it as a user assertion. An assumption is not promoted to an observation by applying a rule. Autolith keeps conflicting facts and marks them as disputed.")
  :procedure__prose
   ("Repeated tool sequences can become parameterized procedures. For a later matching request, Autolith can run the learned sequence with one " (:code nil "procedure.run") " call. Each step keeps its own approval checks.")
  :diagnosis__prose
-  ("For a failure with several plausible causes, " (:code nil "diagnosis.run") " selects probes that distinguish them. It can execute a bounded sequence without another model request. If the evidence does not settle the case, the diagnosis stays open.")
+  ("If a failure has several plausible causes, use " (:code nil "diagnosis.run") " to test them. Autolith can run several checks without another model request. If the checks are inconclusive, Autolith leaves the diagnosis open.")
  :evidence
   ("Keep the source and basis of each fact. A file observation, your assertion, and a model prediction are different kinds of evidence.")
  :rules
-  ("Compute with dates, durations, numbers, and quantities. A proposed rule derives nothing until you admit it; derived facts follow changes in their premises.")
+  ("You decide which rules can be used. If the facts used by a rule change, Autolith recalculates the result.")
  :contracts
-  ("Check a tool's required facts before execution. Missing requirements refuse the call with an explanation; successful results can supply new observations.")
+  ("If the required facts are missing, Autolith skips the call and explains why. Autolith can record facts from successful results.")
  :inspect
- ((:code nil "(why \"c4df\")") " shows a fact's sources, rule, and premises; " (:code nil "(what-changed)") " lists what moved since you last asked, with the cause."))
+  ("Use " (:code nil "(why \"c4df\")") " to see the evidence and any rule used to derive that fact.")
+ :changes
+  ("Use " (:code nil "(what-changed)") " to see what changed since you last asked and why."))

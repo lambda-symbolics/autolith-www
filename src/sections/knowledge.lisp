@@ -80,7 +80,11 @@
               (div
                 (dt "(why)")
                 (dd
-                  (content ':knowledge ':inspect))))))
+                  (content ':knowledge ':inspect)))
+              (div
+                (dt "(what-changed)")
+                (dd
+                  (content ':knowledge ':changes))))))
         (div :class "two kb__pair"
           (div :class "stack-3"
             (figure :class "figure kb-figure" :data-rv "fade"

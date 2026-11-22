@@ -4,7 +4,7 @@
  :title
   ("Autolith, the self-modifying Common Lisp neurosymbolic agent")
  :description
-  ("A live Common Lisp agent with self-modification, symbolic memory, recursive language models, persistent multi-agent channels, and verified long-horizon autonomy. You don't need to know Lisp.")
+  ("Autolith is an agent written in Common Lisp. You can give separate tasks to other agents and ask Autolith to add commands while it runs.")
  :url
  ("https://autolith.rocks")
  :docs
