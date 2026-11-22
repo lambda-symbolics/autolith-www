@@ -113,24 +113,6 @@ function figures(){
     ]
   });
 
-  const rec = $("#recFig");
-  if (rec) flow(rec, {
-    id: "rec", w: 392, h: 348,
-    nodes: [
-      { id: "brk", x: 4,   y: 4,   w: 154, h: 40, label: "bad redefinition", size: 12, order: 0 },
-      { id: "cap", x: 4,   y: 84,  w: 154, h: 40, label: "crash capsule", size: 12, order: 1 },
-      { id: "pri", x: 4,   y: 164, w: 154, h: 46, label: ["pristine", "recovery image"], kind: "boxn solid", size: 11, order: 2 },
-      { id: "gen", x: 238, y: 164, w: 150, h: 46, label: ["known-good", "generation"], size: 11, order: 3 },
-      { id: "dia", x: 4,   y: 280, w: 384, h: 46, label: ["read-only diagnosis turn", "inspect, report, ask"], size: 11, order: 5 }
-    ],
-    edges: [
-      { from: "brk", to: "cap", fromSide: "b", toSide: "t", order: 1, label: "written", lx: 116, ly: 66 },
-      { from: "cap", to: "pri", fromSide: "b", toSide: "t", order: 2, label: "boots", lx: 110, ly: 146 },
-      { from: "pri", to: "gen", order: 3, label: "selects", lx: 198, ly: 179 },
-      { from: "gen", to: "dia", fromSide: "b", toSide: "t", elbow: true, order: 4, label: "conversation restored", lx: 236, ly: 231 }
-    ]
-  });
-
   const task = $("#taskFig");
   if (task) flow(task, {
     id: "task", w: 392, h: 384,

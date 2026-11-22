@@ -2,11 +2,11 @@
 (:name
  ("Autolith")
  :title
-  ("Autolith, the self-modifying Common Lisp neurosymbolic agent")
+ ("Autolith, the self-modifying neurosymbolic agent")
  :description
-  ("Autolith is an agent written in Common Lisp. You can give separate tasks to other agents and ask Autolith to add commands while it runs.")
+ ("Autolith is a neurosymbolic self-modifying long-horizon agent. It can adapt to any workload, it gets better the long it works, and it uses symbolic reasoning to keep information organized.")
  :url
- ("https://autolith.rocks")
+ ("https://autolith.org")
  :docs
  ("https://lambda-symbolics.com/autolith/docs")
  :source

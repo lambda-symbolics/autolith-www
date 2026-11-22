@@ -19,16 +19,4 @@
             (p :class "prose"
               (content ':mutation ':prose))
             (p :class "prose"
-              (content ':mutation ':prose-2))))
-        (div :class "figpair figpair--flip"
-          (figure :class "figure" :data-rv "fade"
-            (div :class "fig" :id "recFig"))
-          (div :class "stack-3"
-            (h3 :class "display d3"
-              (content ':mutation ':subtitle))
-            (p :class "prose"
-              (content ':mutation ':prose-3))
-            (p :class "prose"
-              (content ':mutation ':prose-4))
-            (p :class "note"
-              (content ':mutation ':note))))))))
+              (content ':mutation ':prose-2))))))))
