@@ -2,17 +2,17 @@
 (:title
  ("Install it.")
  :prose
- ("The high testosterone, high estrogen way to install Autolith.")
+  ("Run the complete runtime with Nix, the preferred installation method where available.")
  :prose-2
  ("Installs or updates the packaged release for your platform. Then run " (:code nil "autolith") ".")
  :prose-3
- ("Imagine running a good agent harness directly in PowerShell with the default color scheme, huh.")
+  ("Install from PowerShell, then run " (:code nil "autolith") ".")
  :code__cap
  ("Then sign in to a provider")
  :prose-4
- ("Once you authenticate, it's time to have fun. Run " (:code nil "autolith") " to get started.")
+  ("Choose a provider and authenticate, then run " (:code nil "autolith") ". Type a request to begin.")
  :win__bar
- ("Autolith 5th grade report card")
+  ("Platforms and updates")
  :paragraph
  ("ISC")
  :paragraph-2
@@ -26,4 +26,4 @@
  :paragraph-6
  ((:code nil "(update)") " inside AL, " (:code nil "autolith update") " from the CLI")
  :warn
- (" " (:span (:class "mark" :aria-hidden "true")) " Yes, piping a URL into a shell is evil. Read the installer first, it's not so bad." (:br nil) (:br nil) "Nix is the preferred installation method on worthy operating systems. "))
+  ((:span (:class "mark" :aria-hidden "true")) " Inspect the " (:a (:href "https://sh.lambda-symbolics.com/autolith" :class "ulink") "installer script") " before piping it into a shell. For setup, permissions, and source builds, read the " (:a (:href "https://lambda-symbolics.com/autolith/docs" :class "ulink") "guide") "."))

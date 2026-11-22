@@ -43,27 +43,20 @@
               (content ':repl ':prose-3))
             (figure :class "code"
               (pre :tabindex "0"
-                  (span :class "cm" ";; a computed message")
+                (span :class "cm" ";; a computed message")
                 "
-                  "
-                  (span :class "kw" "channel.send")
-                  " :text ("
-                (span :class "kw" "read-file")
-                " \"review-notes.org\"))
+("
+                (span :class "kw" "channel.send")
+                " :text ("
+                (span :class "kw" "format")
+                " nil \"The result is ~a\" (+ 2 2)))
 
 "
                 (span :class "cm" ";; a tool, called by hand")
                 "
 ("
                 (span :class "kw" "resource.read")
-                " :uri \"workspace:.\")
-
-"
-                (span :class "cm" ";; introspection, right there")
-                "
-("
-                (span :class "kw" "describe")
-                " 'application)")))
+                " :uri \"workspace:.\")")))
           (div :class "stack-3" :data-rv t :style "--d:1"
             (h3 :class "display d3"
               (content ':repl ':subtitle-3))

@@ -1,10 +1,10 @@
-;; Page metadata. Update the URL when the permanent domain is assigned.
+;; Page metadata and shared links.
 (:name
  ("Autolith")
  :title
- ("Autolith, the live Common Lisp agent")
+  ("Autolith, the self-modifying Common Lisp neurosymbolic agent")
  :description
- ("A self-modifying Common Lisp terminal agent. The Emacs of agents: inspect and extend it live, delegate work, and use recursive inference for material beyond one context window.")
+  ("A live Common Lisp agent with self-modification, symbolic memory, recursive language models, persistent multi-agent channels, and verified long-horizon autonomy. You don't need to know Lisp.")
  :url
  ("https://autolith.rocks")
  :docs

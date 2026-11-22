@@ -7,15 +7,12 @@
   ((:file "src/package")
    (:file "src/content")
    (:file "src/components")
-   (:module     "src/sections"
-    :serial     t
-    :components ((:file "hero") (:file "image") (:file "repl")
-                 (:file "mutation") (:file "context") (:file "sessions")
-                 (:file "live") (:file "missions")
-                 (:file "tasks") (:file "knowledge") (:file "cost")
-                 (:file "security") (:file "state")
-                 (:file "yours") (:file "install") (:file "friends")
-                 (:file "footer")))
+   (:module      "src/sections"
+    :serial      t
+     :components ((:file "hero") (:file "mutation") (:file "knowledge")
+                  (:file "context") (:file "tasks") (:file "missions")
+                  (:file "yours") (:file "repl") (:file "sessions")
+                  (:file "install") (:file "friends") (:file "footer")))
    (:file "src/page")
    (:file "src/og")
    (:file "src/build")))

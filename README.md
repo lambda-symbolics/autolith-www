@@ -96,6 +96,10 @@ With an existing Chromium, use `CHROMIUM=/path/to/chromium ./script/check`.
 Checks cover copy validation, escaping, deterministic HTML, JS syntax, internal
 anchors, desktop and mobile rendering, keyboard tabs and navigation, motion
 preferences, no-JavaScript content and automated WCAG A/AA checks with axe.
+The editor browser test starts the real editing server in a temporary checkout
+and exercises edit/save/reload, inline formatting, panel fields, rejected saves
+and exclusion of editor assets from production. Run it alone after building with
+`node tests/editor.mjs`; it never writes to the working tree's copy files.
 Screenshots are written to `test-results/` for visual review. Automated checks
 do not constitute an accessibility certification.
 

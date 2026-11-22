@@ -80,14 +80,6 @@
                 (dd
                   (content ':knowledge ':contracts)))
               (div
-                (dt "Plans, gates")
-                (dd
-                  (content ':knowledge ':gates)))
-              (div
-                (dt "Recipes")
-                (dd
-                  (content ':knowledge ':recipes)))
-              (div
                 (dt "(why)")
                 (dd
                   (content ':knowledge ':inspect))))))

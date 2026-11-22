@@ -1,7 +1,7 @@
 (in-package #:autolith-www)
 
 (defcomp ~section-yours nil
-  "Render the yours section."
+  "Render tools, integrations, and optional runtime extensions."
   (hsx
     (section :class "band" :id "yours"
       (canvas :class "marg marg--r marg--tall" :data-plate "tape" :style
@@ -14,42 +14,22 @@
             (content ':yours ':lede)))
         (dl :class "deflist deflist--two" :data-rv t
           (div
+            (dt "Tools")
+            (dd (content ':yours ':tools)))
+          (div
             (dt "Skills")
-            (dd
-              (content ':yours ':paragraph)))
+            (dd (content ':yours ':skills)))
           (div
             (dt "MCP servers")
-            (dd
-              (content ':yours ':paragraph-2)))
+            (dd (content ':yours ':mcp)))
           (div
-            (dt "Child roles")
-            (dd
-              (content ':yours ':paragraph-3)))
+            (dt "Editors and ACP")
+            (dd (content ':yours ':editors)))
           (div
             (dt "Providers")
-            (dd
-              (content ':yours ':paragraph-4)))
+            (dd (content ':yours ':providers)))
           (div
-            (dt "init.lisp")
-            (dd
-              (content ':yours ':paragraph-5)))
-          (div
-            (dt "Request context")
-            (dd
-              (content ':yours ':paragraph-6)))
-          (div
-            (dt "Commands")
-            (dd
-              (content ':yours ':paragraph-7)))
-          (div
-            (dt "Instructions")
-            (dd
-              (content ':yours ':paragraph-8)))
-          (div
-            (dt "Settings")
-            (dd
-              (content ':yours ':paragraph-9)))
-          (div
-            (dt "Help")
-            (dd
-              (content ':yours ':paragraph-10))))))))
+            (dt "The live runtime")
+            (dd (content ':yours ':runtime))))
+        (p :class "note" :data-rv t
+          (content ':yours ':note))))))

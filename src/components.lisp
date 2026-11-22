@@ -3,12 +3,10 @@
 (hsx:register-web-components svg g path)
 
 (defparameter *navigation*
-  '(("image" "Live image") ("repl" "The REPL")
-    ("mutation" "Self-modification") ("context" "RLM")
-    ("sessions" "Sessions") ("missions" "Missions") ("tasks" "Tasks")
-    ("knowledge" "Knowledge") ("cost" "Cost") ("security" "Security")
-    ("state" "State") ("yours" "Yours"))
-  "Section links in the bar. The install call to action is rendered separately.")
+  '(("mutation" "Self-modification") ("knowledge" "Symbolic memory")
+    ("context" "RLM") ("tasks" "Channels") ("missions" "Autonomy")
+    ("yours" "Extensions") ("sessions" "Recordings"))
+  "The six capabilities and their recorded evidence, with installation separate.")
 
 (defun site-inline-svg (relative-path)
   "Read an SVG asset for inlining, without its embedded stylesheet.

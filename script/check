@@ -5,8 +5,9 @@ case " $* " in
   *" --fix "*) exec sbcl --script script/check-source.lisp "$@" ;;
 esac
 ./script/build --test
-for file in public/js/*.js; do node --check "$file"; done
+for file in public/js/*.js public/edit/*.js tests/*.mjs; do node --check "$file"; done
 node tests/browser.mjs
+node tests/editor.mjs
 git diff --check -- . ':!vendor'
 git diff --cached --check -- . ':!vendor'
 sbcl --script script/check-source.lisp "$@"

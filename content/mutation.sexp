@@ -1,21 +1,21 @@
 ;; Copy for the mutation section. Inline markup: (:em () "text").
 (:title
- ("Update the running agent without " (:em nil "restarting") " it.")
+ ("An agent you can " (:em nil "change while it runs."))
  :lede
- (" Autolith replaces complete functions, methods, classes, macros, conditions, and global settings in its image at runtime. The change is instantly live." (:br nil) (:br nil) "You decide which changes to persist. Trial changes last only for the current process unless you commit them.")
+ ("Somewhere between Emacs and a Lisp Machine: Autolith can inspect its own code and live state, then change how it works to fit your task. Ask for a new command, a different workflow, or a repair. The change is live in the running Common Lisp image.")
  :caption
- ((:b nil "Figure 2.") " Autolith mutations.")
+ ("Live changes, checked before they become durable.")
  :prose
- (" " (:b nil "self.redefine") " journals a complete definition before compiling and installing it in the image." (:br nil) (:br nil) (:b nil "self.exercise") " runs assertions against a pending change to check its behavior." (:br nil) (:br nil) (:b nil "self.diff") " lets Autolith review all pending changes." (:br nil) (:br nil) (:b nil "self.discard") " restores the definitions or settings from before an unwanted trial change.")
+ ("A modification starts as a trial. Autolith journals the definition, installs it, and runs focused checks. Inspect the pending changes or discard an unwanted trial." (:br nil) (:br nil) "The same runtime contains the agent, its tools, commands, and configuration. Extending it does not require a separate plugin service.")
  :prose-2
- (" " (:b nil "self.commit") " persists pending changes as a replay script in Autolith's private Git history, after checking the replay in a clean process. Your modified agent can then be rebuilt from source and that script." (:br nil) (:br nil) "After an update, overrides whose tracked source has moved on are skipped instead of silently replacing new code, and " (:code nil "(fix-skipped-definitions)") " asks Autolith to rebuild them against the current source.")
+ ("A private image commit retains the complete replay script only after a clean-process check. Saved-core generations preserve exact working states; the source and replay script let you reconstruct the modified agent." (:br nil) (:br nil) "Choose which changes to keep. Trial changes last for the current process unless committed.")
  :caption-2
- ((:b nil "Figure 3.") " When Autolith crashes.")
+ ("A pristine recovery image, separate from the modified agent.")
  :subtitle
- ("If Autolith breaks:")
+ ("Experiment, with a way back.")
  :prose-3
- ("If you or Autolith somehow manage to crash the process, it will write a crash capsule, boot a separately built pristine image, and select a known-working generation from it. ")
+ ("Checkpointing and recovery are part of live self-modification. If a change crashes the process, Autolith writes a crash capsule and boots a separately built pristine image to recover a known-working generation.")
  :prose-4
- (" Autolith restores the conversation and starts a read-only diagnosis turn to investigate the crash." (:br nil) (:br nil) "You decide whether to attempt a repair.")
+ ("The conversation is restored for a read-only diagnosis turn. Inspect what happened and decide whether to attempt a repair, rather than losing the work with the process.")
  :note
- ((:strong nil "Note:") " Many Lisp errors can be handled through the debugger without ending the process. You and the model can inspect the condition and choose an available restart."))
+ ("Many Lisp errors are recoverable without a crash. Inspect the condition and choose an available restart. Process separation limits accidental damage; it is not a hostile-code security boundary."))

@@ -1,6 +1,6 @@
 ;; Copy for sessions. Text and inline HSX-compatible markup.
 (:title
- ("Example recorded sessions.")
+  ("Watch it " (:em nil "work."))
  :paragraph
  ("List every condition class in a 3.7 MB concatenation of 201 source files, grouped by subsystem, with the defining file. Budget of 32 calls, 400 000 tokens, depth 2. Do not read or search the file directly.")
  :paragraph-2

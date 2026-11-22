@@ -1,12 +1,12 @@
 ;; Copy for context. Text and inline HSX-compatible markup.
 (:caption
- ((:b nil "Figure 1.") " RLM partitioning")
+  ("Partition the material; bring back the answer and its trace.")
  :title
- ("Work beyond the context window.")
+  ("Read beyond " (:em nil "one context window."))
  :prose
- (" Every model has a hard limit on how much it can read at once." (:br nil) (:br nil) "For a log, codebase, or folder of documents too large to fit, Autolith can divide the material among recursive inference calls and combine their answers. The full input stays outside the main conversation." (:br nil) (:br nil) "The approach comes from " (:a (:href "https://arxiv.org/abs/2512.24601" :class "ulink") "Recursive Language Models") ", by Alex L. Zhang, Tim Kraska, and Omar Khattab. Autolith is a compromise between a traditional agent and " (:a (:href "https://github.com/PrimeIntellect-ai/prime-agent") (:strong nil "Prime Agent")) " (which also rocks, by the way!): a conventional agent with RLM tools it can use when needed.")
+  ("A large log, codebase, or document collection does not have to fit in the conversation. With " (:a (:href "https://arxiv.org/abs/2512.24601" :class "ulink") "Recursive Language Models") ", Autolith keeps the full input outside its working context, writes programs to search and slice it, and combines answers from bounded inference calls.")
  :prose-2
- ("It writes small programs to search and slice the material, sends selected parts to separate model conversations, and combines the answers. Those conversations can split their own work further." (:br nil) (:br nil) "Each run has limits on calls, tokens, and recursion depth. If it reaches a limit, its retained context and trace are available for follow-up work; the answer may be incomplete.")
+  ("Each call receives selected evidence and can divide its work further. The main conversation gets a result and an inspectable trace instead of the whole corpus." (:br nil) (:br nil) "Calls, tokens, and recursion depth are budgeted. A run that exhausts its budget may be incomplete. The example below is one source audit; the " (:a (:href "#sessions" :class "ulink") "recorded sessions") " include a separate, larger run.")
  :paragraph
  ("32 calls, 400 000 tokens, depth 2")
  :paragraph-2

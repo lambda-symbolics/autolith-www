@@ -2,8 +2,8 @@
 (:hero__name
  ("Autolith")
  :display
- ("The Common Lisp agent that " (:em nil "rewrites itself") " and rocks.")
+  ("The " (:em nil "self-modifying") " neurosymbolic agent.")
  :hero__lede
- (" A self-modifying terminal programming agent inside a live image it can inspect, edit, break & recover, and shape to fit any use case. ")
+  ("A live Common Lisp image for long-horizon work. Adapt the agent, reason with persistent knowledge, and coordinate agents across channels. You don't need to know Lisp.")
  :hero__plat
  ("Linux, macOS, FreeBSD, NetBSD, OpenBSD, and Windows. " (:a (:class "ulink" :href "#install") "See more.")))

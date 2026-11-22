@@ -1,7 +1,7 @@
 (in-package #:autolith-www)
 
 (defcomp ~section-tasks nil
-  "Render the tasks section: delegation into isolated worktrees and engineering edits."
+  "Render persistent multi-agent channels and an engineering delegation example."
   (hsx
     (section :class "band" :id "tasks"
       (canvas :class "marg marg--l marg--tall" :data-plate "branches" :style
@@ -24,26 +24,14 @@
               (content ':tasks ':prose-2))))
         (dl :class "deflist deflist--two tasks__list" :data-rv t
           (div
-            (dt "(tasks)")
-            (dd
-              (content ':tasks ':inventory)))
+            (dt "Inspect and steer")
+            (dd (content ':tasks ':inventory)))
           (div
-            (dt "Engineering role")
-            (dd
-              (content ':tasks ':engineering)))
+            (dt "Models and roles")
+            (dd (content ':tasks ':roles)))
           (div
-            (dt "Semantic edits")
-            (dd
-              (content ':tasks ':semantic)))
+            (dt "Councils and hierarchies")
+            (dd (content ':tasks ':peers)))
           (div
-            (dt "Structural rewrites")
-            (dd
-              (content ':tasks ':structural)))
-          (div
-            (dt "Peer messages")
-            (dd
-              (content ':tasks ':peers)))
-          (div
-            (dt "Debugger")
-            (dd
-              (content ':tasks ':debugger))))))))
+            (dt "Keep the context")
+            (dd (content ':tasks ':continuity))))))))
