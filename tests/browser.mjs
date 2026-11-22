@@ -48,6 +48,8 @@ try {
       [...document.querySelectorAll('body *')].filter(element => element.getBoundingClientRect().right > innerWidth + 1)
         .map(element => [element.tagName, element.id, element.className, Math.round(element.getBoundingClientRect().right)]).slice(0, 12));
     assert.deepEqual(overflow, [], name + ' horizontal overflow');
+    assert.equal(await page.locator('#context + #install').count(), 1);
+    assert.equal(await page.locator('#navLinks a').last().getAttribute('href'), '#context');
 
     for (const block of await page.locator('.shellblock').all()) {
       const commands = await block.locator('b').allTextContents();
@@ -71,6 +73,31 @@ try {
       await page.keyboard.press('ArrowRight');
       assert.equal(await page.locator('.hero [role="tab"]').nth(1).getAttribute('aria-selected'), 'true');
       assert(await page.locator('[data-tabpanel="h-binary"]').isVisible());
+
+      const slides = page.locator('#knowledge [role="tabpanel"]');
+      const tabs = page.locator('#knowledge [role="tab"]');
+      assert.equal(await tabs.count(), 4);
+      assert.equal(await slides.filter({visible:true}).count(), 1);
+      await tabs.first().focus();
+      await page.keyboard.press('ArrowRight');
+      assert(await slides.nth(1).isVisible());
+      assert(await tabs.nth(1).evaluate(tab => tab === document.activeElement));
+      await page.keyboard.press('End');
+      assert(await slides.last().isVisible());
+      await page.keyboard.press('ArrowRight');
+      assert(await slides.first().isVisible());
+      for (const tab of await tabs.all()) {
+        await tab.click();
+        const panel = page.locator('#' + await tab.getAttribute('aria-controls'));
+        assert(await panel.isVisible());
+        assert.equal(await slides.filter({visible:true}).count(), 1);
+        assert.equal(await tab.getAttribute('aria-selected'), 'true');
+        assert(await panel.evaluate(element => document.documentElement.scrollWidth <= innerWidth + 1
+          && element.scrollWidth <= element.clientWidth + 1), `${name}: ${panel} overflow`);
+        if (name === 'desktop' || name === 'mobile') {
+          await page.locator('#knowledge .kb__carousel').screenshot({path:`test-results/${name}-${await tab.getAttribute('id')}.png`});
+        }
+      }
       if (name === 'mobile') {
         // The narrow bar drops the section links and keeps the mark and the
         // call to action. Nothing is left behind an overlay.

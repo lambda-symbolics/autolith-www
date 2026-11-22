@@ -426,18 +426,11 @@ function knowledge(){
 
   const procedure = $("#procedureViz");
   ledger(procedure, ({ reveal, later }) => {
-    const calls = row => $$(".kb__calls span", row).forEach(call => later(() => call.classList.add("on"), 190));
-    for (const turn of $$(".kb__turn", procedure)){
-      reveal(turn, 260);
-      calls(turn);
-      later(() => {}, 240);
-    }
-    later(() => $(".kb__turns", procedure).classList.add("folded"), 380);
-    reveal($(".kb__learned", procedure), 1000);
-    reveal($(".kb__next", procedure), 720);
-    reveal($(".kb__fits", procedure), 620);
+    for (const turn of $$(".kb__turn", procedure)) reveal(turn, 210);
     reveal($(".kb__run", procedure), 380);
-    calls($(".kb__run", procedure));
+    for (const call of $$(".kb__calls span", procedure)) {
+      later(() => call.classList.add("on"), 190);
+    }
     later(() => $(".kb__stamp", procedure).classList.add("on"));
   });
 

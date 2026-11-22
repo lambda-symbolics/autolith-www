@@ -85,4 +85,4 @@ animation counts up to, SHOWN its printed form, and LIMIT the allowance."
                 (p :class "mission__legend"
                   (span (i :class "spent") "spent")
                   (span (i :class "res") "reserved"))
-                (p :class "mission__stamp" "verified")))))))))
+                (~status-badge :class "mission__stamp" :label "verified")))))))))

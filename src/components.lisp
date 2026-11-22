@@ -4,8 +4,8 @@
 
 (defparameter *navigation*
   '(("mutation" "Self-modification") ("knowledge" "Symbolic memory")
-    ("context" "RLM") ("tasks" "Channels") ("missions" "Autonomy")
-    ("yours" "Extensions"))
+    ("tasks" "Channels") ("missions" "Autonomy") ("yours" "Extensions")
+    ("context" "RLM"))
   "The six capabilities, with installation separate.")
 
 (defun site-inline-svg (relative-path)
@@ -59,6 +59,13 @@ bar keeps the mark and the call to action."
       (div :class "install"
         (code :tabindex "0" command)
         (button :class "install__copy" :type "button" :data-copy command "Copy")))))
+
+(defcomp ~status-badge (&key class label)
+  "Render a completion badge with a decorative leading checkmark."
+  (hsx
+    (p :class (concatenate 'string "status-badge " class)
+      (span :aria-hidden "true" "✓")
+      label)))
 
 (defcomp ~shell-commands (&key commands)
   "Render shell commands with explicit line separators and unselectable prompts."

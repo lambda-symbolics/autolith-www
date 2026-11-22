@@ -357,9 +357,10 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .mission__legend i{display:inline-block;width:.9em;height:.9em;border:1px solid var(--fg);vertical-align:-.1em;margin-right:.45em}
 .mission__legend .spent{background:var(--fg)}
 .mission__legend .res{background:var(--dither);background-size:3px 3px}
-.mission__stamp,.kb__stamp{font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.16em;color:var(--green-ink);border:2px solid var(--green-ink);padding:.35em .8em;transform:rotate(-3deg);transition:opacity .35s var(--ease),transform .5s var(--ease)}
-.armed .mission__stamp,.armed .kb__stamp{opacity:0;transform:scale(1.7) rotate(-3deg)}
-.armed .mission__stamp.on,.armed .kb__stamp.on{opacity:1;transform:rotate(-3deg)}
+.status-badge{display:inline-flex;align-items:center;gap:.55em;background:#000;color:#fff;font:700 .82rem/1.25 var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:.45em .75em;transition:opacity .35s var(--ease)}
+.status-badge>span:first-child{font-family:system-ui,sans-serif}
+.armed .status-badge{opacity:0}
+.armed .status-badge.on{opacity:1}
 @media (max-width:700px){
   .gates{grid-template-columns:1fr 1fr}
   .budget{grid-template-columns:5.4rem minmax(0,1fr)}
@@ -367,8 +368,15 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 }
 
 /* knowledge ledgers: the finished state is the default, .armed replays it */
-.kb__pair{margin-top:clamp(3.4rem,8vh,5.4rem);align-items:start}
-.kb-figure{display:grid;gap:1.1rem}
+.kb__slide{margin-top:clamp(1.4rem,4vw,2.6rem)}
+.kb__slide .two{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:start}
+.kb__slide .kb{margin:0 15px 15px 0;min-width:0}
+.kb__intro{min-width:0;max-width:58ch}
+.kb__links{display:grid;gap:.65rem;list-style:square;padding-left:1.2em;font-size:.85rem}
+.kb__checkpoint>div{border-left:1px solid var(--fg);padding-inline-start:.8rem}
+.kb__checkpoint dt{font-weight:700;margin-bottom:.3em}
+.kb__checkpoint dd{overflow-wrap:anywhere}
+@media (max-width:900px){.kb__slide .two{grid-template-columns:minmax(0,1fr)}}
 .kb__body{display:grid;gap:clamp(.8rem,1.9vh,1.15rem);padding:clamp(1rem,2.2vw,1.6rem);font-family:var(--mono);font-size:.76rem;line-height:1.35}
 .kb__facts,.kb__turns,.kb__probes{display:grid;gap:.4rem}
 .kb__fact{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr) minmax(0,.8fr) minmax(0,1fr);gap:.7rem;align-items:baseline;padding:.45rem .6rem;border:1px solid var(--fg)}
@@ -380,13 +388,12 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .kb__rule::before{content:"\2193";font-size:1rem;color:var(--green-ink)}
 .kb__foot{display:flex;justify-content:space-between;align-items:center;gap:1rem 1.6rem;flex-wrap:wrap;font-size:.72rem}
 .kb__meter b{font-size:1.05rem;margin-left:.35em;color:var(--green-ink);font-variant-numeric:tabular-nums}
-.kb__turn{display:grid;gap:.3rem;padding:.45rem .6rem;border:1px solid var(--fg)}
+.kb__turn{padding:.45rem .6rem;border:1px solid var(--fg)}
 .kb__ask{font-family:var(--serif);font-style:italic;font-size:.95rem}
 .kb__ask b{font-family:var(--mono);font-style:normal;font-size:.8rem;color:var(--green-ink);text-decoration:underline;text-underline-offset:.2em}
 .kb__calls{display:flex;flex-wrap:wrap;gap:.35rem}
 .kb__calls span{padding:.1rem .4rem;background:var(--fg);color:var(--bg);font-size:.68rem}
 .kb__calls span+span::before{content:"\2192\00a0"}
-.kb__notice{color:var(--green-ink);font-weight:700}
 .kb__run{display:grid;gap:.35rem;padding:.55rem .65rem;background:var(--dither);background-size:3px 3px}
 .kb__run .kb__call{background:var(--bg);justify-self:start;padding:.1rem .35rem;font-weight:700}
 .kb__hypotheses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;padding:0;list-style:none}
@@ -407,7 +414,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .kb .kb__val.fresh{color:var(--green)}
 .kb.armed .kb__calls span{opacity:.18;transition:opacity .3s var(--ease)}
 .kb.armed .kb__calls span.on{opacity:1}
-.kb.armed .kb__turns.folded .kb__turn{opacity:.28;transform:scale(.985);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .kb.armed .kb__hypotheses li{background:var(--bg);color:var(--fg);border-style:dashed;text-decoration:none}
 .kb.armed .kb__hypotheses li::before{content:"?\00a0"}
 .kb.armed .kb__hypotheses li.out{border-style:solid;text-decoration:line-through;opacity:.55}
@@ -474,6 +480,15 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .tabs button:last-child{border-right:0}
 .tabs button:hover{background:var(--fg);color:var(--bg)}
 .tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
+.kb__tabs{overflow:visible}
+.kb__tabs button:focus-visible{outline-offset:-4px}
+.kb__slide[hidden]{display:none}
+@media (max-width:620px){
+  .kb__tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+  .kb__tabs button{white-space:normal}
+  .kb__tabs button:nth-child(2){border-right:0}
+  .kb__tabs button:nth-child(-n+2){border-bottom:1px solid var(--fg)}
+}
 
 /* ---------------------------------------------------------------- bento
    The gaps are the rules. One pixel of ink shows between the cells, so the
