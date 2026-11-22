@@ -520,7 +520,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .panel[hidden]{display:none}
 .panel{padding-top:clamp(1.3rem,2.6vh,2rem)}
 .panel__note{margin-top:.95rem;font-style:italic;font-size:.97rem}
-.install__auth{margin-top:clamp(1.8rem,3.5vh,2.6rem)}
 
 .install{display:flex;border:1px solid var(--fg);font-family:var(--mono);max-width:100%}
 .install[hidden],.demo[hidden],.panel[hidden]{display:none}
@@ -528,8 +527,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .install code::-webkit-scrollbar{display:none}
 .install__copy{flex:none;padding:0 1.1em;border-left:1px solid var(--fg);font-size:.78rem;font-weight:700;transition:background-color .2s,color .2s}
 .install__copy:hover{background:var(--fg);color:var(--bg)}
-
-.warn{max-width:52ch;font-size:.97rem;line-height:1.5}
 
 /* ---------------------------------------------------------------- swell
    The page does not change colour, it dithers into it. One bit, in motion. */
