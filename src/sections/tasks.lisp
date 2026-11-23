@@ -31,5 +31,5 @@
             (dt "Councils and hierarchies")
             (dd (content ':tasks ':peers)))
           (div
-            (dt "Keep the context")
+            (dt "Preserve context")
             (dd (content ':tasks ':continuity))))))))

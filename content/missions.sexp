@@ -1,21 +1,21 @@
 ;; Copy for the missions section. Inline markup: (:em () "text").
 (:title
-  ("You decide " (:em nil "what counts as done."))
+ ("Dispatch " (:em nil "structured missions."))
  :lede
-  ("Use a mission if you need to check the result before you accept it. You can resume a mission after a restart.")
+ ("Use Autolith missions if you need to validate results before accepting them. Missions are essentially an extension of the /goal command found in many harnesses. Agents can help you design missions.")
  :criteria
  ("You set the acceptance criteria. If a criterion has no automated check, you must provide evidence that it was met.")
  :gates
- ("You can use a test command as a gate. Autolith records each result and the inputs used for the check.")
+ ("You can use test commands as gates. Autolith records all results and the inputs used for every check.")
  :budgets
-  ("Bound turns, tokens, and wall-clock time across the primary agent, children, compaction, and recursive inference. Parallel work shares the same allowance.")
+ ("Set limits for turns, token spend, and wall-clock time across the primary agent, children, compactions, and recursive inference.")
  :reviews
-  ("Request an independent review against a fixed snapshot. Unresolved findings block acceptance.")
+ ("Request independent reviews against a fixed snapshot, where unresolved review findings will block acceptance.")
  :schedules
- ("Wake a mission at a time, on an interval, or on an external event. Due work enters the ordinary command queue under the same budgets.")
+ ("Wake missions at a time, on an interval, or when triggered by external events.")
  :durability
-  ("Retain plans, gate attempts, evidence, and spend with the conversation. Compaction preserves the working context without replacing the durable records.")
+ ("Retain plans, gate attempts, evidence, and spend with the conversation. Compaction preserves the working context without replacing the durable records.")
  :win__bar
  ("(mission \"status\")")
  :objective
- ("Deliver the accepted build"))
+ ("Deliver an accepted build"))

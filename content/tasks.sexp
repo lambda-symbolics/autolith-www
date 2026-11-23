@@ -14,4 +14,4 @@
  :peers
  ("Agents in Autolith can form councils and hierarchies of agents with different roles, tasks, models and model efforts")
  :continuity
- ("You can leave the terminal and pick up where you left off later. The world server is a daemon, meaning agents work independently of how many clients you have connected. On restart, continuity features prevent unnecessary redos and confusion."))
+ ("You can leave the terminal and pick up where you left off later. The world server is a daemon, meaning agents work independently of how many clients you have connected. On restart, job continuity features prevent unnecessary redos and confusion."))
