@@ -12,7 +12,7 @@
  :derive__stamp
  ("recomputed locally")
  :inspect
- ("Use " (:code nil "(why \"c4df\")") " to see the evidence and any rule used to derive that fact.")
+ ("Use " (:code nil "(why \"c4df\")") " to see the evidence and rules used to derive the fact in question.")
  :changes
  ("Use " (:code nil "(what-changed)") " to see what changed since you last asked and why.")
  :diagnosis__title

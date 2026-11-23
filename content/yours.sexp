@@ -1,6 +1,6 @@
 ;; Tools, integrations, and optional runtime extension.
 (:title
- ("Adapt Autolith for " (:em nil "your work."))
+ ("Adapt Autolith to " (:em nil "your work."))
  :lede
  ("Use the tools already in Autolith, connect the software you rely on, or ask the agent to add a capability. Configure it in files or extend the live runtime from the prompt by asking the agent.")
  :skills
