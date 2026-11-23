@@ -2,12 +2,12 @@
 (:title
  ("Install Autolith")
  :prose
-  ("Run the complete runtime with Nix, the preferred installation method where available.")
+ ("The high testosterone, high estrogen way to install Autolith.")
  :prose-2
  ("Installs or updates the packaged release for your platform. Then run " (:code nil "autolith") ".")
  :prose-3
-  ("Install from PowerShell, then run " (:code nil "autolith") ".")
+ ("Install from PowerShell, then run " (:code nil "autolith") ".")
  :code__cap
  ("Then sign in to a provider")
  :prose-4
-  ("Choose a provider and authenticate, then run " (:code nil "autolith") "."))
+ ("Choose a provider and authenticate, then run " (:code nil "autolith") "."))

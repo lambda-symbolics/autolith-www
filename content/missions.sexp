@@ -15,8 +15,6 @@
  ("Wake a mission at a time, on an interval, or on an external event. Due work enters the ordinary command queue under the same budgets.")
  :durability
   ("Retain plans, gate attempts, evidence, and spend with the conversation. Compaction preserves the working context without replacing the durable records.")
- :note
- ("Use " (:code nil "(goal \"…\")") " to set a goal without acceptance criteria. Use " (:code nil "(mission \"start …\")") " to start a mission. Run " (:code nil "(mission \"status\")") " to see the results of the checks.")
  :win__bar
  ("(mission \"status\")")
  :objective

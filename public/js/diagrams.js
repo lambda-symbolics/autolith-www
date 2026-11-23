@@ -339,10 +339,8 @@ function charts(){
 
 /* ------------------------------------------------------ knowledge ledgers
    The page renders each ledger finished, so it reads without JavaScript.
-   Armed, a ledger starts empty and plays once it is on screen: facts arrive
-   and the rule derives the departure, then the meeting keeps moving and the
-   departure follows it; three turns fold into a procedure that runs as one
-   call; and probes rule hypotheses out until one cause is left. */
+   The animation shows a test target changing with the PR diff, a sequence of
+   calls becoming a procedure, and probes ruling out hypotheses. */
 function knowledge(){
   if (STILL) return;
 
@@ -381,13 +379,13 @@ function knowledge(){
   const derive = $("#deriveViz");
   ledger(derive, ({ reveal, later }) => {
     const facts = $$(".kb__fact", derive);
-    const start = $(".kb__val", facts[0]);
-    const leave = $(".kb__derived .kb__val", derive);
+    const changedPackage = $(".kb__val", facts[0]);
+    const testTarget = $(".kb__derived .kb__val", derive);
     const stamp = $(".kb__stamp", derive);
-    const moved = [start.textContent, leave.textContent];
-    const first = [start.dataset.earlier, leave.dataset.earlier];
-    start.textContent = first[0];
-    leave.textContent = first[1];
+    const current = [changedPackage.textContent, testTarget.textContent];
+    const earlier = [changedPackage.dataset.earlier, testTarget.dataset.earlier];
+    changedPackage.textContent = earlier[0];
+    testTarget.textContent = earlier[1];
     for (const fact of facts.slice(0, 3)) reveal(fact, 420);
     reveal($(".kb__rule", derive), 560);
     reveal($(".kb__derived", derive), 900);
@@ -396,10 +394,10 @@ function knowledge(){
       let shifted = false;
       const move = () => {
         shifted = !shifted;
-        const [when, leaving] = shifted ? moved : first;
+        const [changed, target] = shifted ? current : earlier;
         stamp.classList.remove("on");
-        swap(start, when);
-        setTimeout(() => swap(leave, leaving), 700);
+        swap(changedPackage, changed);
+        setTimeout(() => swap(testTarget, target), 700);
         setTimeout(() => stamp.classList.add("on"), 1500);
       };
       setTimeout(() => { move(); setInterval(move, 5600); }, 1800);

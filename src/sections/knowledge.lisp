@@ -30,18 +30,18 @@
       (p :class "win__bar" (content ':knowledge ':derive__bar))
       (div :class "win__body kb__body"
         (ol :class "kb__facts"
-          (~knowledge-fact :predicate "event.start" :subject "review"
-                           :value "14:30" :earlier "13:00" :basis "your statement")
-          (~knowledge-fact :predicate "event.travel" :subject "review"
-                           :value "25 min" :basis "observation")
-          (~knowledge-fact :predicate "event.buffer" :subject "review"
-                           :value "15 min" :basis "your statement"))
-        (p :class "kb__rule" (span "?leave = ?start - (?travel + ?buffer)"))
+          (~knowledge-fact :predicate "pr.touches" :subject "pr-42"
+                           :value "parser" :earlier "lexer" :basis "PR diff")
+          (~knowledge-fact :predicate "pkg.depends-on" :subject "cli"
+                           :value "parser" :basis "manifest")
+          (~knowledge-fact :predicate "pkg.depends-on" :subject "fmt"
+                           :value "lexer" :basis "manifest"))
+        (p :class "kb__rule"
+          (span "pr.touches(PR, Lib) ∧ pkg.depends-on(Pkg, Lib) → pr.test(PR, Pkg)"))
         (ol :class "kb__facts"
-          (~knowledge-fact :class "kb__fact kb__derived" :predicate "event.departure"
-                           :subject "review" :value "13:50" :earlier "12:20" :basis "derived"))
+          (~knowledge-fact :class "kb__fact kb__derived" :predicate "pr.test"
+                           :subject "pr-42" :value "cli" :earlier "fmt" :basis "derived"))
         (div :class "kb__foot"
-          (p :class "kb__meter" "model requests " (b "0"))
           (~status-badge :class "kb__stamp" :label (content ':knowledge ':derive__stamp)))))))
 
 (defcomp ~knowledge-diagnosis nil
@@ -63,7 +63,6 @@
                             :rules-out "credentials"))
         (p :class "kb__verdict" "Of the three hypotheses, only the stale endpoint fits.")
         (div :class "kb__foot"
-          (p :class "kb__meter" "model requests between probes " (b "0"))
           (~status-badge :class "kb__stamp" :label (content ':knowledge ':diagnosis__stamp)))))))
 
 (defcomp ~knowledge-procedure nil
@@ -82,7 +81,6 @@
           (span :class "kb__calls"
             (span "sales.load") (span "sales.report") (span "notify.send")))
         (div :class "kb__foot"
-          (p :class "kb__meter" "calls chosen by the model " (b "1"))
           (~status-badge :class "kb__stamp" :label (content ':knowledge ':procedure__stamp)))))))
 
 (defcomp ~knowledge-checkpoint nil

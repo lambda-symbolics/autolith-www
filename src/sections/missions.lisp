@@ -60,9 +60,7 @@ animation counts up to, SHOWN its printed form, and LIMIT the allowance."
               (div
                 (dt "Durability")
                 (dd
-                  (content ':missions ':durability))))
-            (p :class "note"
-              (content ':missions ':note)))
+                  (content ':missions ':durability)))))
           (figure :class "win shadowband" :id "missionViz" :data-rv "fade"
             (figcaption :class "win__bar"
               (content ':missions ':win__bar))
