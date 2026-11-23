@@ -14,9 +14,6 @@
             (content ':yours ':lede)))
         (dl :class "deflist deflist--two" :data-rv t
           (div
-            (dt "Tools")
-            (dd (content ':yours ':tools)))
-          (div
             (dt "Skills")
             (dd (content ':yours ':skills)))
           (div
@@ -24,10 +21,4 @@
             (dd (content ':yours ':mcp)))
           (div
             (dt "Editors and ACP")
-            (dd (content ':yours ':editors)))
-          (div
-            (dt "Providers")
-            (dd (content ':yours ':providers)))
-          (div
-            (dt "The live runtime")
-            (dd (content ':yours ':runtime))))))))
+            (dd (content ':yours ':editors))))))))
