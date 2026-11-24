@@ -6,7 +6,7 @@ import { chromium } from 'playwright';
 
 const root = resolve('dist');
 const types = {'.html':'text/html', '.js':'text/javascript', '.css':'text/css',
-  '.svg':'image/svg+xml', '.png':'image/png', '.woff2':'font/woff2'};
+  '.svg':'image/svg+xml', '.png':'image/png', '.webp':'image/webp', '.woff2':'font/woff2'};
 const server = createServer(async (request, response) => {
   const path = resolve(root, '.' + decodeURIComponent(new URL(request.url, 'http://localhost').pathname));
   if (path !== root && !path.startsWith(root + sep)) { response.writeHead(403).end(); return; }
@@ -50,6 +50,41 @@ try {
     assert.deepEqual(overflow, [], name + ' horizontal overflow');
     assert.equal(await page.locator('#context + #install').count(), 1);
     assert.equal(await page.locator('#navLinks a').last().getAttribute('href'), '#context');
+
+    const gallery = page.locator('#screenshots');
+    const images = gallery.locator('img');
+    assert.equal(await images.count(), 3);
+    if (name === 'no-js') {
+      assert.equal(await gallery.getByRole('tablist').count(), 0);
+      assert.equal(await images.filter({visible:true}).count(), 3);
+    } else {
+      const screenshotTabs = gallery.getByRole('tab');
+      assert.equal(await screenshotTabs.count(), 3);
+      assert.equal(await images.filter({visible:true}).count(), 1);
+      await screenshotTabs.first().focus();
+      await page.keyboard.press('ArrowLeft');
+      assert(await images.last().isVisible());
+      assert(await screenshotTabs.last().evaluate(tab => tab === document.activeElement));
+      for (let index = 0; index < 3; index++) {
+        await screenshotTabs.nth(index).click();
+        assert(await images.nth(index).isVisible());
+        assert.equal(await images.filter({visible:true}).count(), 1);
+        assert.equal(await screenshotTabs.nth(index).getAttribute('aria-selected'), 'true');
+      }
+      await screenshotTabs.first().click();
+    }
+    const shownImages = images.filter({visible:true});
+    for (const image of await shownImages.all()) {
+      await image.scrollIntoViewIfNeeded();
+      assert(await image.evaluate(async element => {
+        await element.decode();
+        return element.naturalWidth > 0 && element.closest('a').href === element.currentSrc
+          && document.documentElement.scrollWidth <= innerWidth + 1;
+      }), `${name}: screenshot must fit and link to the full image`);
+    }
+    if (name !== 'no-js') {
+      await gallery.screenshot({path:`test-results/${name}-screenshots.png`});
+    }
 
     for (const block of await page.locator('.shellblock').all()) {
       const commands = await block.locator('b').allTextContents();

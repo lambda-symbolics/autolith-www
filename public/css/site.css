@@ -486,6 +486,18 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
   .kb__tabs button:nth-child(-n+2){border-bottom:1px solid var(--fg)}
 }
 
+/* ---------------------------------------------------------- screenshots */
+
+.screenshots__slides{background:var(--ink)}
+.screenshots__slide+.screenshots__slide{border-top:1px solid var(--paper)}
+.js .screenshots__slide{border-top:0}
+.screenshots__slide a,.screenshots__slide img{display:block;width:100%}
+.screenshots__slide img{height:auto}
+.screenshots__slide a:focus-visible{outline-offset:-4px}
+.screenshots .screenshots__tabs{width:100%;border:0;border-top:1px solid var(--fg)}
+.screenshots__tabs button{flex:1}
+.screenshots__tabs button:focus-visible{outline-offset:-4px}
+
 /* ---------------------------------------------------------------- bento
    The gaps are the rules. One pixel of ink shows between the cells, so the
    grid draws itself and no cell needs to know where it sits. */

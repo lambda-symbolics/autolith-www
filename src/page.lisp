@@ -45,6 +45,7 @@
           (main :id "main"
             (span :id "top")
             (~section-hero)
+            (~section-screenshots)
             (~section-mutation)
             (~plate :kind "mobius")
             (~section-knowledge)

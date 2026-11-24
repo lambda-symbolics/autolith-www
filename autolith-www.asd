@@ -12,7 +12,7 @@
      :components ((:file "hero") (:file "mutation") (:file "knowledge")
                   (:file "context") (:file "tasks") (:file "missions")
                   (:file "yours") (:file "install") (:file "friends")
-                  (:file "footer")))
+                   (:file "screenshots") (:file "footer")))
    (:file "src/page")
    (:file "src/og")
    (:file "src/build")))
