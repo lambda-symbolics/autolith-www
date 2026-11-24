@@ -1,6 +1,6 @@
 ;; Copy for the mutation section. Inline markup: (:em () "text").
 (:title
- ("The " (:em nil (:em nil "self-modifying") ",") " adaptable agent")
+ ("The " "self-modifying," " " (:em nil "adaptable") " agent")
  :lede
  ("Autolith is a flexible computing environment similar to Emacs or a Lisp machine with an LLM in it. It can inspect its own code and live state, then change how it works to fit your task, add new tools to save tokens, or work around bugs.")
  :prose
