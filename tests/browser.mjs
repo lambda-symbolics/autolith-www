@@ -48,30 +48,45 @@ try {
       [...document.querySelectorAll('body *')].filter(element => element.getBoundingClientRect().right > innerWidth + 1)
         .map(element => [element.tagName, element.id, element.className, Math.round(element.getBoundingClientRect().right)]).slice(0, 12));
     assert.deepEqual(overflow, [], name + ' horizontal overflow');
-    assert.equal(await page.locator('#context + #install').count(), 1);
+    assert.equal(await page.locator('#context + #screenshots + #install').count(), 1);
     assert.equal(await page.locator('#navLinks a').last().getAttribute('href'), '#context');
 
     const gallery = page.locator('#screenshots');
     const images = gallery.locator('img');
     assert.equal(await images.count(), 3);
+    const controls = gallery.getByRole('group', {name:'Screenshot controls'});
     if (name === 'no-js') {
-      assert.equal(await gallery.getByRole('tablist').count(), 0);
+      assert.equal(await controls.count(), 0);
       assert.equal(await images.filter({visible:true}).count(), 3);
     } else {
-      const screenshotTabs = gallery.getByRole('tab');
-      assert.equal(await screenshotTabs.count(), 3);
-      assert.equal(await images.filter({visible:true}).count(), 1);
-      await screenshotTabs.first().focus();
-      await page.keyboard.press('ArrowLeft');
-      assert(await images.last().isVisible());
-      assert(await screenshotTabs.last().evaluate(tab => tab === document.activeElement));
-      for (let index = 0; index < 3; index++) {
-        await screenshotTabs.nth(index).click();
+      const previous = controls.getByRole('button', {name:'Previous screenshot'});
+      const next = controls.getByRole('button', {name:'Next screenshot'});
+      const counter = controls.getByRole('status');
+      async function checkSlide(index) {
         assert(await images.nth(index).isVisible());
         assert.equal(await images.filter({visible:true}).count(), 1);
-        assert.equal(await screenshotTabs.nth(index).getAttribute('aria-selected'), 'true');
+        assert.equal(await counter.textContent(), `0${index + 1} / 03`);
       }
-      await screenshotTabs.first().click();
+      await checkSlide(0);
+      await previous.click();
+      await checkSlide(2);
+      await next.click();
+      await checkSlide(0);
+      await next.press('Enter');
+      await checkSlide(1);
+      await next.press('ArrowRight');
+      await checkSlide(2);
+      await next.press('ArrowLeft');
+      await checkSlide(1);
+      await next.press('End');
+      await checkSlide(2);
+      await next.press('Home');
+      await checkSlide(0);
+      assert(await next.evaluate(button => button === document.activeElement));
+      const imageBounds = await images.first().boundingBox();
+      const counterBounds = await counter.boundingBox();
+      assert(counterBounds.y >= imageBounds.y + imageBounds.height);
+      assert(Math.abs(counterBounds.x + counterBounds.width / 2 - imageBounds.x - imageBounds.width / 2) <= 1);
     }
     const shownImages = images.filter({visible:true});
     for (const image of await shownImages.all()) {

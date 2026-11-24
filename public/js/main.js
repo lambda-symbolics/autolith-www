@@ -4,12 +4,12 @@ import { splitAll, observeReveals } from './typography.js';
 import { monolith } from './monolith.js';
 import { figures, rlm, imagebox, mission, charts, knowledge } from './diagrams.js';
 import { swell, plates } from './plates.js';
-import { tabs, copy } from './controls.js';
+import { tabs, screenshots, copy } from './controls.js';
 
 // Apply the enhanced layout before any canvas measures its visible bounds.
 document.documentElement.classList.add('js');
 document.documentElement.classList.toggle('still', STILL);
-const features = [navSetup, tabs, copy, monolith, rlm, figures,
+const features = [navSetup, tabs, screenshots, copy, monolith, rlm, figures,
                   swell, plates, imagebox, mission, charts, knowledge];
 for (const setup of features) {
   try { setup(); } catch (error) { console.error(`Site feature ${setup.name}:`, error); }

@@ -488,15 +488,18 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 
 /* ---------------------------------------------------------- screenshots */
 
-.screenshots__slides{background:var(--ink)}
-.screenshots__slide+.screenshots__slide{border-top:1px solid var(--paper)}
-.js .screenshots__slide{border-top:0}
-.screenshots__slide a,.screenshots__slide img{display:block;width:100%}
+.screenshots{padding-block:clamp(1rem,4vh,2.5rem) 0}
+.screenshots h2{margin-bottom:clamp(1.25rem,3vw,2.5rem)}
+.screenshots__slides{display:grid;gap:clamp(1rem,3vw,2.5rem)}
+.screenshots__slide,.screenshots__slide img{display:block;width:100%}
 .screenshots__slide img{height:auto}
-.screenshots__slide a:focus-visible{outline-offset:-4px}
-.screenshots .screenshots__tabs{width:100%;border:0;border-top:1px solid var(--fg)}
-.screenshots__tabs button{flex:1}
-.screenshots__tabs button:focus-visible{outline-offset:-4px}
+.screenshots__slide[hidden],.screenshots__pager[hidden]{display:none}
+.screenshots__pager{display:flex;align-items:center;justify-content:center;gap:.5rem;
+  margin-top:.65rem;font:1rem/1 var(--mono);font-variant-numeric:tabular-nums}
+.screenshots__pager button{width:2.65rem;height:2.65rem;transition:color .2s,transform .2s}
+.screenshots__pager button:hover{color:var(--green-ink)}
+.screenshots__pager button:active{transform:scale(.92)}
+.screenshots__pager button:focus-visible{outline-offset:-3px}
 
 /* ---------------------------------------------------------------- bento
    The gaps are the rules. One pixel of ink shows between the cells, so the

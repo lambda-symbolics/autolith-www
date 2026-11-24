@@ -34,6 +34,38 @@ export function tabs() {
   });
 }
 
+export function screenshots() {
+  const gallery = document.getElementById('screenshots');
+  if (!gallery) return;
+  const slides = $$('.screenshots__slide', gallery);
+  const pager = gallery.querySelector('.screenshots__pager');
+  const [previous, next] = $$('button', pager);
+  const count = pager.querySelector('[role="status"]');
+  const number = value => String(value).padStart(2, '0');
+  let current = 0;
+
+  function show(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, position) => { slide.hidden = position !== current; });
+    count.textContent = `${number(current + 1)} / ${number(slides.length)}`;
+  }
+
+  previous.addEventListener('click', () => show(current - 1));
+  next.addEventListener('click', () => show(current + 1));
+  pager.addEventListener('keydown', event => {
+    let index;
+    if (event.key === 'ArrowLeft') index = current - 1;
+    if (event.key === 'ArrowRight') index = current + 1;
+    if (event.key === 'Home') index = 0;
+    if (event.key === 'End') index = slides.length - 1;
+    if (index === undefined) return;
+    event.preventDefault();
+    show(index);
+  });
+  show(0);
+  pager.hidden = false;
+}
+
 export function copy() {
   $$('[data-copy]').forEach(button => {
     button.addEventListener('click', async () => {

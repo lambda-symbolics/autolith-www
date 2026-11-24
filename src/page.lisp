@@ -45,7 +45,6 @@
           (main :id "main"
             (span :id "top")
             (~section-hero)
-            (~section-screenshots)
             (~section-mutation)
             (~plate :kind "mobius")
             (~section-knowledge)
@@ -57,6 +56,7 @@
             (~section-yours)
             (~plate :kind "layers")
             (~section-context)
+            (~section-screenshots)
             (~section-install)
             (~section-friends))
           (div :class "swell" :aria-hidden "true" (canvas :id "swell"))
