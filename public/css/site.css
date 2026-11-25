@@ -373,6 +373,7 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .kb__checkpoint>div{border-left:1px solid var(--fg);padding-inline-start:.8rem}
 .kb__checkpoint dt{font-weight:700;margin-bottom:.3em}
 .kb__checkpoint dd{overflow-wrap:anywhere}
+.kb__code{margin:0;font:inherit;white-space:pre-wrap;overflow-wrap:anywhere}
 @media (max-width:900px){.kb__slide .two{grid-template-columns:minmax(0,1fr)}}
 .kb__body{display:grid;gap:clamp(.8rem,1.9vh,1.15rem);padding:clamp(1rem,2.2vw,1.6rem);font-family:var(--mono);font-size:.76rem;line-height:1.35}
 .kb__facts,.kb__probes{display:grid;gap:.4rem}

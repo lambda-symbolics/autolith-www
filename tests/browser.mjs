@@ -126,12 +126,16 @@ try {
 
       const slides = page.locator('#knowledge [role="tabpanel"]');
       const tabs = page.locator('#knowledge [role="tab"]');
-      assert.equal(await tabs.count(), 3);
+      assert.equal(await tabs.count(), 4);
       assert.equal(await slides.filter({visible:true}).count(), 1);
       await tabs.first().focus();
       await page.keyboard.press('ArrowRight');
       assert(await slides.nth(1).isVisible());
       assert(await tabs.nth(1).evaluate(tab => tab === document.activeElement));
+      await page.keyboard.press('ArrowRight');
+      const procedureTab = tabs.filter({hasText:'Procedures'});
+      assert.equal(await procedureTab.getAttribute('aria-selected'), 'true');
+      assert(await page.locator('[data-tabpanel="procedures"]').isVisible());
       await page.keyboard.press('End');
       assert(await slides.last().isVisible());
       await page.keyboard.press('ArrowRight');

@@ -23,6 +23,24 @@
  ("diagnosis.run remote-service")
  :diagnosis__stamp
  ("cause found")
+ :procedure__title
+ ("Procedures")
+ :procedure__prose
+ ("Procedures are reusable Lisp functions that are stored in your workspace. Autolith can define a procedure for work you expect to repeat and run the same code with different arguments.")
+ :procedure__inspect
+ ("Procedures can call tools directly. Those calls follow the approvals of the current conversation. Use " (:code nil "(procedures)") " to list the procedures and their parameters.")
+ :procedure__bar
+ ("procedure.define · read-report")
+ :procedure__source
+ ("(lambda (&key file)
+  \"Read the report at FILE.\"
+  (resource.read
+   :uri (format nil \"workspace:~A\" file)))")
+ :procedure__prompt
+ ("Run at the Autolith prompt")
+ :procedure__call
+ ("(run-procedure \"read-report\"
+               :file \"reports/q3.org\")")
  :compaction__title
  ("Symbolic compaction")
  :compaction__prose

@@ -59,6 +59,18 @@
         (div :class "kb__foot"
           (~status-badge :class "kb__stamp" :label (content ':knowledge ':diagnosis__stamp)))))))
 
+(defcomp ~knowledge-procedure nil
+  "Show the Lisp source of a procedure and a call from the prompt."
+  (hsx
+    (figure :class "win shadowband kb"
+      (figcaption :class "win__bar" (content ':knowledge ':procedure__bar))
+      (div :class "win__body kb__body"
+        (pre :class "kb__code" (code (content ':knowledge ':procedure__source)))
+        (dl :class "kb__checkpoint"
+          (div
+            (dt (content ':knowledge ':procedure__prompt))
+            (dd (pre :class "kb__code" (code (content ':knowledge ':procedure__call))))))))))
+
 (defcomp ~knowledge-checkpoint nil
   "Show a compaction note, its fact reference and a later change to the cited fact."
   (hsx
@@ -100,6 +112,7 @@
           (div :class "tabs kb__tabs" :role "tablist" :aria-label "Neurosymbolic examples"
             (loop for (name title) in '(("facts" :facts__title)
                                         ("diagnoses" :diagnosis__title)
+                                        ("procedures" :procedure__title)
                                         ("compaction" :compaction__title))
                   collect
               (hsx (button :role "tab" :type "button" :data-tab name
@@ -112,6 +125,9 @@
                             :example (~knowledge-derivation))
           (~knowledge-slide :name "diagnoses" :title ':diagnosis__title :prose ':diagnosis__prose
                             :example (~knowledge-diagnosis))
+          (~knowledge-slide :name "procedures" :title ':procedure__title :prose ':procedure__prose
+                            :extra   (hsx (p :class "prose" (content ':knowledge ':procedure__inspect)))
+                            :example (~knowledge-procedure))
           (~knowledge-slide :name "compaction" :title ':compaction__title :prose ':compaction__prose
                             :extra   (hsx (p :class "prose" (content ':knowledge ':compaction__changes)))
                             :example (~knowledge-checkpoint)))))))
