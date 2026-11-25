@@ -339,8 +339,8 @@ function charts(){
 
 /* ------------------------------------------------------ knowledge ledgers
    The page renders each ledger finished, so it reads without JavaScript.
-   The animation shows a test target changing with the PR diff, a sequence of
-   calls becoming a procedure, and probes ruling out hypotheses. */
+   The animations show a test target that changes with the PR diff and probes
+   that rule out hypotheses. */
 function knowledge(){
   if (STILL) return;
 
@@ -402,16 +402,6 @@ function knowledge(){
       };
       setTimeout(() => { move(); setInterval(move, 5600); }, 1800);
     };
-  });
-
-  const procedure = $("#procedureViz");
-  ledger(procedure, ({ reveal, later }) => {
-    for (const turn of $$(".kb__turn", procedure)) reveal(turn, 210);
-    reveal($(".kb__run", procedure), 380);
-    for (const call of $$(".kb__calls span", procedure)) {
-      later(() => call.classList.add("on"), 190);
-    }
-    later(() => $(".kb__stamp", procedure).classList.add("on"));
   });
 
   const diagnosis = $("#diagnosisViz");

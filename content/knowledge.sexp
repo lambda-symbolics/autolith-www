@@ -23,16 +23,6 @@
  ("diagnosis.run remote-service")
  :diagnosis__stamp
  ("cause found")
- :services__title
- ("Services")
- :services__prose
- ("Give a service call a contract that declares what must be true before it runs and what facts to record from the result. If a required fact is missing, Autolith skips the call and tells you why.")
- :procedure__prose
- ("Autolith can also learn a reusable procedure across several calls. Next quarter, one " (:code nil "procedure.run") " call can load the sales data, build the report, and send it. Each step still goes through its own approval checks.")
- :procedure__bar
- ("procedure make-sales-report")
- :procedure__stamp
- ("learned from 3 turns")
  :compaction__title
  ("Symbolic compaction")
  :compaction__prose

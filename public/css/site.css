@@ -375,7 +375,7 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .kb__checkpoint dd{overflow-wrap:anywhere}
 @media (max-width:900px){.kb__slide .two{grid-template-columns:minmax(0,1fr)}}
 .kb__body{display:grid;gap:clamp(.8rem,1.9vh,1.15rem);padding:clamp(1rem,2.2vw,1.6rem);font-family:var(--mono);font-size:.76rem;line-height:1.35}
-.kb__facts,.kb__turns,.kb__probes{display:grid;gap:.4rem}
+.kb__facts,.kb__probes{display:grid;gap:.4rem}
 .kb__fact{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr) minmax(0,.8fr) minmax(0,1fr);gap:.7rem;align-items:baseline;padding:.45rem .6rem;border:1px solid var(--fg)}
 .kb__pred{font-weight:700;overflow-wrap:anywhere}
 .kb__val{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -384,14 +384,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .kb__rule{display:flex;align-items:center;gap:.6rem;padding-left:.6rem;font-size:.72rem}
 .kb__rule::before{content:"\2193";font-size:1rem;color:var(--green-ink)}
 .kb__foot{display:flex;justify-content:flex-end;font-size:.72rem}
-.kb__turn{padding:.45rem .6rem;border:1px solid var(--fg)}
-.kb__ask{font-family:var(--serif);font-style:italic;font-size:.95rem}
-.kb__ask b{font-family:var(--mono);font-style:normal;font-size:.8rem;color:var(--green-ink);text-decoration:underline;text-underline-offset:.2em}
-.kb__calls{display:flex;flex-wrap:wrap;gap:.35rem}
-.kb__calls span{padding:.1rem .4rem;background:var(--fg);color:var(--bg);font-size:.68rem}
-.kb__calls span+span::before{content:"\2192\00a0"}
-.kb__run{display:grid;gap:.35rem;padding:.55rem .65rem;background:var(--dither);background-size:3px 3px}
-.kb__run .kb__call{background:var(--bg);justify-self:start;padding:.1rem .35rem;font-weight:700}
 .kb__hypotheses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;padding:0;list-style:none}
 .kb__hypotheses li{display:flex;align-items:center;min-height:2.6rem;padding:.45rem .6rem;border:1px solid var(--fg);text-decoration:line-through;transition:background-color .3s var(--ease),color .3s var(--ease)}
 .kb__hypotheses li::before{content:"\2717\00a0"}
@@ -408,8 +400,6 @@ code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
 .kb .kb__val{transition:background-color .25s var(--ease),color .25s var(--ease)}
 .kb .kb__val.busy{background:var(--dither);background-size:3px 3px;color:transparent}
 .kb .kb__val.fresh{color:var(--green)}
-.kb.armed .kb__calls span{opacity:.18;transition:opacity .3s var(--ease)}
-.kb.armed .kb__calls span.on{opacity:1}
 .kb.armed .kb__hypotheses li{background:var(--bg);color:var(--fg);border-style:dashed;text-decoration:none}
 .kb.armed .kb__hypotheses li::before{content:"?\00a0"}
 .kb.armed .kb__hypotheses li.out{border-style:solid;text-decoration:line-through;opacity:.55}

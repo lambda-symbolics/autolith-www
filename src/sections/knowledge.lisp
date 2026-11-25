@@ -9,12 +9,6 @@
       (span :class "kb__val" :data-earlier earlier value)
       (span :class "kb__basis" basis))))
 
-(defcomp ~knowledge-turn (&key quarter)
-  "Render a remembered request for a quarterly sales report."
-  (hsx
-    (li :class "kb__turn kb__ask"
-      "Make the sales report for " (b quarter) ".")))
-
 (defcomp ~knowledge-probe (&key call result rules-out)
   "Render one diagnosis probe: the call, the fact it observed and the hypothesis it ruled out."
   (hsx
@@ -65,24 +59,6 @@
         (div :class "kb__foot"
           (~status-badge :class "kb__stamp" :label (content ':knowledge ':diagnosis__stamp)))))))
 
-(defcomp ~knowledge-procedure nil
-  "Show repeated service calls becoming a single parameterized procedure."
-  (hsx
-    (figure :class "win shadowband kb" :id "procedureViz"
-      (p :class "win__bar" (content ':knowledge ':procedure__bar))
-      (div :class "win__body kb__body"
-        (ol :class "kb__turns"
-          (~knowledge-turn :quarter "q1")
-          (~knowledge-turn :quarter "q2")
-          (~knowledge-turn :quarter "q3"))
-        (p :class "kb__run"
-          (span :class "kb__ask" "Make the sales report for " (b "q4") ".")
-          (span :class "kb__call" "procedure.run make-sales-report {\"file\":\"q4\"}")
-          (span :class "kb__calls"
-            (span "sales.load") (span "sales.report") (span "notify.send")))
-        (div :class "kb__foot"
-          (~status-badge :class "kb__stamp" :label (content ':knowledge ':procedure__stamp)))))))
-
 (defcomp ~knowledge-checkpoint nil
   "Show a compaction note, its fact reference and a later change to the cited fact."
   (hsx
@@ -111,7 +87,7 @@
         example))))
 
 (defcomp ~section-knowledge nil
-  "Render the four examples in a reader-controlled carousel."
+  "Render examples of symbolic reasoning in a tabbed carousel."
   (hsx
     (section :class "band" :id "knowledge"
       (canvas :class "marg marg--r" :data-plate "orb" :style "--mt:12%"
@@ -124,7 +100,6 @@
           (div :class "tabs kb__tabs" :role "tablist" :aria-label "Neurosymbolic examples"
             (loop for (name title) in '(("facts" :facts__title)
                                         ("diagnoses" :diagnosis__title)
-                                        ("services" :services__title)
                                         ("compaction" :compaction__title))
                   collect
               (hsx (button :role "tab" :type "button" :data-tab name
@@ -137,9 +112,6 @@
                             :example (~knowledge-derivation))
           (~knowledge-slide :name "diagnoses" :title ':diagnosis__title :prose ':diagnosis__prose
                             :example (~knowledge-diagnosis))
-          (~knowledge-slide :name "services" :title ':services__title :prose ':services__prose
-                            :extra   (hsx (p :class "prose" (content ':knowledge ':procedure__prose)))
-                            :example (~knowledge-procedure))
           (~knowledge-slide :name "compaction" :title ':compaction__title :prose ':compaction__prose
                             :extra   (hsx (p :class "prose" (content ':knowledge ':compaction__changes)))
                             :example (~knowledge-checkpoint)))))))

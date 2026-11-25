@@ -126,7 +126,7 @@ try {
 
       const slides = page.locator('#knowledge [role="tabpanel"]');
       const tabs = page.locator('#knowledge [role="tab"]');
-      assert.equal(await tabs.count(), 4);
+      assert.equal(await tabs.count(), 3);
       assert.equal(await slides.filter({visible:true}).count(), 1);
       await tabs.first().focus();
       await page.keyboard.press('ArrowRight');
