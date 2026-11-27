@@ -4,6 +4,6 @@
  :display
  ("The " (:em nil "self-modifying") " neurosymbolic agent.")
  :hero__lede
- ("The best agent for long work demanding precision.")
+ ("The best agent at precise, long-running tasks")
  :hero__plat
  ((:a (:class "ulink" :href "#install") "See more.")))

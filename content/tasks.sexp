@@ -2,11 +2,11 @@
 (:title
  ("World of " (:em nil "channels."))
  :lede
- ("Agents work in channels. If you assign more work in the same channel, the agent can use the earlier conversation.")
+ ("Agents work in a hierarchy of persistant channels. Agents can cooperate with parents, peers and children anywhere in the tree to rely on their know-how and divide work")
  :prose
- ("There is an agent in every channel except your home channel. Agents work together in a hierarchy of channels and can mention each other.")
+ ("There is an agent in every channel except your home channel, where you are the \"agent\". Working together comes naturally in a World of Channels, agents can mention others, message others, or subscribe to other channels. ")
  :prose-2
- ("For independent code changes, children can edit and test in isolated Git worktrees. They return patches or commit ranges with checks and evidence. The parent reviews each artifact before integrating it.")
+ ("For independent tasks, children can edit and test code in isolated Git worktrees. They patches or commit ranges they created can be submitted to parents, children or peers for review before being integrated.")
  :inventory
  ("You and other agents can inspect ongoing work, its lineage, usage, and so on. You or parent agents can steer running agents or cancel unnecessary work.")
  :roles

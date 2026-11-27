@@ -2,11 +2,11 @@
 (:title
  ("Leverage " (:em nil "symbolic ") (:em nil "reasoning"))
  :lede
- ("Alongside the language model, Autolith has a small, rule engine similar to Datalog. It is used to associate structured memories and facts with evidence and to derive new information and reason deterministically without LLMs.")
+ ("Autolith comes with a rule engine (similar to Datalog) which is used for storing structured memories linked to evidence, and for deriving new facts. The rule engine can be used to reason without an LLM.")
  :facts__title
  ("Facts and derivations")
  :facts__prose
- ("Give Autolith a rule to test packages that depend directly on code changed in a pull request. If a new revision changes the parser instead of the lexer, Autolith updates the test target from the formatter to the CLI. You can inspect the rule and the facts behind the result.")
+ ("Your Autolith can have a rule to test packages that depend directly on code changed in a pull request. If a new revision changes the parser instead of the lexer, Autolith can update the test target from the formatter to the CLI.")
  :derive__bar
  ("memory:facts · rule test-dependents")
  :derive__stamp
@@ -14,7 +14,7 @@
  :inspect
  ("Use " (:code nil "(why \"c4df\")") " to see the evidence and rules used to derive the fact in question.")
  :changes
- ("Use " (:code nil "(what-changed)") " to see what changed since you last asked and why.")
+ ("Use " (:code nil "(what-changed)") " to see what changed since you last asked")
  :diagnosis__title
  ("Diagnoses")
  :diagnosis__prose
